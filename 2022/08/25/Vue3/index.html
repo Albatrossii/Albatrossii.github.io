@@ -1,0 +1,447 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0">
+        <title>Vue3 | Albatross&amp;blog</title>
+        <meta name="author" content="Albatross">
+        <meta name="description" content="">
+        <meta name="keywords" content="">
+        <link rel="icon" href="/images/c.jpg">
+        <script src="https://cdn.staticfile.org/instant.page/5.1.0/instantpage.min.js" type="module"></script>
+        <script src="https://cdn.staticfile.org/font-awesome/6.1.1/js/all.min.js"></script>
+        
+        </script>
+        
+        <link rel="stylesheet" href="/css/fonts.min.css">
+        <link rel="stylesheet" href="/css/particlex.css">
+        
+        <script src="https://cdn.staticfile.org/vue/3.2.33/vue.global.prod.min.js"></script>
+       
+    <meta name="generator" content="Hexo 6.2.0"><link rel="alternate" href="/atom.xml" title="Albatross&blog" type="application/atom+xml">
+</head>
+    <body>
+
+        <div id="loading" style="height:100vh;width:100vw;position:fixed;display:flex;z-index:200;justify-content:space-between;background:#fff;transition:opacity 0.3s ease-out"><div style="position:fixed;height:100vh;width:100vw;display:flex;justify-content:center;align-items:center"><div id="loadcontent" style="width:50vmin;height:50vmin;padding:50px;border-radius:50%;display:flex;justify-content:center;align-items:center;border:solid 10px #a3ddfb;text-align:center"><div><h2>LOADING...</h2><p style="word-break:keep-all">加载过慢请开启缓存(浏览器默认开启)</p><div><img alt="loading" src="/loading.gif"></div></div></div></div></div>
+        <div id="layout">
+            <i data-fa-symbol="calendar-solid" class="fa-solid fa-calendar fa-fw"></i>
+            <i data-fa-symbol="bookmark-solid" class="fa-solid fa-bookmark fa-fw"></i>
+            <i data-fa-symbol="tags-solid" class="fa-solid fa-tags fa-fw"></i>
+            <transition name="into">
+                <div v-show="show_page" style="display: -not-none">
+                    <div id="menu_show">
+                         
+<nav id="menu">
+    <div class="desktop-menu">
+        <a href="/">
+            <span class="title">Albatross&blog</span>
+        </a>
+        
+        <a href="/">
+            <i class="fa-solid fa-house fa-fw"></i>
+            <span>&ensp;home</span>
+        </a>
+        
+        <a href="/about">
+            <i class="fa-solid fa-id-card fa-fw"></i>
+            <span>&ensp;about</span>
+        </a>
+        
+        <a href="/archives">
+            <i class="fa-solid fa-box-archive fa-fw"></i>
+            <span>&ensp;archives</span>
+        </a>
+        
+        <a href="/categories">
+            <i class="fa-solid fa-bookmark fa-fw"></i>
+            <span>&ensp;categories</span>
+        </a>
+        
+        <a href="/tags">
+            <i class="fa-solid fa-tags fa-fw"></i>
+            <span>&ensp;tags</span>
+        </a>
+        
+    </div>
+    <div :class="'phone-menu ' + menu_show" id="phone-menu">
+        <div class="curtain" @click="menu_show = !menu_show" v-show="menu_show"></div>
+        <div :class="'title'" @click="menu_show = !menu_show">
+            <i class="fa-solid fa-bars fa-fw"></i>
+            <span>&emsp;Albatross&blog</span>
+        </div>
+        <transition name="slide">
+        <div class="items" v-show="menu_show">
+            
+            <a href="">
+                <div class="item">
+                    <div style="min-width: 20px; max-width: 50px; width: 10%">
+                        <i class="fa-solid fa-house fa-fw"></i>
+                    </div>
+                    <div style="min-width: 100px; max-width: 150%; width: 20%">home</div>
+                </div>
+            </a>
+            
+            <a href="about">
+                <div class="item">
+                    <div style="min-width: 20px; max-width: 50px; width: 10%">
+                        <i class="fa-solid fa-id-card fa-fw"></i>
+                    </div>
+                    <div style="min-width: 100px; max-width: 150%; width: 20%">about</div>
+                </div>
+            </a>
+            
+            <a href="archives">
+                <div class="item">
+                    <div style="min-width: 20px; max-width: 50px; width: 10%">
+                        <i class="fa-solid fa-box-archive fa-fw"></i>
+                    </div>
+                    <div style="min-width: 100px; max-width: 150%; width: 20%">archives</div>
+                </div>
+            </a>
+            
+            <a href="categories">
+                <div class="item">
+                    <div style="min-width: 20px; max-width: 50px; width: 10%">
+                        <i class="fa-solid fa-bookmark fa-fw"></i>
+                    </div>
+                    <div style="min-width: 100px; max-width: 150%; width: 20%">categories</div>
+                </div>
+            </a>
+            
+            <a href="tags">
+                <div class="item">
+                    <div style="min-width: 20px; max-width: 50px; width: 10%">
+                        <i class="fa-solid fa-tags fa-fw"></i>
+                    </div>
+                    <div style="min-width: 100px; max-width: 150%; width: 20%">tags</div>
+                </div>
+            </a>
+            
+        </div>
+        </transition>
+    </div>
+    <canvas
+    id="background"
+    style="position:fixed;top:0;left:0;width:100vw;height:100vh;pointer-events:none;z-index:-1"
+></canvas>
+<script src="/js/background.js"></script>
+</nav>
+
+
+                    </div>
+                    <div id="main">
+                        
+<div class="article">
+    <div>
+        <h1>Vue3 </h1>
+    </div>
+    <div class="info">
+        <span class="date">
+            <span class="icon">
+                <svg class="fa-icon"><use xlink:href="#calendar-solid"></use></svg>
+            </span>
+            2022/8/25
+        </span>
+        
+        <span class="category">
+            <a href="/categories/开发/">
+                <span class="icon">
+                    <svg class="fa-icon"><use xlink:href="#bookmark-solid"></use></svg>
+                </span>
+                开发
+            </a>
+        </span>
+        
+        
+        <span class="tags">
+            <span class="icon">
+                <svg class="fa-icon"><use xlink:href="#tags-solid"></use></svg>
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/vue3/" style="color: #03a9f4">
+                    vue3
+                </a>
+            </span>
+            
+        </span>
+        
+    </div>
+    <div class="content" v-pre>
+        <p>记录一下学习vue框架时的知识点以及需要注意的小tips~ 🥰</p>
+<span id="more"></span>
+<h3 id="0-启动vue自带的图形化项目管理界面"><a class="header-anchor" href="#0-启动vue自带的图形化项目管理界面">¶</a>0.  启动<code>vue</code>自带的图形化项目管理界面</h3>
+<p><code>vue ui</code><br>
+常见问题1：Windows上运行<code>vue</code>，提示无法加载文件，表示用户权限不足。<br>
+解决方案：用管理员身份打开终端，输入<code>set-ExecutionPolicy RemoteSigned</code>，然后输入<code>y</code></p>
+<h3 id="1-基本概念"><a class="header-anchor" href="#1-基本概念">¶</a>1.   基本概念</h3>
+<h4 id="script部分"><a class="header-anchor" href="#script部分">¶</a>script部分</h4>
+<p><code>export default</code>对象的属性：</p>
+<p><code>name</code>：组件的名称<br>
+<code>components</code>：存储<code>&lt;template&gt;</code>中用到的所有组件<br>
+<code>props</code>：存储父组件传递给子组件的数据<br>
+<code>watch()</code>：当某个数据发生变化时触发<br>
+<code>computed</code>：动态计算某个数据<br>
+<code>setup(props, context)</code>：初始化变量、函数<br>
+<code>ref</code>定义变量，可以用<code>.value</code>属性重新赋值<br>
+<code>	reactive</code>定义对象，不可重新赋值<br>
+<code>	props</code>存储父组件传递过来的数据<br>
+<code>context.emit()</code>：触发父组件绑定的函数</p>
+<ul>
+<li><code>ref</code>定义变量，可以用.<code>value</code>属性重新赋值</li>
+<li><code>reactive</code>定义对象，不可重新赋值</li>
+<li><code>props</code>存储父组件传递过来的数据</li>
+<li><code>context.emit()</code>：触发父组件绑定的函数</li>
+</ul>
+<h4 id="template部分"><a class="header-anchor" href="#template部分">¶</a>template部分</h4>
+<p><code>&lt;slot&gt;&lt;/slot&gt;</code>：存放父组件传过来的<code>children</code>。<br>
+<code>v-on:click</code>或<code>@click</code>属性：绑定事件<br>
+<code>v-if</code>、<code>v-else</code>、<code>v-else-if</code>属性：判断<br>
+<code>v-for</code>属性：循环，<code>:key</code>循环的每个元素需要有唯一的key<br>
+<code>v-bind:</code>或<code>:：</code>绑定属性</p>
+<h4 id="style部分"><a class="header-anchor" href="#style部分">¶</a>style部分</h4>
+<p><code>&lt;style&gt;</code>标签添加<code>scope</code>属性后，不同组件间的css不会相互影响。</p>
+<h4 id="第三方组件"><a class="header-anchor" href="#第三方组件">¶</a>第三方组件</h4>
+<p><code>view-router</code>包：实现路由功能。<br>
+<code>vuex</code>：存储全局状态，全局唯一。<br>
+<code>state</code>: 存储所有数据，可以用<code>modules</code>属性划分成若干模块<br>
+<code>getters</code>：根据state中的值计算新的值<br>
+<code>mutations</code>：所有对<code>state</code>的修改操作都需要定义在这里，不支持异步，可以通过<code>$store.commit()</code>触发<br>
+<code>actions</code>：定义对<code>state</code>的复杂修改操作，支持异步，可以通过<code>$store.dispatch()</code>触发。注意不能直接修改<code>state</code>，只能通过<code>mutations</code>修改<code>state</code>。<br>
+<code>modules</code>：定义<code>state</code>的子模块</p>
+<h3 id="2-常用API"><a class="header-anchor" href="#2-常用API">¶</a>2. 常用API</h3>
+<h4 id="获取Json-Web-Token（JWT）"><a class="header-anchor" href="#获取Json-Web-Token（JWT）">¶</a>获取Json Web Token（JWT）</h4>
+<ul>
+<li>
+<p>地址：<a target="_blank" rel="noopener" href="https://app165.acapp.acwing.com.cn/api/token/">https://app165.acapp.acwing.com.cn/api/token/</a></p>
+</li>
+<li>
+<p>方法：<code>POST</code></p>
+</li>
+<li>
+<p>是否验证jwt：否</p>
+</li>
+<li>
+<p>输入参数：</p>
+<p>​	<code>username</code>: 用户名</p>
+<p>​	<code>password</code>: 密码</p>
+</li>
+<li>
+<p>返回结果：</p>
+<p>​	<code>access</code>: 访问令牌，有效期5分钟</p>
+<p>​	<code>refresh</code>: 刷新令牌，有效期14天</p>
+</li>
+</ul>
+<h4 id="刷新JWT令牌"><a class="header-anchor" href="#刷新JWT令牌">¶</a>刷新JWT令牌</h4>
+<ul>
+<li>
+<p>地址：<a target="_blank" rel="noopener" href="https://app165.acapp.acwing.com.cn/api/token/refresh/">https://app165.acapp.acwing.com.cn/api/token/refresh/</a></p>
+</li>
+<li>
+<p>方法：<code>POST</code></p>
+</li>
+<li>
+<p>是否验证jwt：否</p>
+</li>
+<li>
+<p>输入参数：</p>
+<p>​	<code>refresh</code>: 刷新令牌</p>
+</li>
+<li>
+<p>返回结果：</p>
+<p>​	<code>access</code>: 访问令牌，有效期5分钟</p>
+</li>
+</ul>
+<h4 id="获取用户列表"><a class="header-anchor" href="#获取用户列表">¶</a>获取用户列表</h4>
+<ul>
+<li>地址：<a target="_blank" rel="noopener" href="https://app165.acapp.acwing.com.cn/myspace/userlist/">https://app165.acapp.acwing.com.cn/myspace/userlist/</a></li>
+<li>方法：<code>GET</code></li>
+<li>是否验证jwt：否</li>
+<li>输入参数：无</li>
+<li>返回结果：返回10个用户的信息</li>
+</ul>
+<h4 id="获取某个用户的信息"><a class="header-anchor" href="#获取某个用户的信息">¶</a>获取某个用户的信息</h4>
+<ul>
+<li>
+<p>地址：<a target="_blank" rel="noopener" href="https://app165.acapp.acwing.com.cn/myspace/getinfo/">https://app165.acapp.acwing.com.cn/myspace/getinfo/</a></p>
+<p>​	方法：<code>GET</code></p>
+</li>
+<li>
+<p>是否验证jwt：是</p>
+</li>
+<li>
+<p>输入参数：</p>
+<p>​	<code>user_id</code>：用户的ID</p>
+</li>
+<li>
+<p>返回结果：该用户的信息</p>
+</li>
+</ul>
+<h4 id="获取某个用户的所有帖子"><a class="header-anchor" href="#获取某个用户的所有帖子">¶</a>获取某个用户的所有帖子</h4>
+<ul>
+<li>
+<p>地址：<a target="_blank" rel="noopener" href="https://app165.acapp.acwing.com.cn/myspace/post/">https://app165.acapp.acwing.com.cn/myspace/post/</a></p>
+</li>
+<li>
+<p>方法：<code>GET</code></p>
+</li>
+<li>
+<p>是否验证jwt：是</p>
+</li>
+<li>
+<p>输入参数：</p>
+<p>​	<code>user_id</code>：用户的ID</p>
+</li>
+<li>
+<p>返回结果：该用户的所有帖子</p>
+</li>
+</ul>
+<h4 id="创建一个帖子"><a class="header-anchor" href="#创建一个帖子">¶</a>创建一个帖子</h4>
+<ul>
+<li>
+<p>地址：<a target="_blank" rel="noopener" href="https://app165.acapp.acwing.com.cn/myspace/post/">https://app165.acapp.acwing.com.cn/myspace/post/</a></p>
+</li>
+<li>
+<p>方法：<code>POST</code></p>
+</li>
+<li>
+<p>是否验证jwt：是</p>
+</li>
+<li>
+<p>输入参数：</p>
+<p>​	<code>content</code>：帖子的内容</p>
+</li>
+<li>
+<p>返回结果：<code>result: success</code></p>
+</li>
+</ul>
+<h4 id="删除一个帖子"><a class="header-anchor" href="#删除一个帖子">¶</a>删除一个帖子</h4>
+<ul>
+<li>
+<p>地址：<a target="_blank" rel="noopener" href="https://app165.acapp.acwing.com.cn/myspace/post/">https://app165.acapp.acwing.com.cn/myspace/post/</a></p>
+</li>
+<li>
+<p>方法：<code>DELETE</code></p>
+</li>
+<li>
+<p>是否验证jwt：是</p>
+</li>
+<li>
+<p>输入参数：</p>
+<p>​	<code>post_id</code>：被删除帖子的ID</p>
+</li>
+<li>
+<p>返回结果：<code>result: success</code></p>
+</li>
+</ul>
+<h4 id="更改关注状态"><a class="header-anchor" href="#更改关注状态">¶</a>更改关注状态</h4>
+<p>如果未关注，则关注；如果已关注，则取消关注。</p>
+<ul>
+<li>
+<p>地址：<a target="_blank" rel="noopener" href="https://app165.acapp.acwing.com.cn/myspace/follow/">https://app165.acapp.acwing.com.cn/myspace/follow/</a></p>
+</li>
+<li>
+<p>方法：POST</p>
+</li>
+<li>
+<p>是否验证jwt：是</p>
+</li>
+<li>
+<p>输入参数：</p>
+<p>​	<code>target_id</code>: 被关注的用户ID</p>
+</li>
+<li>
+<p>返回结果：<code>result: success</code></p>
+</li>
+</ul>
+<h4 id="注册账号"><a class="header-anchor" href="#注册账号">¶</a>注册账号</h4>
+<ul>
+<li>
+<p>地址：<a target="_blank" rel="noopener" href="https://app165.acapp.acwing.com.cn/myspace/user/">https://app165.acapp.acwing.com.cn/myspace/user/</a></p>
+</li>
+<li>
+<p>方法：<code>POST</code></p>
+</li>
+<li>
+<p>是否验证jwt：否</p>
+</li>
+<li>
+<p>输入参数：</p>
+<p>​	<code>username</code>: 用户名</p>
+<p>​	<code>password</code>：密码</p>
+<p>​	<code>password_confirm</code>：确认密码</p>
+</li>
+<li>
+<p>返回结果：</p>
+<p>​	<code>result: success</code></p>
+<p>​	<code>result: 用户名和密码不能为空</code></p>
+<p>​	<code>result: 两个密码不一致</code></p>
+<p>​	<code>result: 用户名已存在</code></p>
+</li>
+</ul>
+<h3 id="3-小知识点"><a class="header-anchor" href="#3-小知识点">¶</a>3 .小知识点</h3>
+<ol>
+<li>
+<p>页面与组件之间信息进行交互时，setup里面要写props和context</p>
+<blockquote>
+<p>父组件向子组件传递信息用props，</p>
+<p>子组件向父组件传递信息用context</p>
+</blockquote>
+</li>
+</ol>
+<p>2.所有的循环都需要绑定一个唯一的key属性</p>
+
+    </div>
+    
+</div>
+                         
+
+
+<footer id="footer">
+    
+
+    <div class="footer-wrap">
+        <div>
+            ©  - 2022 Albatross&amp;blog
+            <span class="footer-icon">
+                <i class="fa-solid fa-font-awesome fa-fw"></i>
+            </span>
+            @Albatross
+        </div>
+
+        <div></div>
+        <div>Based on the <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo Engine</a> & <a
+                target="_blank" rel="noopener" href="https://github.com/argvchs/hexo-theme-particlex">ParticleX Theme</a></div>
+        
+    </div>
+    <!--这一段是不蒜子的访问量统计代码-->
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+    </script>
+ 
+    <span id="busuanzi_value_page_pv"><i class="fa fa-spinner"></i></span> Hits   
+</footer>
+
+
+                        
+                    </div>
+                </div>
+            </transition>
+            <div id="img_show">
+                <img id="img_content" alt="img_show">
+            </div>
+        </div>
+        <script src="https://cdn.staticfile.org/highlight.js/11.5.1/highlight.min.js"></script>
+        <script src="/js/particlex.js"></script>
+        <script src="/js/showimg.js"></script>
+        
+        
+
+    <script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/wanko.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"log":false});</script></body>
+    <canvas
+        id="background"
+        style="position:fixed;top:0;left:0;width:100vw;height:100vh;pointer-events:none;z-index:-1"
+    ></canvas>
+    <script src="/js/background.js"></script>
+</html>
