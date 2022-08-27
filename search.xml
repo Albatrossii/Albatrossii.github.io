@@ -1,180 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>KMP算法详解（bushi</title>
-    <url>/2022/08/27/KMP%E7%AE%97%E6%B3%95%E8%AF%A6%E8%A7%A3/</url>
-    <content><![CDATA[<p>几个月前学过一次kmp，因为太愚笨，没有搞明白暂时放弃了，这几天又开始看，终于搞明白了，再次记录一下我的理解😎</p>
-<span id="more"></span>
-<h3 id="BF算法-O-n-m"><a class="header-anchor" href="#BF算法-O-n-m">¶</a>BF算法 O(n*m)</h3>
-<p><strong>模式匹配</strong>：子串的定位运算成为串的模式匹配或串匹配</p>
-<blockquote>
-<p>假设有两个串 S、T，设S为主串，也称正文串：T为子串，也称模式。在主串 S中查找<br>
-与模式 T相匹配的子串，如果查找成功，返回匹配的子串第一个字符在主串中的位置。<br>
-最笨的办法就是穷举所有 S的所有子串，判断是否与T匹配，该算法称为 BF ( Brute<br>
-Force）算法。</p>
-</blockquote>
-<p>BF算法的思想就是将目标串S的第一个字符与模式串T的第一个字符进行匹配，若相等，则继续比较S的第二个字符和T的第二个字符；若不相等，则比较S的第二个字符和T的第一个字符，依次比较下去，直到得出最后的匹配结果。</p>
-<p>算法实现（C语言版本）</p>
-<pre><code class="language-c">#include &lt;stdio.h&gt;
-#include&lt;string.h&gt;
-//strA是主串，strB是子串
-int mate(char *strA, char *strB) &#123;
-    int i, j;
-    i = j = 0;
-    while (i &lt; strlen(strA) &amp;&amp; j &lt; strlen(strB)) &#123;
-        if(strA[i]==strB[j])&#123;
-            i++;
-            j++;
-        &#125; else&#123;
-            i=i-j+1;
-            j=0;
-        &#125;
-    &#125;
-    //判断字串情况如果到最后则遍历完毕找到匹配位置
-    if(j== strlen(strB))&#123;
-        return i-j+1;
-    &#125;
-    return 0;
-&#125;
-</code></pre>
-<p>可以看出 bf算法本身是没有什么技巧在的 就是简单的暴力枚举 故当数据范围比较大时 bf算法就不再适用</p>
-<h3 id="改进的KMP算法"><a class="header-anchor" href="#改进的KMP算法">¶</a>改进的KMP算法</h3>
-<p>实际上，完全没必要从S的每一个字符开始穷举每一种情况，某K，M，P名字开头的三位大佬对上述算法进行改进，并提出了KMP算法。</p>
-<p>需要了解一些基本概念：</p>
-<ol>
-<li>
-<p>s[ ]是模式串，即比较长的字符串。</p>
-</li>
-<li>
-<p>p[ ]是模板串，即比较短的字符串。</p>
-</li>
-<li>
-<p>前缀：从前往后取若干个字符。</p>
-</li>
-<li>
-<p>后缀：从后往前取若干个字符。</p>
-</li>
-<li>
-<p>部分匹配值：前缀和后缀的最长共有元素的长度。</p>
-</li>
-<li>
-<p>next[ ]是“部分匹配值表”，即next数组，它存储的是每一个下标对应的“部分匹配值”，是<strong>KMP算法的核心</strong>。（后面作详细讲解）。</p>
-</li>
-</ol>
-<p>核心思想：在每次失配时，不是把p串往后移一位，而是把p串往后移动至下一次可以和前面部分匹配的位置，这样就可以跳过大多数的失配步骤。而每次p串移动的步数就是通过查找next[ ]数组确定的。</p>
-<h4 id="next数组的含义："><a class="header-anchor" href="#next数组的含义：">¶</a>next数组的含义：</h4>
-<p>对next[ j ] ，是p[ 1, j ]串中前缀和后缀相同的最大长度（部分匹配值），即 p[ 1, next[ j ] ] = p[ j - next[ j ] + 1, j ]。</p>
-<p>如：</p>
-<p>手动模拟求next数组：</p>
-<p>对 p = “abcab”</p>
-<table>
-<thead>
-<tr>
-<th>p</th>
-<th>a</th>
-<th>b</th>
-<th>c</th>
-<th>a</th>
-<th>b</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>下标</td>
-<td>1</td>
-<td>2</td>
-<td>3</td>
-<td>4</td>
-<td>5</td>
-</tr>
-<tr>
-<td>next[ ]</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>1</td>
-<td>2</td>
-</tr>
-</tbody>
-</table>
-<p>对next[ 1 ] ：前缀 = 空集—————后缀 = 空集—————next[ 1 ] = 0;</p>
-<p>对next[ 2 ] ：前缀 = { a }—————后缀 = { b }—————next[ 2 ] = 0;</p>
-<p>对next[ 3 ] ：前缀 = { a , ab }—————后缀 = { c , bc}—————next[ 3 ] = 0;</p>
-<p>对next[ 4 ] ：前缀 = { a , ab , abc }—————后缀 = { a . ca , bca }—————next[ 4 ] = 1;</p>
-<p>对next[ 5 ] ：前缀 = { a , ab , abc , abca }————后缀 = { b , ab , cab , bcab}————next[ 5 ] = 2;</p>
-<h4 id="KMP主要分两步：求next数组、匹配字符串。"><a class="header-anchor" href="#KMP主要分两步：求next数组、匹配字符串。">¶</a>KMP主要分两步：求next数组、匹配字符串。</h4>
-<p>先说一下如何求 next数组</p>
-<p>next数组其实就是求模板串的相同前后缀的长度</p>
-<p>算法实现：</p>
-<pre><code class="language-c">for(int i = 2, j = 0; i &lt;= m; i++)
-&#123;
-    while(j &amp;&amp; p[i] != p[j+1]) j = next[j];
-
-    if(p[i] == p[j+1]) j++;
-    
-    next[i] = j;
-
-&#125;
-</code></pre>
-<p>可以写出通用公式</p>
-<p>​					{ 0 ,  j=1</p>
-<p>next[j]=	  { lmax+1 , T的相等前缀后缀的最大程度为lmax</p>
-<p>​					{ 1 , 没有相等前缀后缀</p>
-<p>求匹配字符串</p>
-<p>算法实现（c语言版本）</p>
-<pre><code class="language-c">for(int i = 1, j = 0; i &lt;= n; i++)
-&#123;
-    while(j &amp;&amp; s[i] != p[j+1]) j = ne[j];
-    //如果j有对应p串的元素， 且s[i] != p[j+1], 则失配， 移动p串
-    //用while是由于移动后可能仍然失配，所以要继续移动直到匹配或整个p串移到后面（j = 0)
-
-    if(s[i] == p[j+1]) j++;
-    //当前元素匹配，j移向p串下一位
-    if(j == m)
-    &#123;
-        //匹配成功，进行相关操作
-        j = next[j];  //继续匹配下一个子串
-    &#125;
-&#125;
-</code></pre>
-<p>将上述两个代码合并就是KMP算法的代码实现啦</p>
-<pre><code class="language-c">for (int i = 2,j=0; i &lt;= n; i ++ )&#123;
-        while(j&amp;&amp;p[i]!=p[j+1]) j=ne[j];   
-   if(p[i]==p[j+1]) j++;
-    
-    ne[i]=j;
-&#125;
-
-for (int i = 1,j=0; i &lt;= m; i ++ )&#123;
-    while( j &amp;&amp; s[i]!= p[j+1]) j=ne[j];
-    
-    if(s[i]==p[j+1]) j++;
-    
-    if(j==n)&#123;
-        j=ne[j];
-        
-        printf(&quot;%d &quot;,i-n);
-    &#125;
-&#125;
-</code></pre>
-<h4 id="算法复杂度分析"><a class="header-anchor" href="#算法复杂度分析">¶</a>算法复杂度分析</h4>
-<p>设S,T串的长度分别为n、m。KMP 算法的特点是：i不回退，当S[j]≠T[j]时，j回退<br>
-到next[j]，重新开始比较。最坏情况下扫描整个S串，其时间复杂度为 O（n)。计算next数<br>
-组需要扫描整个 工串，其时间复杂度为 0（m），因此总的时间复杂度为 O(n×m)。<br>
-需要注意的是，尽管 BF 算法最坏情况下时间复杂度为 O（n×m)，KMP 算法的时间复杂<br>
-度为 O(n×m)。但是在实际运用中，BF 算法的时间复杂度一般为 Q(n×m)，因此仍然有很多<br>
-地方用 BF 算法进行模式匹配。只有在主串和子串有很多部分匹配的情况下，KMP 才显得更<br>
-优越</p>
-]]></content>
-      <categories>
-        <category>算法</category>
-      </categories>
-      <tags>
-        <tag>KMP</tag>
-        <tag>算法</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>vue3</title>
     <url>/2022/08/25/Vue3/</url>
     <content><![CDATA[<p>记录一下学习vue框架时的知识点以及需要注意的小tips~ 🥰</p>
@@ -405,6 +231,180 @@ for (int i = 1,j=0; i &lt;= m; i ++ )&#123;
       </categories>
       <tags>
         <tag>vue3</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>KMP算法详解</title>
+    <url>/2022/08/27/KMP%E7%AE%97%E6%B3%95%E8%AF%A6%E8%A7%A3/</url>
+    <content><![CDATA[<p>几个月前学过一次kmp，因为太愚笨，没有搞明白暂时放弃了，这几天又开始看，终于搞明白了，再次记录一下我的理解😎</p>
+<span id="more"></span>
+<h3 id="BF算法-O-n-m"><a class="header-anchor" href="#BF算法-O-n-m">¶</a>BF算法 O(n*m)</h3>
+<p><strong>模式匹配</strong>：子串的定位运算成为串的模式匹配或串匹配</p>
+<blockquote>
+<p>假设有两个串 S、T，设S为主串，也称正文串：T为子串，也称模式。在主串 S中查找<br>
+与模式 T相匹配的子串，如果查找成功，返回匹配的子串第一个字符在主串中的位置。<br>
+最笨的办法就是穷举所有 S的所有子串，判断是否与T匹配，该算法称为 BF ( Brute<br>
+Force）算法。</p>
+</blockquote>
+<p>BF算法的思想就是将目标串S的第一个字符与模式串T的第一个字符进行匹配，若相等，则继续比较S的第二个字符和T的第二个字符；若不相等，则比较S的第二个字符和T的第一个字符，依次比较下去，直到得出最后的匹配结果。</p>
+<p>算法实现（C语言版本）</p>
+<pre><code class="language-c">#include &lt;stdio.h&gt;
+#include&lt;string.h&gt;
+//strA是主串，strB是子串
+int mate(char *strA, char *strB) &#123;
+    int i, j;
+    i = j = 0;
+    while (i &lt; strlen(strA) &amp;&amp; j &lt; strlen(strB)) &#123;
+        if(strA[i]==strB[j])&#123;
+            i++;
+            j++;
+        &#125; else&#123;
+            i=i-j+1;
+            j=0;
+        &#125;
+    &#125;
+    //判断字串情况如果到最后则遍历完毕找到匹配位置
+    if(j== strlen(strB))&#123;
+        return i-j+1;
+    &#125;
+    return 0;
+&#125;
+</code></pre>
+<p>可以看出 bf算法本身是没有什么技巧在的 就是简单的暴力枚举 故当数据范围比较大时 bf算法就不再适用</p>
+<h3 id="改进的KMP算法"><a class="header-anchor" href="#改进的KMP算法">¶</a>改进的KMP算法</h3>
+<p>实际上，完全没必要从S的每一个字符开始穷举每一种情况，某K，M，P名字开头的三位大佬对上述算法进行改进，并提出了KMP算法。</p>
+<p>需要了解一些基本概念：</p>
+<ol>
+<li>
+<p>s[ ]是模式串，即比较长的字符串。</p>
+</li>
+<li>
+<p>p[ ]是模板串，即比较短的字符串。</p>
+</li>
+<li>
+<p>前缀：从前往后取若干个字符。</p>
+</li>
+<li>
+<p>后缀：从后往前取若干个字符。</p>
+</li>
+<li>
+<p>部分匹配值：前缀和后缀的最长共有元素的长度。</p>
+</li>
+<li>
+<p>next[ ]是“部分匹配值表”，即next数组，它存储的是每一个下标对应的“部分匹配值”，是<strong>KMP算法的核心</strong>。（后面作详细讲解）。</p>
+</li>
+</ol>
+<p>核心思想：在每次失配时，不是把p串往后移一位，而是把p串往后移动至下一次可以和前面部分匹配的位置，这样就可以跳过大多数的失配步骤。而每次p串移动的步数就是通过查找next[ ]数组确定的。</p>
+<h4 id="next数组的含义："><a class="header-anchor" href="#next数组的含义：">¶</a>next数组的含义：</h4>
+<p>对next[ j ] ，是p[ 1, j ]串中前缀和后缀相同的最大长度（部分匹配值），即 p[ 1, next[ j ] ] = p[ j - next[ j ] + 1, j ]。</p>
+<p>如：</p>
+<p>手动模拟求next数组：</p>
+<p>对 p = “abcab”</p>
+<table>
+<thead>
+<tr>
+<th>p</th>
+<th>a</th>
+<th>b</th>
+<th>c</th>
+<th>a</th>
+<th>b</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>下标</td>
+<td>1</td>
+<td>2</td>
+<td>3</td>
+<td>4</td>
+<td>5</td>
+</tr>
+<tr>
+<td>next[ ]</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>2</td>
+</tr>
+</tbody>
+</table>
+<p>对next[ 1 ] ：前缀 = 空集—————后缀 = 空集—————next[ 1 ] = 0;</p>
+<p>对next[ 2 ] ：前缀 = { a }—————后缀 = { b }—————next[ 2 ] = 0;</p>
+<p>对next[ 3 ] ：前缀 = { a , ab }—————后缀 = { c , bc}—————next[ 3 ] = 0;</p>
+<p>对next[ 4 ] ：前缀 = { a , ab , abc }—————后缀 = { a . ca , bca }—————next[ 4 ] = 1;</p>
+<p>对next[ 5 ] ：前缀 = { a , ab , abc , abca }————后缀 = { b , ab , cab , bcab}————next[ 5 ] = 2;</p>
+<h4 id="KMP主要分两步：求next数组、匹配字符串。"><a class="header-anchor" href="#KMP主要分两步：求next数组、匹配字符串。">¶</a>KMP主要分两步：求next数组、匹配字符串。</h4>
+<p>先说一下如何求 next数组</p>
+<p>next数组其实就是求模板串的相同前后缀的长度</p>
+<p>算法实现：</p>
+<pre><code class="language-c">for(int i = 2, j = 0; i &lt;= m; i++)
+&#123;
+    while(j &amp;&amp; p[i] != p[j+1]) j = next[j];
+
+    if(p[i] == p[j+1]) j++;
+    
+    next[i] = j;
+
+&#125;
+</code></pre>
+<p>可以写出通用公式</p>
+<p>​					{ 0 ,  j=1</p>
+<p>next[j]=	  { lmax+1 , T的相等前缀后缀的最大程度为lmax</p>
+<p>​					{ 1 , 没有相等前缀后缀</p>
+<p>求匹配字符串</p>
+<p>算法实现（c语言版本）</p>
+<pre><code class="language-c">for(int i = 1, j = 0; i &lt;= n; i++)
+&#123;
+    while(j &amp;&amp; s[i] != p[j+1]) j = ne[j];
+    //如果j有对应p串的元素， 且s[i] != p[j+1], 则失配， 移动p串
+    //用while是由于移动后可能仍然失配，所以要继续移动直到匹配或整个p串移到后面（j = 0)
+
+    if(s[i] == p[j+1]) j++;
+    //当前元素匹配，j移向p串下一位
+    if(j == m)
+    &#123;
+        //匹配成功，进行相关操作
+        j = next[j];  //继续匹配下一个子串
+    &#125;
+&#125;
+</code></pre>
+<p>将上述两个代码合并就是KMP算法的代码实现啦</p>
+<pre><code class="language-c">for (int i = 2,j=0; i &lt;= n; i ++ )&#123;
+        while(j&amp;&amp;p[i]!=p[j+1]) j=ne[j];   
+   if(p[i]==p[j+1]) j++;
+    
+    ne[i]=j;
+&#125;
+
+for (int i = 1,j=0; i &lt;= m; i ++ )&#123;
+    while( j &amp;&amp; s[i]!= p[j+1]) j=ne[j];
+    
+    if(s[i]==p[j+1]) j++;
+    
+    if(j==n)&#123;
+        j=ne[j];
+        
+        printf(&quot;%d &quot;,i-n);
+    &#125;
+&#125;
+</code></pre>
+<h4 id="算法复杂度分析"><a class="header-anchor" href="#算法复杂度分析">¶</a>算法复杂度分析</h4>
+<p>设S,T串的长度分别为n、m。KMP 算法的特点是：i不回退，当S[j]≠T[j]时，j回退<br>
+到next[j]，重新开始比较。最坏情况下扫描整个S串，其时间复杂度为 O（n)。计算next数<br>
+组需要扫描整个 工串，其时间复杂度为 0（m），因此总的时间复杂度为 O(n×m)。<br>
+需要注意的是，尽管 BF 算法最坏情况下时间复杂度为 O（n×m)，KMP 算法的时间复杂<br>
+度为 O(n×m)。但是在实际运用中，BF 算法的时间复杂度一般为 Q(n×m)，因此仍然有很多<br>
+地方用 BF 算法进行模式匹配。只有在主串和子串有很多部分匹配的情况下，KMP 才显得更<br>
+优越</p>
+]]></content>
+      <categories>
+        <category>算法</category>
+      </categories>
+      <tags>
+        <tag>KMP</tag>
+        <tag>算法</tag>
       </tags>
   </entry>
   <entry>
