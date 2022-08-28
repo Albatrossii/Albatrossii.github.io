@@ -6,7 +6,7 @@
   <link href="http://example.com/atom.xml" rel="self"/>
   
   <link href="http://example.com/"/>
-  <updated>2022-08-28T08:38:44.534Z</updated>
+  <updated>2022-08-28T12:03:01.855Z</updated>
   <id>http://example.com/</id>
   
   <author>
@@ -17,11 +17,34 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>算法学习的一些零碎知识点</title>
+    <link href="http://example.com/2022/08/28/%E9%9B%B6%E9%9B%B6%E7%A2%8E%E7%A2%8E%E7%9A%84%E7%9F%A5%E8%AF%86%E7%82%B9/"/>
+    <id>http://example.com/2022/08/28/%E9%9B%B6%E9%9B%B6%E7%A2%8E%E7%A2%8E%E7%9A%84%E7%9F%A5%E8%AF%86%E7%82%B9/</id>
+    <published>2022-08-28T10:00:20.602Z</published>
+    <updated>2022-08-28T12:03:01.855Z</updated>
+    
+    <content type="html"><![CDATA[<p>随笔记录一下日常学习遇到的points</p><span id="more"></span><h3 id="无穷大"><a class="header-anchor" href="#无穷大">¶</a>无穷大</h3><p>在算法竞赛中，我们常常需要用到设置一个常量用来代表“无穷大”。</p><p>比如对于int类型的数，有的人会采用INT_MAX，即0x7fffffff作为无穷大。但是以INT_MAX为无穷大常常面临一个问题，即加一个其他的数会溢出。</p><p>而这种情况在动态规划，或者其他一些递推的算法中常常出现，很有可能导致算法出问题。</p><p>所以在算法竞赛中，我们常采用0x3f3f3f3f来作为无穷大。0x3f3f3f3f主要有如下好处：</p><p>0x3f3f3f3f的十进制为1061109567，和INT_MAX一个数量级，即10<sup>9数量级，而一般场合下的数据都是小于10</sup>9的。<br>0x3f3f3f3f * 2 = 2122219134，无穷大相加依然不会溢出。<br>可以使用memset(array, 0x3f, sizeof(array))来为数组设初值为0x3f3f3f3f，因为这个数的每个字节都是0x3f。</p>]]></content>
+    
+    
+    <summary type="html">&lt;p&gt;随笔记录一下日常学习遇到的points&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="算法" scheme="http://example.com/categories/%E7%AE%97%E6%B3%95/"/>
+    
+    
+    <category term="ALGO" scheme="http://example.com/tags/ALGO/"/>
+    
+    <category term="others" scheme="http://example.com/tags/others/"/>
+    
+  </entry>
+  
+  <entry>
     <title>c语言中的&amp;的用法</title>
     <link href="http://example.com/2022/08/28/c%E8%AF%AD%E8%A8%80%E4%B8%AD%E7%9A%84&amp;%E7%9A%84%E7%94%A8%E6%B3%95/"/>
     <id>http://example.com/2022/08/28/c%E8%AF%AD%E8%A8%80%E4%B8%AD%E7%9A%84&amp;%E7%9A%84%E7%94%A8%E6%B3%95/</id>
     <published>2022-08-28T08:36:26.279Z</published>
-    <updated>2022-08-28T08:38:44.534Z</updated>
+    <updated>2022-08-28T11:59:38.329Z</updated>
     
     <content type="html"><![CDATA[<p>在做题时，经常会看到在数字或者字符串前面加上&amp;，之前一直没太注意这个单目&amp;，下面总结一下&amp;的用法。😗</p><span id="more"></span><h3 id="取地址（指针赋值）"><a class="header-anchor" href="#取地址（指针赋值）">¶</a>取地址（指针赋值）</h3><p>个人认为c语言中，比较不容易理解的就是指针了。</p><p>举一个该情况下使用&amp;的例子</p><pre><code class="language-c">#include&lt;stdio.h&gt;int main()&#123;    int a = 2;        int*b;//定义一个整形指针        b = &amp;a;//给指针赋值，使指针指向a的地址        printf(&quot;%d&quot;, b);//输出的是a的地址    printf(&quot;%d&quot;, *b);//*的作用是解引用，取出指针指向地址的内容,本例里输出的是2    return 0;&#125;</code></pre><p>由于使用&amp;（引用）的时候，跟原数指向的是一个地址，故也不会造成每次使用都新开辟一个内存，相当于JAVA中的静态变量</p><p>比如接下来在Tire中的一个<code>insert</code>操作（将相应的数字存储在Tire上，以便于接下来的操作）</p><pre><code class="language-c">void insert(int x)&#123;    int p=0;    for (int i = 30; ~i ; i -- )&#123;        int &amp;s=son[p][x&gt;&gt;i&amp;1];        if(!s) s=++idx;        p=s;    &#125;&#125;</code></pre><p>这里在定义s时，如果不加第一个引用（第二个&amp;是与操作，接下来会讲），只能代表son[p][x&gt;&gt;i&amp;1]中存储的数值，而在这里使用了引用 就相当于以下操作</p><pre><code class="language-c">void insert(int x)&#123;    int p=0;    for (int i = 30; ~i ; i -- )&#123;        int &amp;s=son[p][x&gt;&gt;i&amp;1];        if(!son[p][x&gt;&gt;i&amp;1]) son[p][x&gt;&gt;i&amp;1]=++idx;        p=son[p][x&gt;&gt;i&amp;1];    &#125;&#125;</code></pre><p>是不是很省代码！</p><h3 id="位操作中的与操作运算符"><a class="header-anchor" href="#位操作中的与操作运算符">¶</a><a href="https://so.csdn.net/so/search?q=%E4%BD%8D%E6%93%8D%E4%BD%9C&amp;spm=1001.2101.3001.7020">位操作</a>中的与操作运算符</h3><p>&amp;是单目运算符，按位与运算通常用来对某些位清0或保留某些位</p><p>计算的时候按位计算，&amp;两边操作数对应位上全为1时，结果的该位值为1。否则该位值为0</p><h3 id="逻辑与运算"><a class="header-anchor" href="#逻辑与运算">¶</a>逻辑与运算</h3><p>&amp;&amp;就是常说的and操作，双目运算符</p><p>逻辑运算结果只有0和1两种结果。 一般在&amp;&amp;两边是两个逻辑表达式。当两个表达式值均为1时，<br>&amp;&amp;运算结果为1，否则为0。</p>]]></content>
     
@@ -32,6 +55,8 @@
     
     <category term="其他" scheme="http://example.com/categories/%E5%85%B6%E4%BB%96/"/>
     
+    
+    <category term="C/C++" scheme="http://example.com/tags/C-C/"/>
     
     <category term="others" scheme="http://example.com/tags/others/"/>
     
