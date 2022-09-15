@@ -4,7 +4,7 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0">
-        <title>C语言中的&amp;的用法 | Albatross&amp;blog</title>
+        <title>C++ STL简介 | Albatross&amp;blog</title>
         <meta name="author" content="Albatross">
         <meta name="description" content="">
         <meta name="keywords" content="吃喝玩睡ing">
@@ -134,22 +134,22 @@
                         
 <div class="article">
     <div>
-        <h1>C语言中的&amp;的用法 </h1>
+        <h1>C++ STL简介 </h1>
     </div>
     <div class="info">
         <span class="date">
             <span class="icon">
                 <svg class="fa-icon"><use xlink:href="#calendar-solid"></use></svg>
             </span>
-            2022/8/28
+            2022/9/5
         </span>
         
         <span class="category">
-            <a href="/categories/其他/">
+            <a href="/categories/语言学习/">
                 <span class="icon">
                     <svg class="fa-icon"><use xlink:href="#bookmark-solid"></use></svg>
                 </span>
-                其他
+                语言学习
             </a>
         </span>
         
@@ -161,14 +161,14 @@
             
             <span class="tag">
                 
-                <a href="/tags/C-C/" style="color: #ffa2c4">
+                <a href="/tags/C-C/" style="color: #00a596">
                     C/C++
                 </a>
             </span>
             
             <span class="tag">
                 
-                <a href="/tags/others/" style="color: #03a9f4">
+                <a href="/tags/others/" style="color: #00bcd4">
                     others
                 </a>
             </span>
@@ -177,55 +177,116 @@
         
     </div>
     <div class="content" v-pre>
-        <p>在做题时，经常会看到在数字或者字符串前面加上&amp;，之前一直没太注意这个单目&amp;，下面总结一下&amp;的用法。😗</p>
+        <p>C/C++常用stl及api用法</p>
 <span id="more"></span>
-<h3 id="取地址（指针赋值）"><a class="header-anchor" href="#取地址（指针赋值）">¶</a>取地址（指针赋值）</h3>
-<p>个人认为c语言中，比较不容易理解的就是指针了。</p>
-<p>举一个该情况下使用&amp;的例子</p>
-<pre><code class="language-c">#include&lt;stdio.h&gt;
-int main()
-&#123;
-    int a = 2;
-    
-    int*b;//定义一个整形指针
-    
-    b = &amp;a;//给指针赋值，使指针指向a的地址
-    
-    printf(&quot;%d&quot;, b);//输出的是a的地址
-
-    printf(&quot;%d&quot;, *b);//*的作用是解引用，取出指针指向地址的内容,本例里输出的是2
-    return 0;
-&#125;
-</code></pre>
-<p>由于使用&amp;（引用）的时候，跟原数指向的是一个地址，故也不会造成每次使用都新开辟一个内存，相当于JAVA中的静态变量</p>
-<p>比如接下来在Tire中的一个<code>insert</code>操作（将相应的数字存储在Tire上，以便于接下来的操作）</p>
-<pre><code class="language-c">void insert(int x)&#123;
-    int p=0;
-    for (int i = 30; ~i ; i -- )&#123;
-        int &amp;s=son[p][x&gt;&gt;i&amp;1];
-        if(!s) s=++idx;
-        p=s;
-    &#125;
-&#125;
-</code></pre>
-<p>这里在定义s时，如果不加第一个引用（第二个&amp;是与操作，接下来会讲），只能代表son[p][x&gt;&gt;i&amp;1]中存储的数值，而在这里使用了引用 就相当于以下操作</p>
-<pre><code class="language-c">void insert(int x)&#123;
-    int p=0;
-    for (int i = 30; ~i ; i -- )&#123;
-        int &amp;s=son[p][x&gt;&gt;i&amp;1];
-        if(!son[p][x&gt;&gt;i&amp;1]) son[p][x&gt;&gt;i&amp;1]=++idx;
-        p=son[p][x&gt;&gt;i&amp;1];
-    &#125;
-&#125;
-</code></pre>
-<p>是不是很省代码！</p>
-<h3 id="位操作中的与操作运算符"><a class="header-anchor" href="#位操作中的与操作运算符">¶</a><a target="_blank" rel="noopener" href="https://so.csdn.net/so/search?q=%E4%BD%8D%E6%93%8D%E4%BD%9C&amp;spm=1001.2101.3001.7020">位操作</a>中的与操作运算符</h3>
-<p>&amp;是单目运算符，按位与运算通常用来对某些位清0或保留某些位</p>
-<p>计算的时候按位计算，&amp;两边操作数对应位上全为1时，结果的该位值为1。否则该位值为0</p>
-<h3 id="逻辑与运算"><a class="header-anchor" href="#逻辑与运算">¶</a>逻辑与运算</h3>
-<p>&amp;&amp;就是常说的and操作，双目运算符</p>
-<p>逻辑运算结果只有0和1两种结果。 一般在&amp;&amp;两边是两个逻辑表达式。当两个表达式值均为1时，<br>
-&amp;&amp;运算结果为1，否则为0。</p>
+<p>每个容器都有的api</p>
+<p><code>size() </code> 返回元素个数 O(1)</p>
+<p><code> empty()</code>  返回是否为空	O(1)</p>
+<p><code>clear()</code> 清空	队列无	O(n)</p>
+<h3 id="vector"><a class="header-anchor" href="#vector">¶</a>vector</h3>
+<p>vector, 变长数组，倍增的思想<br>
+<code>clear()</code>  清空<br>
+<code>front()/back()</code>取队头或者对位<br>
+<code>push_back()/pop_back()</code>  插入最后一个数\删除最后一个数<br>
+``begin()/end()`  迭代器</p>
+<p>​    支持比较运算，按字典序</p>
+<blockquote>
+<p>定义一个长度为n,ing且里面的每一个数字都初始化为m的vector数组</p>
+<p><code>vector&lt;int&gt; a(n,m)</code></p>
+<p>系统为某一程序分配空间时所需时间，与空间大小无关，与申请所需要的次数有关</p>
+<p>vector具有空间不足，自动扩容（倍增）的机制，并且完成自我复制</p>
+</blockquote>
+<h3 id="pair-int-int"><a class="header-anchor" href="#pair-int-int">¶</a>pair&lt;int, int&gt;</h3>
+<p>相当于二元结构体，并内置比较函数</p>
+<p>​    <code>first</code>, 第一个元素<br>
+​    <code>second</code>, 第二个元素<br>
+​    支持比较运算，以<code>first</code>为第一关键字，以<code>second</code>为第二关键字（字典序）</p>
+<h3 id="string，字符串"><a class="header-anchor" href="#string，字符串">¶</a>string，字符串</h3>
+<p>​    <code>length()</code>  返回字符串长度<br>
+​    <code>substr(起始下标，(子串长度))</code>  返回子串<br>
+<code>c_str()</code> 返回字符串所在字符数组的起始地址</p>
+<h3 id="queue-队列"><a class="header-anchor" href="#queue-队列">¶</a>queue, 队列</h3>
+<p><code>push()</code>  向队尾插入一个元素<br>
+<code>front()</code>  返回队头元素<br>
+<code>back()</code>  返回队尾元素<br>
+<code>pop()</code>  弹出队头元素</p>
+<h3 id="priority-queue"><a class="header-anchor" href="#priority-queue">¶</a>priority_queue</h3>
+<p>priority_queue, 优先队列，默认是大根堆</p>
+<p>​    <code>push()</code>  插入一个元素<br>
+<code>top()</code>  返回堆顶元素<br>
+​    <code>pop()</code>  弹出堆顶元素<br>
+​    定义成小根堆的方式：<code>priority_queue&lt;int, vector&lt;int&gt;, greater&lt;int&gt;&gt; q</code>;</p>
+<blockquote>
+<p>greater表示内置类型从大到小排序，less表示内置类型从小到大排序。</p>
+</blockquote>
+<h3 id="stack-栈"><a class="header-anchor" href="#stack-栈">¶</a>stack, 栈</h3>
+<p><code>push()</code>  向栈顶插入一个元素</p>
+<p><code> top()</code>  返回栈顶元素</p>
+<p><code> pop()</code>  弹出栈顶元素</p>
+<h3 id="deque-双端队列"><a class="header-anchor" href="#deque-双端队列">¶</a>deque, 双端队列</h3>
+<p>效率很低撒~</p>
+<p>​    <code>front()/back()</code><br>
+​    <code>push_back()/pop_back()</code><br>
+​    <code>push_front()/pop_front()</code><br>
+​    <code>begin()/end()</code><br>
+​</p>
+<h3 id="set-map-multiset-multimap"><a class="header-anchor" href="#set-map-multiset-multimap">¶</a>set, map, multiset, multimap</h3>
+<p>基于平衡二叉树（红黑树），动态维护有序序列</p>
+<p>​    <code>size()</code><br>
+​    <code>empty()</code><br>
+​    <code>clear()</code><br>
+​    <code>begin()/end()</code><br>
+​    <code>++, --</code> 返回前驱和后继，时间复杂度 O(logn)</p>
+<h4 id="set-multiset"><a class="header-anchor" href="#set-multiset">¶</a>set/multiset</h4>
+<p><code>insert()</code>  插入一个数</p>
+<p><code>find()</code>  查找一个数</p>
+<p><code>count()</code>  返回某一个数的个数</p>
+<p><code> erase()</code></p>
+<ol>
+<li>
+<p>输入一个数x，删除所有x	O(k+logn) k是个数</p>
+</li>
+<li>
+<p>输入一个迭代器，删除这个迭代器</p>
+</li>
+<li>
+<p>​        输入是一个数x，删除所有x   O(k + logn)</p>
+</li>
+<li>
+<p>​        输入一个迭代器，删除这个迭代器</p>
+</li>
+</ol>
+<p><code> lower_bound()/upper_bound()</code><br>
+<code>lower_bound(x)</code>  返回大于等于x的最小的数的迭代器<br>
+<code> upper_bound(x)</code>  返回大于x的最小的数的迭代器</p>
+<h4 id="map-multimap"><a class="header-anchor" href="#map-multimap">¶</a>map/multimap</h4>
+<p>​    <code>insert()</code>  插入的数是一个pair（表现为映射）<br>
+<code> erase()</code>  输入的参数是pair或者迭代器<br>
+​    <code>find()</code><br>
+​     注意multimap不支持此操作。 时间复杂度是 O(logn)<br>
+​    <code>lower_bound()/upper_bound()</code></p>
+<h4 id="unordered-set-unordered-map-unordered-multiset-unordered-multimap-哈希表"><a class="header-anchor" href="#unordered-set-unordered-map-unordered-multiset-unordered-multimap-哈希表">¶</a>unordered_set, unordered_map, unordered_multiset, unordered_multimap, 哈希表</h4>
+<p>​	内部无序</p>
+<p>​    和上面类似，增删改查的时间复杂度是 O(1)<br>
+​    不支持 <code>lower_bound()/upper_bound()</code>， 迭代器的++，–</p>
+<h3 id="bitset-圧位"><a class="header-anchor" href="#bitset-圧位">¶</a>bitset, 圧位</h3>
+<p>省八位空间</p>
+<blockquote>
+<p>bitset是一个多位二进制数，每八位占用一个字节，因为支持基本的位运算，所以可用于状态压缩，n位bitset执行一次位运算的时间复杂度可视为n/32.</p>
+<p><code>bitset&lt;10000&gt; s;</code></p>
+</blockquote>
+<p>支持的符号操作</p>
+<p><code> ~, &amp;, |, ^</code><br>
+<code> &gt;&gt;, &lt;&lt;</code><br>
+<code>==, !=</code></p>
+<p><code>count()</code>  返回有多少个1</p>
+<p><code>any()</code>  判断是否至少有一个1<br>
+<code>none()</code>  判断是否全为0</p>
+<p><code>set() </code> 把所有位置成1<br>
+<code>set(k, v)</code>  将第k位变成v<br>
+<code>reset()</code>  把所有位变成0<br>
+<code>flip()</code>  等价于~<br>
+<code>flip(k)</code> 把第k位取反</p>
 
     </div>
     

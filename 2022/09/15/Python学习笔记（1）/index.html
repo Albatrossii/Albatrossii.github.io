@@ -4,7 +4,7 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0">
-        <title>C语言中的&amp;的用法 | Albatross&amp;blog</title>
+        <title>Python学习笔记（1）入门 | Albatross&amp;blog</title>
         <meta name="author" content="Albatross">
         <meta name="description" content="">
         <meta name="keywords" content="吃喝玩睡ing">
@@ -134,22 +134,22 @@
                         
 <div class="article">
     <div>
-        <h1>C语言中的&amp;的用法 </h1>
+        <h1>Python学习笔记（1）入门 </h1>
     </div>
     <div class="info">
         <span class="date">
             <span class="icon">
                 <svg class="fa-icon"><use xlink:href="#calendar-solid"></use></svg>
             </span>
-            2022/8/28
+            2022/9/15
         </span>
         
         <span class="category">
-            <a href="/categories/其他/">
+            <a href="/categories/语言学习/">
                 <span class="icon">
                     <svg class="fa-icon"><use xlink:href="#bookmark-solid"></use></svg>
                 </span>
-                其他
+                语言学习
             </a>
         </span>
         
@@ -161,15 +161,8 @@
             
             <span class="tag">
                 
-                <a href="/tags/C-C/" style="color: #ffa2c4">
-                    C/C++
-                </a>
-            </span>
-            
-            <span class="tag">
-                
-                <a href="/tags/others/" style="color: #03a9f4">
-                    others
+                <a href="/tags/PYTHON/" style="color: #00a596">
+                    PYTHON
                 </a>
             </span>
             
@@ -177,55 +170,95 @@
         
     </div>
     <div class="content" v-pre>
-        <p>在做题时，经常会看到在数字或者字符串前面加上&amp;，之前一直没太注意这个单目&amp;，下面总结一下&amp;的用法。😗</p>
+        <p>准备学习Python 记录下学习笔记</p>
 <span id="more"></span>
-<h3 id="取地址（指针赋值）"><a class="header-anchor" href="#取地址（指针赋值）">¶</a>取地址（指针赋值）</h3>
-<p>个人认为c语言中，比较不容易理解的就是指针了。</p>
-<p>举一个该情况下使用&amp;的例子</p>
-<pre><code class="language-c">#include&lt;stdio.h&gt;
-int main()
-&#123;
-    int a = 2;
-    
-    int*b;//定义一个整形指针
-    
-    b = &amp;a;//给指针赋值，使指针指向a的地址
-    
-    printf(&quot;%d&quot;, b);//输出的是a的地址
+<p>IDLE 常用的快捷键</p>
+<table>
+<thead>
+<tr>
+<th>含义</th>
+<th>快捷键</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>增加代码块缩进</td>
+<td>Ctrl+]</td>
+</tr>
+<tr>
+<td>减少代码块缩进</td>
+<td>Ctrl+[</td>
+</tr>
+<tr>
+<td>注释代码块</td>
+<td>Alt+3</td>
+</tr>
+<tr>
+<td>取消代码块注释</td>
+<td>Alt+4</td>
+</tr>
+<tr>
+<td>浏览上一条输入的命令</td>
+<td>Alt+p</td>
+</tr>
+<tr>
+<td>浏览下一条输入的命令</td>
+<td>Alt+n</td>
+</tr>
+<tr>
+<td>补全单词，列出全部可选单词供选择</td>
+<td>Tab</td>
+</tr>
+</tbody>
+</table>
+<h2 id="快速入门"><a class="header-anchor" href="#快速入门">¶</a>快速入门</h2>
+<p>有了其他语言的基础，Python非常好理解，这里简单写一下</p>
+<h3 id="注释"><a class="header-anchor" href="#注释">¶</a>注释</h3>
+<p>单行注释	<code>#</code></p>
+<p>多行注释	<code>'''</code>3 个单引号	<code>&quot;&quot;&quot;</code>3 个双引号</p>
+<h3 id="变量以及变量命名规范"><a class="header-anchor" href="#变量以及变量命名规范">¶</a>变量以及变量命名规范</h3>
+<p>标识符是在程序中用来标识诸如变量、函数、类、对象等名字的符号。在 Python 中，<br>
+用标识符来标识变量，变量在使用前都必须被赋值，变量被赋值后变量才会被创建。在 Python<br>
+中，变量是用一个变量名表示，也就是一个标识符来表示，变量名的命名规则：</p>
+<p>（1）变量名只能是字母、数字或下划线的任意组合。<br>
+（2）变量名的第一个字符不能是数字。<br>
+（3） Python 关键字不能声明为变量名：</p>
+<p>推荐使用驼峰体或者下划线命名</p>
+<blockquote>
+<p>驼峰体: 除首字母外的其他每个单词首字母大写</p>
+<p>下划线: 每个单词之间用下划线分开</p>
+</blockquote>
+<p><strong>类型属于对象，变量是没有类型的，变量只是对象的引用，所谓变量的类型指的是变量所引用的对象的类型。变量的类型随着所赋值的类型的变化而改变。</strong></p>
+<p>变量的数据类型:</p>
+<p>int, 整数, 加减乘除, 余数, 整除</p>
+<p>str, 字符串, ‘, &quot;, ‘’’, “”&quot;都是字符串, 操作: +, *</p>
+<p>bool，布尔值. True, False</p>
+<p>​</p>
+<h3 id="常量"><a class="header-anchor" href="#常量">¶</a>常量</h3>
+<p>Python中不存在绝对的常量，只要字母大写就是常量</p>
+<h3 id="用户交互"><a class="header-anchor" href="#用户交互">¶</a>用户交互</h3>
+<p>​       <code>input()</code></p>
+<p><strong>input获取到数据都是字符串类型, 如果想要进行数学运算或者比较. 必须转化成int()</strong></p>
+<h3 id="条件分支"><a class="header-anchor" href="#条件分支">¶</a>条件分支</h3>
+<pre><code class="language-python">if 条件:    # 引号是将条件与结果分开。
+	结果 	  # 四个空格，或者一个tab键，这个是告诉程序满足这个条件的   
 
-    printf(&quot;%d&quot;, *b);//*的作用是解引用，取出指针指向地址的内容,本例里输出的是2
-    return 0;
-&#125;
+elif 条件2:   
+	结果2
+... 
+else:   
+	结果n 
 </code></pre>
-<p>由于使用&amp;（引用）的时候，跟原数指向的是一个地址，故也不会造成每次使用都新开辟一个内存，相当于JAVA中的静态变量</p>
-<p>比如接下来在Tire中的一个<code>insert</code>操作（将相应的数字存储在Tire上，以便于接下来的操作）</p>
-<pre><code class="language-c">void insert(int x)&#123;
-    int p=0;
-    for (int i = 30; ~i ; i -- )&#123;
-        int &amp;s=son[p][x&gt;&gt;i&amp;1];
-        if(!s) s=++idx;
-        p=s;
-    &#125;
-&#125;
+<p>当条件成立. 执行相应的结果.</p>
+<p>​</p>
+<h3 id="循环分支"><a class="header-anchor" href="#循环分支">¶</a>循环分支</h3>
+<pre><code class="language-python">while 条件:   
+	循环体 
 </code></pre>
-<p>这里在定义s时，如果不加第一个引用（第二个&amp;是与操作，接下来会讲），只能代表son[p][x&gt;&gt;i&amp;1]中存储的数值，而在这里使用了引用 就相当于以下操作</p>
-<pre><code class="language-c">void insert(int x)&#123;
-    int p=0;
-    for (int i = 30; ~i ; i -- )&#123;
-        int &amp;s=son[p][x&gt;&gt;i&amp;1];
-        if(!son[p][x&gt;&gt;i&amp;1]) son[p][x&gt;&gt;i&amp;1]=++idx;
-        p=son[p][x&gt;&gt;i&amp;1];
-    &#125;
-&#125;
-</code></pre>
-<p>是不是很省代码！</p>
-<h3 id="位操作中的与操作运算符"><a class="header-anchor" href="#位操作中的与操作运算符">¶</a><a target="_blank" rel="noopener" href="https://so.csdn.net/so/search?q=%E4%BD%8D%E6%93%8D%E4%BD%9C&amp;spm=1001.2101.3001.7020">位操作</a>中的与操作运算符</h3>
-<p>&amp;是单目运算符，按位与运算通常用来对某些位清0或保留某些位</p>
-<p>计算的时候按位计算，&amp;两边操作数对应位上全为1时，结果的该位值为1。否则该位值为0</p>
-<h3 id="逻辑与运算"><a class="header-anchor" href="#逻辑与运算">¶</a>逻辑与运算</h3>
-<p>&amp;&amp;就是常说的and操作，双目运算符</p>
-<p>逻辑运算结果只有0和1两种结果。 一般在&amp;&amp;两边是两个逻辑表达式。当两个表达式值均为1时，<br>
-&amp;&amp;运算结果为1，否则为0。</p>
+<p>只要条件成立. 就一直执行循环体. 每次执行完循环体. 重新判断条件</p>
+<h3 id="流程控制-break和continue"><a class="header-anchor" href="#流程控制-break和continue">¶</a>流程控制-break和continue</h3>
+<p><code>break</code>: 立刻跳出循环. 打断的意思.</p>
+<p><code>continue</code>: 继续执行下一次循环</p>
 
     </div>
     
