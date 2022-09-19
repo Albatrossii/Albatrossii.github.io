@@ -6,7 +6,7 @@
   <link href="http://example.com/atom.xml" rel="self"/>
   
   <link href="http://example.com/"/>
-  <updated>2022-09-15T01:55:33.203Z</updated>
+  <updated>2022-09-18T13:00:04.752Z</updated>
   <id>http://example.com/</id>
   
   <author>
@@ -17,16 +17,37 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>Python学习笔记（2）基础数据类型</title>
+    <link href="http://example.com/2022/09/15/Python%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%882%EF%BC%89/"/>
+    <id>http://example.com/2022/09/15/Python%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%882%EF%BC%89/</id>
+    <published>2022-09-15T08:10:15.811Z</published>
+    <updated>2022-09-18T13:00:04.752Z</updated>
+    
+    <content type="html"><![CDATA[<p>最近在学py，简单记录一下笔记</p><span id="more"></span><h2 id="格式化输出"><a class="header-anchor" href="#格式化输出">¶</a>格式化输出</h2><p>放置占位符，再把字符串里的占位符与外部的变量做好映射关系</p><pre><code class="language-python">name = input(&quot;Name:&quot;) age = input(&quot;Age:&quot;) job = input(&quot;Job:&quot;) hobby = input(&quot;Hobbie:&quot;) info = ''' ------------ info of %s ----------- #这里的每个%s就是一个占位符，本行的代表 后面拓号里的 name Name : %s #代表 name Age  : %s #代表 age  job  : %s #代表 job Hobbie: %s #代表 hobbie ------------- end ----------------- ''' % (name,name,age,job,hobbie) # 这行的 % 号就是 把前面的字符串 与拓号 后面的 变量 关联起来 print(info)         </code></pre><p><u>注意空格</u></p><p>%s就是代表字符串占位符，除此之外，还有%d, 是数字占位符， 如果把上面的age后面的换成%d，就代表你必须只能输入数字啦, 这时对应的数据必须是int类型. 否则程序会报错使用时,需要进行类型转换.</p><pre><code class="language-python">int(str)   # 字符串转换成int str(int)   # int转换成字符串      </code></pre><blockquote><p>在字符串中如果使用了%s这样的占位符. 那么所有的%都将变成占位符需要使用%%来表示字符串中的%</p></blockquote><p>python3.5以后可以使用f来格式化字符串.</p><p>语法 : <code>f&quot;&#123;变量&#125;&quot;</code></p><pre><code class="language-python">name = &quot;sylar&quot; print(f&quot;&#123;name&#125;真是一个...&quot;)         </code></pre><p>​</p><h2 id="基本运算符"><a class="header-anchor" href="#基本运算符">¶</a>基本运算符</h2><h4 id="算术运算"><a class="header-anchor" href="#算术运算">¶</a>算术运算</h4><p><img src="/images/%E7%AE%97%E6%9C%AF%E8%BF%90%E7%AE%97.png" alt="image-20220915164625454"></p><h4 id="比较运算"><a class="header-anchor" href="#比较运算">¶</a>比较运算</h4><p><img src="/images/%E6%AF%94%E8%BE%83%E8%BF%90%E7%AE%97.png" alt="image-20220915164937061"></p><h4 id="赋值运算"><a class="header-anchor" href="#赋值运算">¶</a>赋值运算</h4><p><img src="/images/%E8%B5%8B%E5%80%BC%E8%BF%90%E7%AE%97.png" alt="image-20220915165015281"></p><h4 id="逻辑运算"><a class="header-anchor" href="#逻辑运算">¶</a>逻辑运算</h4><p><img src="/images/%E9%80%BB%E8%BE%91%E8%BF%90%E7%AE%97.png" alt="image-20220915165046443"></p><p>and 并且 and左右两端同时为真，结果才为真</p><p>or 或者 两端有一个为真结果为真</p><p>not 非 非真即假，非假即真</p><p><strong>逻辑运算的运算顺序: () &gt; not &gt; and &gt; or</strong></p><h4 id="成员运算"><a class="header-anchor" href="#成员运算">¶</a>成员运算</h4><p><code>xx in xxx</code> 表示xx是否不在xxx中出现</p><p><code>xx not...in xxx</code>   表示xx是否不在xxx中出现</p><h2 id="编码初识以及bytes"><a class="header-anchor" href="#编码初识以及bytes">¶</a>编码初识以及bytes</h2><ol><li>ascii : 8bit, 主要存放的是英文, 数字,  特殊符号</li><li>gbk: 16bit, 主要存放中文和亚洲字符. 兼容ascii</li><li>unicode: 16bit和32bit两个版本. 平时我们用的是16bit这个版本. 全世界所有国家的文字信息. 缺点: 浪费空间(传输和存储)</li><li>utf-8 : 可变长度unicode, 英文: 8bit, 欧洲文字: 16bit, 中文24bit. 一般数据传输和存储的时候使用.</li><li>以上所有编码必须兼容ascii .</li></ol><p>内存中使用的是unicode ，一个/x就是一个字节，一个汉字三个字节</p><p>gbk中，一个汉字两个字节</p><p><u>编码用encode()  解码用decode()</u></p><p>不同的编码之间是不能进行转换的，若想转换，可以先解码再编码</p><p>一个字节8个0和1</p><h2 id="基础数据类型bool"><a class="header-anchor" href="#基础数据类型bool">¶</a>基础数据类型bool</h2><p>所有表示空的东西都是False</p><p>基本数据类型之间的转化, 想变成谁, 就用谁把数据括起来</p><h2 id="基础数据类型str"><a class="header-anchor" href="#基础数据类型str">¶</a>基础数据类型str</h2><p>把字符连成串. 在python中用’, &quot;, ‘’', “”&quot;引起来的内容被称为字符串.</p><p>字符串: 把多个字符连成串</p><p>字符串索引和切片</p><p>索引从0开始</p><p>切片:</p><p>s[start: end: step]</p><p>start: 起始位置</p><p>end: 结束位置, 取不到</p><p>step: 步长（步长如果是负数，从右往左取数字）.</p><ol><li><p>upper(), 把字符串中所有的字母都变成大写. 主要使用在忽略大小写的时候用</p></li><li><p>strip(), 默认去掉左右两端的空白, 包括\n, \t, 空格.</p></li><li><p>replace(), 字符串替换</p></li><li><p>split(),  字符串切割. 得到字符串列表</p></li><li><p>join(),  把列表重新组合成字符串</p><pre><code class="language-python">lst = ['周杰伦', '王力宏', '麻花藤'] s = &quot;_&quot;.join(lst) print(s)  # 周杰伦_王力宏_麻花藤           </code></pre></li><li><p>startswith(),  判断是否以xxxx开头</p></li><li><p>find(), 查找xxxx</p></li><li><p>count(), 数数, 查看xxx出现的次数</p></li><li><p>isdigit(), 判断该字符串是否是由数字组成</p></li><li><p>len(), 字符串长度, 它是一个内置函数, 直接len(数据)即可</p></li><li><p>capitalize(),首字母变成大写</p></li><li><p>dir(),能查看这个数据类型能执行哪些操作</p></li></ol><pre><code class="language-python">for 变量 in 可迭代对象（不能放数字在这里）:循环体</code></pre><p>关于in</p><pre><code class="language-python"> '''   in有两种用法:     1. 在for中. 是把每一个元素获取到赋值给前面的变量.       2. 不在for中. 判断xxx是否出现在str中. ''' print('VUE' in s19)      </code></pre><p>​        <img src="C:%5CUsers%5Casus%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20220918200917476.png" alt="image-20220918200917476"></p><h2 id="基础数据类型list"><a class="header-anchor" href="#基础数据类型list">¶</a>基础数据类型list</h2><h2 id="基础数据类型tuple"><a class="header-anchor" href="#基础数据类型tuple">¶</a>基础数据类型tuple</h2><h2 id="基础数据类型dict"><a class="header-anchor" href="#基础数据类型dict">¶</a>基础数据类型dict</h2><h2 id="基本数据类型Set"><a class="header-anchor" href="#基本数据类型Set">¶</a>基本数据类型Set</h2><h2 id="深浅copy"><a class="header-anchor" href="#深浅copy">¶</a>深浅copy</h2><h2 id="知识点补充"><a class="header-anchor" href="#知识点补充">¶</a>知识点补充</h2><h2 id="文件操作"><a class="header-anchor" href="#文件操作">¶</a>文件操作</h2>]]></content>
+    
+    
+    <summary type="html">&lt;p&gt;最近在学py，简单记录一下笔记&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="语言学习" scheme="http://example.com/categories/%E8%AF%AD%E8%A8%80%E5%AD%A6%E4%B9%A0/"/>
+    
+    
+    <category term="PYTHON" scheme="http://example.com/tags/PYTHON/"/>
+    
+  </entry>
+  
+  <entry>
     <title>Python学习笔记（1）入门</title>
     <link href="http://example.com/2022/09/15/Python%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%881%EF%BC%89/"/>
     <id>http://example.com/2022/09/15/Python%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%881%EF%BC%89/</id>
     <published>2022-09-15T01:50:59.963Z</published>
-    <updated>2022-09-15T01:55:33.203Z</updated>
+    <updated>2022-09-15T08:54:21.123Z</updated>
     
-    <content type="html"><![CDATA[<p>准备学习Python 记录下学习笔记</p><span id="more"></span><p>IDLE 常用的快捷键</p><table><thead><tr><th>含义</th><th>快捷键</th></tr></thead><tbody><tr><td>增加代码块缩进</td><td>Ctrl+]</td></tr><tr><td>减少代码块缩进</td><td>Ctrl+[</td></tr><tr><td>注释代码块</td><td>Alt+3</td></tr><tr><td>取消代码块注释</td><td>Alt+4</td></tr><tr><td>浏览上一条输入的命令</td><td>Alt+p</td></tr><tr><td>浏览下一条输入的命令</td><td>Alt+n</td></tr><tr><td>补全单词，列出全部可选单词供选择</td><td>Tab</td></tr></tbody></table><h2 id="快速入门"><a class="header-anchor" href="#快速入门">¶</a>快速入门</h2><p>有了其他语言的基础，Python非常好理解，这里简单写一下</p><h3 id="注释"><a class="header-anchor" href="#注释">¶</a>注释</h3><p>单行注释<code>#</code></p><p>多行注释<code>'''</code>3 个单引号<code>&quot;&quot;&quot;</code>3 个双引号</p><h3 id="变量以及变量命名规范"><a class="header-anchor" href="#变量以及变量命名规范">¶</a>变量以及变量命名规范</h3><p>标识符是在程序中用来标识诸如变量、函数、类、对象等名字的符号。在 Python 中，<br>用标识符来标识变量，变量在使用前都必须被赋值，变量被赋值后变量才会被创建。在 Python<br>中，变量是用一个变量名表示，也就是一个标识符来表示，变量名的命名规则：</p><p>（1）变量名只能是字母、数字或下划线的任意组合。<br>（2）变量名的第一个字符不能是数字。<br>（3） Python 关键字不能声明为变量名：</p><p>推荐使用驼峰体或者下划线命名</p><blockquote><p>驼峰体: 除首字母外的其他每个单词首字母大写</p><p>下划线: 每个单词之间用下划线分开</p></blockquote><p><strong>类型属于对象，变量是没有类型的，变量只是对象的引用，所谓变量的类型指的是变量所引用的对象的类型。变量的类型随着所赋值的类型的变化而改变。</strong></p><p>变量的数据类型:</p><p>int, 整数, 加减乘除, 余数, 整除</p><p>str, 字符串, ‘, &quot;, ‘’’, “”&quot;都是字符串, 操作: +, *</p><p>bool，布尔值. True, False</p><p>​</p><h3 id="常量"><a class="header-anchor" href="#常量">¶</a>常量</h3><p>Python中不存在绝对的常量，只要字母大写就是常量</p><h3 id="用户交互"><a class="header-anchor" href="#用户交互">¶</a>用户交互</h3><p>​       <code>input()</code></p><p><strong>input获取到数据都是字符串类型, 如果想要进行数学运算或者比较. 必须转化成int()</strong></p><h3 id="条件分支"><a class="header-anchor" href="#条件分支">¶</a>条件分支</h3><pre><code class="language-python">if 条件:    # 引号是将条件与结果分开。结果   # 四个空格，或者一个tab键，这个是告诉程序满足这个条件的   elif 条件2:   结果2... else:   结果n </code></pre><p>当条件成立. 执行相应的结果.</p><p>​</p><h3 id="循环分支"><a class="header-anchor" href="#循环分支">¶</a>循环分支</h3><pre><code class="language-python">while 条件:   循环体 </code></pre><p>只要条件成立. 就一直执行循环体. 每次执行完循环体. 重新判断条件</p><h3 id="流程控制-break和continue"><a class="header-anchor" href="#流程控制-break和continue">¶</a>流程控制-break和continue</h3><p><code>break</code>: 立刻跳出循环. 打断的意思.</p><p><code>continue</code>: 继续执行下一次循环</p>]]></content>
+    <content type="html"><![CDATA[<p>最近在学py，简单记录一下笔记</p><span id="more"></span><p>IDLE 常用的快捷键</p><table><thead><tr><th>含义</th><th>快捷键</th></tr></thead><tbody><tr><td>增加代码块缩进</td><td>Ctrl+]</td></tr><tr><td>减少代码块缩进</td><td>Ctrl+[</td></tr><tr><td>注释代码块</td><td>Alt+3</td></tr><tr><td>取消代码块注释</td><td>Alt+4</td></tr><tr><td>浏览上一条输入的命令</td><td>Alt+p</td></tr><tr><td>浏览下一条输入的命令</td><td>Alt+n</td></tr><tr><td>补全单词，列出全部可选单词供选择</td><td>Tab</td></tr></tbody></table><ul><li>Python中对空格的应用很严格 运算时 运算符要与其他数据加上空格隔开</li></ul><h3 id="注释"><a class="header-anchor" href="#注释">¶</a>注释</h3><p>单行注释<code>#</code></p><p>多行注释<code>'''</code>3 个单引号<code>&quot;&quot;&quot;</code>3 个双引号</p><h3 id="变量以及变量命名规范"><a class="header-anchor" href="#变量以及变量命名规范">¶</a>变量以及变量命名规范</h3><p>标识符是在程序中用来标识诸如变量、函数、类、对象等名字的符号。在 Python 中，<br>用标识符来标识变量，变量在使用前都必须被赋值，变量被赋值后变量才会被创建。在 Python<br>中，变量是用一个变量名表示，也就是一个标识符来表示，变量名的命名规则：</p><p>（1）变量名只能是字母、数字或下划线的任意组合。<br>（2）变量名的第一个字符不能是数字。<br>（3） Python 关键字不能声明为变量名：</p><p>推荐使用驼峰体或者下划线命名</p><blockquote><p>驼峰体: 除首字母外的其他每个单词首字母大写</p><p>下划线: 每个单词之间用下划线分开</p></blockquote><p><strong>类型属于对象，变量是没有类型的，变量只是对象的引用，所谓变量的类型指的是变量所引用的对象的类型。变量的类型随着所赋值的类型的变化而改变。</strong></p><p>变量的数据类型:</p><p>int, 整数, 加减乘除, 余数, 整除</p><p>str, 字符串, ‘, &quot;, ‘’’, “”&quot;都是字符串, 操作: +, *</p><p>bool，布尔值. True, False</p><p>​</p><h3 id="常量"><a class="header-anchor" href="#常量">¶</a>常量</h3><p>Python中不存在绝对的常量，只要字母大写就是常量</p><h3 id="用户交互"><a class="header-anchor" href="#用户交互">¶</a>用户交互</h3><p><code>input()</code></p><p><strong>input获取到数据都是字符串类型, 如果想要进行数学运算或者比较. 必须转化成int()</strong></p><h3 id="条件分支"><a class="header-anchor" href="#条件分支">¶</a>条件分支</h3><pre><code class="language-python">if 条件:    # 引号是将条件与结果分开。结果   # 四个空格，或者一个tab键，这个是告诉程序满足这个条件的   elif 条件2:   结果2... else:   结果n </code></pre><p>当条件成立. 执行相应的结果.</p><p>​</p><h3 id="循环分支"><a class="header-anchor" href="#循环分支">¶</a>循环分支</h3><pre><code class="language-python">while 条件:   循环体 </code></pre><p>只要条件成立. 就一直执行循环体. 每次执行完循环体. 重新判断条件</p><h3 id="流程控制-break和continue"><a class="header-anchor" href="#流程控制-break和continue">¶</a>流程控制-break和continue</h3><p><code>break</code>: 立刻跳出循环. 打断的意思.</p><p><code>continue</code>: 结束当前这一次循环，跳过后面可能存在的信息，即继续执行下一次循环</p>]]></content>
     
     
-    <summary type="html">&lt;p&gt;准备学习Python 记录下学习笔记&lt;/p&gt;</summary>
+    <summary type="html">&lt;p&gt;最近在学py，简单记录一下笔记&lt;/p&gt;</summary>
     
     
     
@@ -148,9 +169,9 @@
     <category term="算法" scheme="http://example.com/categories/%E7%AE%97%E6%B3%95/"/>
     
     
-    <category term="ALGO" scheme="http://example.com/tags/ALGO/"/>
-    
     <category term="KMP" scheme="http://example.com/tags/KMP/"/>
+    
+    <category term="ALGO" scheme="http://example.com/tags/ALGO/"/>
     
   </entry>
   

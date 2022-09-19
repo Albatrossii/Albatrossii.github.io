@@ -1,67 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>c语言中的&amp;的用法</title>
-    <url>/2022/08/28/c%E8%AF%AD%E8%A8%80%E4%B8%AD%E7%9A%84&amp;%E7%9A%84%E7%94%A8%E6%B3%95/</url>
-    <content><![CDATA[<p>在做题时，经常会看到在数字或者字符串前面加上&amp;，之前一直没太注意这个单目&amp;，下面总结一下&amp;的用法。😗</p>
-<span id="more"></span>
-<h3 id="取地址（指针赋值）"><a class="header-anchor" href="#取地址（指针赋值）">¶</a>取地址（指针赋值）</h3>
-<p>个人认为c语言中，比较不容易理解的就是指针了。</p>
-<p>举一个该情况下使用&amp;的例子</p>
-<pre><code class="language-c">#include&lt;stdio.h&gt;
-int main()
-&#123;
-    int a = 2;
-    
-    int*b;//定义一个整形指针
-    
-    b = &amp;a;//给指针赋值，使指针指向a的地址
-    
-    printf(&quot;%d&quot;, b);//输出的是a的地址
-
-    printf(&quot;%d&quot;, *b);//*的作用是解引用，取出指针指向地址的内容,本例里输出的是2
-    return 0;
-&#125;
-</code></pre>
-<p>由于使用&amp;（引用）的时候，跟原数指向的是一个地址，故也不会造成每次使用都新开辟一个内存，相当于JAVA中的静态变量</p>
-<p>比如接下来在Tire中的一个<code>insert</code>操作（将相应的数字存储在Tire上，以便于接下来的操作）</p>
-<pre><code class="language-c">void insert(int x)&#123;
-    int p=0;
-    for (int i = 30; ~i ; i -- )&#123;
-        int &amp;s=son[p][x&gt;&gt;i&amp;1];
-        if(!s) s=++idx;
-        p=s;
-    &#125;
-&#125;
-</code></pre>
-<p>这里在定义s时，如果不加第一个引用（第二个&amp;是与操作，接下来会讲），只能代表son[p][x&gt;&gt;i&amp;1]中存储的数值，而在这里使用了引用 就相当于以下操作</p>
-<pre><code class="language-c">void insert(int x)&#123;
-    int p=0;
-    for (int i = 30; ~i ; i -- )&#123;
-        int &amp;s=son[p][x&gt;&gt;i&amp;1];
-        if(!son[p][x&gt;&gt;i&amp;1]) son[p][x&gt;&gt;i&amp;1]=++idx;
-        p=son[p][x&gt;&gt;i&amp;1];
-    &#125;
-&#125;
-</code></pre>
-<p>是不是很省代码！</p>
-<h3 id="位操作中的与操作运算符"><a class="header-anchor" href="#位操作中的与操作运算符">¶</a><a href="https://so.csdn.net/so/search?q=%E4%BD%8D%E6%93%8D%E4%BD%9C&amp;spm=1001.2101.3001.7020">位操作</a>中的与操作运算符</h3>
-<p>&amp;是单目运算符，按位与运算通常用来对某些位清0或保留某些位</p>
-<p>计算的时候按位计算，&amp;两边操作数对应位上全为1时，结果的该位值为1。否则该位值为0</p>
-<h3 id="逻辑与运算"><a class="header-anchor" href="#逻辑与运算">¶</a>逻辑与运算</h3>
-<p>&amp;&amp;就是常说的and操作，双目运算符</p>
-<p>逻辑运算结果只有0和1两种结果。 一般在&amp;&amp;两边是两个逻辑表达式。当两个表达式值均为1时，<br>
-&amp;&amp;运算结果为1，否则为0。</p>
-]]></content>
-      <categories>
-        <category>其他</category>
-      </categories>
-      <tags>
-        <tag>C/C++</tag>
-        <tag>others</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>C++ STL简介</title>
     <url>/2022/09/05/C++%20STL%E7%AE%80%E4%BB%8B/</url>
     <content><![CDATA[<p>C/C++常用stl及api用法</p>
@@ -181,6 +120,619 @@ int main()
       <tags>
         <tag>C/C++</tag>
         <tag>others</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>KMP算法详解</title>
+    <url>/2022/08/27/KMP%E7%AE%97%E6%B3%95%E8%AF%A6%E8%A7%A3/</url>
+    <content><![CDATA[<p>几个月前学过一次kmp，因为太愚笨，没有搞明白暂时放弃了，这几天又开始看，终于搞明白了，再次记录一下我的理解😎</p>
+<span id="more"></span>
+<h3 id="BF算法-O-n-m"><a class="header-anchor" href="#BF算法-O-n-m">¶</a>BF算法 O(n*m)</h3>
+<p><strong>模式匹配</strong>：子串的定位运算成为串的模式匹配或串匹配</p>
+<blockquote>
+<p>假设有两个串 S、T，设S为主串，也称正文串：T为子串，也称模式。在主串 S中查找<br>
+与模式 T相匹配的子串，如果查找成功，返回匹配的子串第一个字符在主串中的位置。<br>
+最笨的办法就是穷举所有 S的所有子串，判断是否与T匹配，该算法称为 BF ( Brute<br>
+Force）算法。</p>
+</blockquote>
+<p>BF算法的思想就是将目标串S的第一个字符与模式串T的第一个字符进行匹配，若相等，则继续比较S的第二个字符和T的第二个字符；若不相等，则比较S的第二个字符和T的第一个字符，依次比较下去，直到得出最后的匹配结果。</p>
+<p>算法实现（C语言版本）</p>
+<pre><code class="language-c">#include &lt;stdio.h&gt;
+#include&lt;string.h&gt;
+//strA是主串，strB是子串
+int mate(char *strA, char *strB) &#123;
+    int i, j;
+    i = j = 0;
+    while (i &lt; strlen(strA) &amp;&amp; j &lt; strlen(strB)) &#123;
+        if(strA[i]==strB[j])&#123;
+            i++;
+            j++;
+        &#125; else&#123;
+            i=i-j+1;
+            j=0;
+        &#125;
+    &#125;
+    //判断字串情况如果到最后则遍历完毕找到匹配位置
+    if(j== strlen(strB))&#123;
+        return i-j+1;
+    &#125;
+    return 0;
+&#125;
+</code></pre>
+<p>可以看出 bf算法本身是没有什么技巧在的 就是简单的暴力枚举 故当数据范围比较大时 bf算法就不再适用</p>
+<h3 id="改进的KMP算法"><a class="header-anchor" href="#改进的KMP算法">¶</a>改进的KMP算法</h3>
+<p>实际上，完全没必要从S的每一个字符开始穷举每一种情况，某K，M，P名字开头的三位大佬对上述算法进行改进，并提出了KMP算法。</p>
+<p>需要了解一些基本概念：</p>
+<ol>
+<li>
+<p>s[ ]是模式串，即比较长的字符串。</p>
+</li>
+<li>
+<p>p[ ]是模板串，即比较短的字符串。</p>
+</li>
+<li>
+<p>前缀：从前往后取若干个字符。</p>
+</li>
+<li>
+<p>后缀：从后往前取若干个字符。</p>
+</li>
+<li>
+<p>部分匹配值：前缀和后缀的最长共有元素的长度。</p>
+</li>
+<li>
+<p>next[ ]是“部分匹配值表”，即next数组，它存储的是每一个下标对应的“部分匹配值”，是<strong>KMP算法的核心</strong>。（后面作详细讲解）。</p>
+</li>
+</ol>
+<p>核心思想：在每次失配时，不是把p串往后移一位，而是把p串往后移动至下一次可以和前面部分匹配的位置，这样就可以跳过大多数的失配步骤。而每次p串移动的步数就是通过查找next[ ]数组确定的。</p>
+<h4 id="next数组的含义："><a class="header-anchor" href="#next数组的含义：">¶</a>next数组的含义：</h4>
+<p>对next[ j ] ，是p[ 1, j ]串中前缀和后缀相同的最大长度（部分匹配值），即 p[ 1, next[ j ] ] = p[ j - next[ j ] + 1, j ]。</p>
+<p>如：</p>
+<p>手动模拟求next数组：</p>
+<p>对 p = “abcab”</p>
+<table>
+<thead>
+<tr>
+<th>p</th>
+<th>a</th>
+<th>b</th>
+<th>c</th>
+<th>a</th>
+<th>b</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>下标</td>
+<td>1</td>
+<td>2</td>
+<td>3</td>
+<td>4</td>
+<td>5</td>
+</tr>
+<tr>
+<td>next[ ]</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>2</td>
+</tr>
+</tbody>
+</table>
+<p>对next[ 1 ] ：前缀 = 空集—————后缀 = 空集—————next[ 1 ] = 0;</p>
+<p>对next[ 2 ] ：前缀 = { a }—————后缀 = { b }—————next[ 2 ] = 0;</p>
+<p>对next[ 3 ] ：前缀 = { a , ab }—————后缀 = { c , bc}—————next[ 3 ] = 0;</p>
+<p>对next[ 4 ] ：前缀 = { a , ab , abc }—————后缀 = { a . ca , bca }—————next[ 4 ] = 1;</p>
+<p>对next[ 5 ] ：前缀 = { a , ab , abc , abca }————后缀 = { b , ab , cab , bcab}————next[ 5 ] = 2;</p>
+<h4 id="KMP主要分两步：求next数组、匹配字符串。"><a class="header-anchor" href="#KMP主要分两步：求next数组、匹配字符串。">¶</a>KMP主要分两步：求next数组、匹配字符串。</h4>
+<p>先说一下如何求 next数组</p>
+<p>next数组其实就是求模板串的相同前后缀的长度</p>
+<p>算法实现：</p>
+<pre><code class="language-c">for(int i = 2, j = 0; i &lt;= m; i++)
+&#123;
+    while(j &amp;&amp; p[i] != p[j+1]) j = next[j];
+
+    if(p[i] == p[j+1]) j++;
+    
+    next[i] = j;
+
+&#125;
+</code></pre>
+<p>可以写出通用公式</p>
+<p>​					{ 0 ,  j=1</p>
+<p>next[j]=	  { lmax+1 , T的相等前缀后缀的最大程度为lmax</p>
+<p>​					{ 1 , 没有相等前缀后缀</p>
+<p>求匹配字符串</p>
+<p>算法实现（c语言版本）</p>
+<pre><code class="language-c">for(int i = 1, j = 0; i &lt;= n; i++)
+&#123;
+    while(j &amp;&amp; s[i] != p[j+1]) j = ne[j];
+    //如果j有对应p串的元素， 且s[i] != p[j+1], 则失配， 移动p串
+    //用while是由于移动后可能仍然失配，所以要继续移动直到匹配或整个p串移到后面（j = 0)
+
+    if(s[i] == p[j+1]) j++;
+    //当前元素匹配，j移向p串下一位
+    if(j == m)
+    &#123;
+        //匹配成功，进行相关操作
+        j = next[j];  //继续匹配下一个子串
+    &#125;
+&#125;
+</code></pre>
+<p>将上述两个代码合并就是KMP算法的代码实现啦</p>
+<pre><code class="language-c">for (int i = 2,j=0; i &lt;= n; i ++ )&#123;
+        while(j&amp;&amp;p[i]!=p[j+1]) j=ne[j];   
+   if(p[i]==p[j+1]) j++;
+    
+    ne[i]=j;
+&#125;
+
+for (int i = 1,j=0; i &lt;= m; i ++ )&#123;
+    while( j &amp;&amp; s[i]!= p[j+1]) j=ne[j];
+    
+    if(s[i]==p[j+1]) j++;
+    
+    if(j==n)&#123;
+        j=ne[j];
+        
+        printf(&quot;%d &quot;,i-n);
+    &#125;
+&#125;
+</code></pre>
+<h4 id="算法复杂度分析"><a class="header-anchor" href="#算法复杂度分析">¶</a>算法复杂度分析</h4>
+<p>设S,T串的长度分别为n、m。KMP 算法的特点是：i不回退，当S[j]≠T[j]时，j回退<br>
+到next[j]，重新开始比较。最坏情况下扫描整个S串，其时间复杂度为 O（n)。计算next数<br>
+组需要扫描整个 工串，其时间复杂度为 0（m），因此总的时间复杂度为 O(n×m)。<br>
+需要注意的是，尽管 BF 算法最坏情况下时间复杂度为 O（n×m)，KMP 算法的时间复杂<br>
+度为 O(n×m)。但是在实际运用中，BF 算法的时间复杂度一般为 Q(n×m)，因此仍然有很多<br>
+地方用 BF 算法进行模式匹配。只有在主串和子串有很多部分匹配的情况下，KMP 才显得更<br>
+优越</p>
+]]></content>
+      <categories>
+        <category>算法</category>
+      </categories>
+      <tags>
+        <tag>KMP</tag>
+        <tag>ALGO</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Python学习笔记（2）基础数据类型</title>
+    <url>/2022/09/15/Python%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%882%EF%BC%89/</url>
+    <content><![CDATA[<p>最近在学py，简单记录一下笔记</p>
+<span id="more"></span>
+<h2 id="格式化输出"><a class="header-anchor" href="#格式化输出">¶</a>格式化输出</h2>
+<p>放置占位符，再把字符串里的占位符与外部的变量做好映射关系</p>
+<pre><code class="language-python">name = input(&quot;Name:&quot;) 
+age = input(&quot;Age:&quot;) 
+job = input(&quot;Job:&quot;) 
+hobby = input(&quot;Hobbie:&quot;) 
+
+info = ''' ------------ info of %s ----------- #这里的每个%s就是一个占位符，本行的代表 后面拓号里的 name 
+Name : %s #代表 name 
+Age  : %s #代表 age  job  : %s #代表 job 
+Hobbie: %s #代表 hobbie 
+------------- end -----------------
+ ''' % (name,name,age,job,hobbie) # 这行的 % 号就是 把前面的字符串 与拓号 后面的 变量 关联起来 
+
+print(info)         
+</code></pre>
+<p><u>注意空格</u></p>
+<p>%s就是代表字符串占位符，除此之外，还有%d, 是数字占位符， 如果把上面的age后面的换成%d，就代表你必须只能输入数字啦, 这时对应的数据必须是int类型. 否则程序会报错使用时,需要进行类型转换.</p>
+<pre><code class="language-python">int(str)   # 字符串转换成int 
+str(int)   # int转换成字符串      
+</code></pre>
+<blockquote>
+<p>在字符串中如果使用了%s这样的占位符. 那么所有的%都将变成占位符需要使用%%来表示字符串中的%</p>
+</blockquote>
+<p>python3.5以后可以使用f来格式化字符串.</p>
+<p>语法 : <code>f&quot;&#123;变量&#125;&quot;</code></p>
+<pre><code class="language-python">name = &quot;sylar&quot; 
+print(f&quot;&#123;name&#125;真是一个...&quot;)         
+</code></pre>
+<p>​</p>
+<h2 id="基本运算符"><a class="header-anchor" href="#基本运算符">¶</a>基本运算符</h2>
+<h4 id="算术运算"><a class="header-anchor" href="#算术运算">¶</a>算术运算</h4>
+<p><img src="/images/%E7%AE%97%E6%9C%AF%E8%BF%90%E7%AE%97.png" alt="image-20220915164625454"></p>
+<h4 id="比较运算"><a class="header-anchor" href="#比较运算">¶</a>比较运算</h4>
+<p><img src="/images/%E6%AF%94%E8%BE%83%E8%BF%90%E7%AE%97.png" alt="image-20220915164937061"></p>
+<h4 id="赋值运算"><a class="header-anchor" href="#赋值运算">¶</a>赋值运算</h4>
+<p><img src="/images/%E8%B5%8B%E5%80%BC%E8%BF%90%E7%AE%97.png" alt="image-20220915165015281"></p>
+<h4 id="逻辑运算"><a class="header-anchor" href="#逻辑运算">¶</a>逻辑运算</h4>
+<p><img src="/images/%E9%80%BB%E8%BE%91%E8%BF%90%E7%AE%97.png" alt="image-20220915165046443"></p>
+<p>and 并且 and左右两端同时为真，结果才为真</p>
+<p>or 或者 两端有一个为真结果为真</p>
+<p>not 非 非真即假，非假即真</p>
+<p><strong>逻辑运算的运算顺序: () &gt; not &gt; and &gt; or</strong></p>
+<h4 id="成员运算"><a class="header-anchor" href="#成员运算">¶</a>成员运算</h4>
+<p><code>xx in xxx</code> 	表示xx是否不在xxx中出现</p>
+<p><code>xx not...in xxx</code>   表示xx是否不在xxx中出现</p>
+<h2 id="编码初识以及bytes"><a class="header-anchor" href="#编码初识以及bytes">¶</a>编码初识以及bytes</h2>
+<ol>
+<li>ascii : 8bit, 主要存放的是英文, 数字,  特殊符号</li>
+<li>gbk: 16bit, 主要存放中文和亚洲字符. 兼容ascii</li>
+<li>unicode: 16bit和32bit两个版本. 平时我们用的是16bit这个版本. 全世界所有国家的文字信息. 缺点: 浪费空间(传输和存储)</li>
+<li>utf-8 : 可变长度unicode, 英文: 8bit, 欧洲文字: 16bit, 中文24bit. 一般数据传输和存储的时候使用.</li>
+<li>以上所有编码必须兼容ascii .</li>
+</ol>
+<p>内存中使用的是unicode ，一个/x就是一个字节，一个汉字三个字节</p>
+<p>gbk中，一个汉字两个字节</p>
+<p><u>编码用encode()  解码用decode()</u></p>
+<p>不同的编码之间是不能进行转换的，若想转换，可以先解码再编码</p>
+<p>一个字节8个0和1</p>
+<h2 id="基础数据类型bool"><a class="header-anchor" href="#基础数据类型bool">¶</a>基础数据类型bool</h2>
+<p>所有表示空的东西都是False</p>
+<p>基本数据类型之间的转化, 想变成谁, 就用谁把数据括起来</p>
+<h2 id="基础数据类型str"><a class="header-anchor" href="#基础数据类型str">¶</a>基础数据类型str</h2>
+<p>把字符连成串. 在python中用’, &quot;, ‘’', “”&quot;引起来的内容被称为字符串.</p>
+<p>字符串: 把多个字符连成串</p>
+<p>字符串索引和切片</p>
+<p>索引从0开始</p>
+<p>切片:</p>
+<p>s[start: end: step]</p>
+<p>start: 起始位置</p>
+<p>end: 结束位置, 取不到</p>
+<p>step: 步长（步长如果是负数，从右往左取数字）.</p>
+<ol>
+<li>
+<p>upper(), 把字符串中所有的字母都变成大写. 主要使用在忽略大小写的时候用</p>
+</li>
+<li>
+<p>strip(), 默认去掉左右两端的空白, 包括\n, \t, 空格.</p>
+</li>
+<li>
+<p>replace(), 字符串替换</p>
+</li>
+<li>
+<p>split(),  字符串切割. 得到字符串列表</p>
+</li>
+<li>
+<p>join(),  把列表重新组合成字符串</p>
+<pre><code class="language-python">lst = ['周杰伦', '王力宏', '麻花藤'] 
+s = &quot;_&quot;.join(lst) 
+print(s)  # 周杰伦_王力宏_麻花藤           
+</code></pre>
+</li>
+<li>
+<p>startswith(),  判断是否以xxxx开头</p>
+</li>
+<li>
+<p>find(), 查找xxxx</p>
+</li>
+<li>
+<p>count(), 数数, 查看xxx出现的次数</p>
+</li>
+<li>
+<p>isdigit(), 判断该字符串是否是由数字组成</p>
+</li>
+<li>
+<p>len(), 字符串长度, 它是一个内置函数, 直接len(数据)即可</p>
+</li>
+<li>
+<p>capitalize(),首字母变成大写</p>
+</li>
+<li>
+<p>dir(),能查看这个数据类型能执行哪些操作</p>
+</li>
+</ol>
+<pre><code class="language-python">for 变量 in 可迭代对象（不能放数字在这里）:
+
+循环体
+</code></pre>
+<p>关于in</p>
+<pre><code class="language-python"> '''   in有两种用法:     
+	1. 在for中. 是把每一个元素获取到赋值给前面的变量.       2. 不在for中. 判断xxx是否出现在str中. 
+''' 
+print('VUE' in s19)      
+</code></pre>
+<p>​        <img src="C:%5CUsers%5Casus%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20220918200917476.png" alt="image-20220918200917476"></p>
+<h2 id="基础数据类型list"><a class="header-anchor" href="#基础数据类型list">¶</a>基础数据类型list</h2>
+<h2 id="基础数据类型tuple"><a class="header-anchor" href="#基础数据类型tuple">¶</a>基础数据类型tuple</h2>
+<h2 id="基础数据类型dict"><a class="header-anchor" href="#基础数据类型dict">¶</a>基础数据类型dict</h2>
+<h2 id="基本数据类型Set"><a class="header-anchor" href="#基本数据类型Set">¶</a>基本数据类型Set</h2>
+<h2 id="深浅copy"><a class="header-anchor" href="#深浅copy">¶</a>深浅copy</h2>
+<h2 id="知识点补充"><a class="header-anchor" href="#知识点补充">¶</a>知识点补充</h2>
+<h2 id="文件操作"><a class="header-anchor" href="#文件操作">¶</a>文件操作</h2>
+]]></content>
+      <categories>
+        <category>语言学习</category>
+      </categories>
+      <tags>
+        <tag>PYTHON</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>c语言中的&amp;的用法</title>
+    <url>/2022/08/28/c%E8%AF%AD%E8%A8%80%E4%B8%AD%E7%9A%84&amp;%E7%9A%84%E7%94%A8%E6%B3%95/</url>
+    <content><![CDATA[<p>在做题时，经常会看到在数字或者字符串前面加上&amp;，之前一直没太注意这个单目&amp;，下面总结一下&amp;的用法。😗</p>
+<span id="more"></span>
+<h3 id="取地址（指针赋值）"><a class="header-anchor" href="#取地址（指针赋值）">¶</a>取地址（指针赋值）</h3>
+<p>个人认为c语言中，比较不容易理解的就是指针了。</p>
+<p>举一个该情况下使用&amp;的例子</p>
+<pre><code class="language-c">#include&lt;stdio.h&gt;
+int main()
+&#123;
+    int a = 2;
+    
+    int*b;//定义一个整形指针
+    
+    b = &amp;a;//给指针赋值，使指针指向a的地址
+    
+    printf(&quot;%d&quot;, b);//输出的是a的地址
+
+    printf(&quot;%d&quot;, *b);//*的作用是解引用，取出指针指向地址的内容,本例里输出的是2
+    return 0;
+&#125;
+</code></pre>
+<p>由于使用&amp;（引用）的时候，跟原数指向的是一个地址，故也不会造成每次使用都新开辟一个内存，相当于JAVA中的静态变量</p>
+<p>比如接下来在Tire中的一个<code>insert</code>操作（将相应的数字存储在Tire上，以便于接下来的操作）</p>
+<pre><code class="language-c">void insert(int x)&#123;
+    int p=0;
+    for (int i = 30; ~i ; i -- )&#123;
+        int &amp;s=son[p][x&gt;&gt;i&amp;1];
+        if(!s) s=++idx;
+        p=s;
+    &#125;
+&#125;
+</code></pre>
+<p>这里在定义s时，如果不加第一个引用（第二个&amp;是与操作，接下来会讲），只能代表son[p][x&gt;&gt;i&amp;1]中存储的数值，而在这里使用了引用 就相当于以下操作</p>
+<pre><code class="language-c">void insert(int x)&#123;
+    int p=0;
+    for (int i = 30; ~i ; i -- )&#123;
+        int &amp;s=son[p][x&gt;&gt;i&amp;1];
+        if(!son[p][x&gt;&gt;i&amp;1]) son[p][x&gt;&gt;i&amp;1]=++idx;
+        p=son[p][x&gt;&gt;i&amp;1];
+    &#125;
+&#125;
+</code></pre>
+<p>是不是很省代码！</p>
+<h3 id="位操作中的与操作运算符"><a class="header-anchor" href="#位操作中的与操作运算符">¶</a><a href="https://so.csdn.net/so/search?q=%E4%BD%8D%E6%93%8D%E4%BD%9C&amp;spm=1001.2101.3001.7020">位操作</a>中的与操作运算符</h3>
+<p>&amp;是单目运算符，按位与运算通常用来对某些位清0或保留某些位</p>
+<p>计算的时候按位计算，&amp;两边操作数对应位上全为1时，结果的该位值为1。否则该位值为0</p>
+<h3 id="逻辑与运算"><a class="header-anchor" href="#逻辑与运算">¶</a>逻辑与运算</h3>
+<p>&amp;&amp;就是常说的and操作，双目运算符</p>
+<p>逻辑运算结果只有0和1两种结果。 一般在&amp;&amp;两边是两个逻辑表达式。当两个表达式值均为1时，<br>
+&amp;&amp;运算结果为1，否则为0。</p>
+]]></content>
+      <categories>
+        <category>其他</category>
+      </categories>
+      <tags>
+        <tag>C/C++</tag>
+        <tag>others</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Hello World</title>
+    <url>/2022/08/24/hello-world/</url>
+    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
+<span id="more"></span>
+<h2 id="Quick-Start"><a class="header-anchor" href="#Quick-Start">¶</a>Quick Start</h2>
+<h3 id="Create-a-new-post"><a class="header-anchor" href="#Create-a-new-post">¶</a>Create a new post</h3>
+<pre><code class="language-bash">$ hexo new &quot;My New Post&quot;
+</code></pre>
+<p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p>
+<h3 id="Run-server"><a class="header-anchor" href="#Run-server">¶</a>Run server</h3>
+<pre><code class="language-bash">$ hexo server
+</code></pre>
+<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
+<h3 id="Generate-static-files"><a class="header-anchor" href="#Generate-static-files">¶</a>Generate static files</h3>
+<pre><code class="language-bash">$ hexo generate
+</code></pre>
+<p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p>
+<h3 id="Deploy-to-remote-sites"><a class="header-anchor" href="#Deploy-to-remote-sites">¶</a>Deploy to remote sites</h3>
+<pre><code class="language-bash">$ hexo deploy
+</code></pre>
+<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+]]></content>
+      <categories>
+        <category>其他</category>
+      </categories>
+      <tags>
+        <tag>others</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>堆排序（数组模拟）</title>
+    <url>/2022/09/04/%E5%A0%86%E6%8E%92%E5%BA%8F%EF%BC%88%E6%95%B0%E7%BB%84%E6%A8%A1%E6%8B%9F%EF%BC%89/</url>
+    <content><![CDATA[<p>堆是特殊的队列，特殊的点就在于它可以依照元素的优先级取出，而不是元素入队的先后顺序。</p>
+<span id="more"></span>
+<p>堆常表现为完全二叉树的形式，因为高度为h的完全二叉树有结点 2<sup>(k-1)到2</sup>k-1个，且结点排布极共规律，因此，通常不必用指针，而是用数组来实现堆的存储。</p>
+<p><img src="/images/%E5%A0%86%E6%8E%92%E5%BA%8F.png" alt="image-20220904145447744"></p>
+<p>堆排序核心操作，建堆</p>
+<pre><code class="language-c++">void down(int u)&#123;
+int t=u;
+
+//构建平衡二叉搜索树
+if( 2*u&lt;=cnt &amp;&amp; h[2*u]&lt;h[t] ) t=2*u;
+if( 2*u+1 &lt;= cnt &amp;&amp; h[2*u+1]&lt;h[t]) t=2*u+1;
+//代表树的位置已经发生变化,递归直到u==t时结束
+if(u!=t)&#123;
+    swap(h[u],h[t]);
+    down(t);
+&#125;
+&#125;
+</code></pre>
+<p>只要理解平衡二叉树的原理就好</p>
+<p>完整代码</p>
+<pre><code class="language-c++">#include &lt;iostream&gt;
+#include &lt;cstring&gt;
+#include &lt;algorithm&gt;
+
+using namespace std;
+
+const int N = 1e5+10;
+
+int n,m;
+//cnt记录结点数，h数组模拟树
+int cnt,h[N];
+
+void down(int u)&#123;
+int t=u;
+
+if( 2*u&lt;=cnt &amp;&amp; h[2*u]&lt;h[t] ) t=2*u;
+if( 2*u+1 &lt;= cnt &amp;&amp; h[2*u+1]&lt;h[t]) t=2*u+1;
+if(u!=t)&#123;
+    swap(h[u],h[t]);
+    down(t);
+&#125;
+&#125;
+
+int main()
+&#123;
+    scanf(&quot;%d%d&quot;, &amp;n ,&amp;m );
+    for (int i = 1; i &lt;= n; i ++ ) 
+	scanf(&quot;%d&quot;, &amp;h[i]);
+
+	//更新cnt
+	cnt=n;
+
+	//从树顶开始向下递归
+	for (int i = n/2; i ; i -- )
+	down(i);
+
+while (m -- )&#123;
+    printf(&quot;%d &quot;,h[1]);
+    //保证每次输出的顶都是最小的
+    h[1]=h[cnt--];
+    down(1);
+&#125;
+&#125;
+</code></pre>
+]]></content>
+      <categories>
+        <category>算法</category>
+      </categories>
+      <tags>
+        <tag>C/C++</tag>
+        <tag>others</tag>
+        <tag>ALGO</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>算法学习的一些零碎知识点</title>
+    <url>/2022/08/28/%E9%9B%B6%E9%9B%B6%E7%A2%8E%E7%A2%8E%E7%9A%84%E7%9F%A5%E8%AF%86%E7%82%B9/</url>
+    <content><![CDATA[<p>随笔记录一下日常学习遇到的points</p>
+<span id="more"></span>
+<h3 id="无穷大"><a class="header-anchor" href="#无穷大">¶</a>无穷大</h3>
+<p>在算法竞赛中，我们常常需要用到设置一个常量用来代表“无穷大”。</p>
+<p>比如对于int类型的数，有的人会采用INT_MAX，即0x7fffffff作为无穷大。但是以INT_MAX为无穷大常常面临一个问题，即加一个其他的数会溢出。</p>
+<p>而这种情况在动态规划，或者其他一些递推的算法中常常出现，很有可能导致算法出问题。</p>
+<p>所以在算法竞赛中，我们常采用0x3f3f3f3f来作为无穷大。0x3f3f3f3f主要有如下好处：</p>
+<p>0x3f3f3f3f的十进制为1061109567，和INT_MAX一个数量级，即10<sup>9数量级，而一般场合下的数据都是小于10</sup>9的。<br>
+0x3f3f3f3f * 2 = 2122219134，无穷大相加依然不会溢出。<br>
+可以使用memset(array, 0x3f, sizeof(array))来为数组设初值为0x3f3f3f3f，因为这个数的每个字节都是0x3f。</p>
+<h3 id="memset"><a class="header-anchor" href="#memset">¶</a>memset</h3>
+<p>memset函数是按照字节直接来对数组进行赋值，比如h为一个int类型数组，有四个字节<br>
+<code>memset( h , 0x3f ,sizeof h )</code></p>
+]]></content>
+      <categories>
+        <category>算法</category>
+      </categories>
+      <tags>
+        <tag>others</tag>
+        <tag>ALGO</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Python学习笔记（1）入门</title>
+    <url>/2022/09/15/Python%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%881%EF%BC%89/</url>
+    <content><![CDATA[<p>最近在学py，简单记录一下笔记</p>
+<span id="more"></span>
+<p>IDLE 常用的快捷键</p>
+<table>
+<thead>
+<tr>
+<th>含义</th>
+<th>快捷键</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>增加代码块缩进</td>
+<td>Ctrl+]</td>
+</tr>
+<tr>
+<td>减少代码块缩进</td>
+<td>Ctrl+[</td>
+</tr>
+<tr>
+<td>注释代码块</td>
+<td>Alt+3</td>
+</tr>
+<tr>
+<td>取消代码块注释</td>
+<td>Alt+4</td>
+</tr>
+<tr>
+<td>浏览上一条输入的命令</td>
+<td>Alt+p</td>
+</tr>
+<tr>
+<td>浏览下一条输入的命令</td>
+<td>Alt+n</td>
+</tr>
+<tr>
+<td>补全单词，列出全部可选单词供选择</td>
+<td>Tab</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>Python中对空格的应用很严格 运算时 运算符要与其他数据加上空格隔开</li>
+</ul>
+<h3 id="注释"><a class="header-anchor" href="#注释">¶</a>注释</h3>
+<p>单行注释	<code>#</code></p>
+<p>多行注释	<code>'''</code>3 个单引号	<code>&quot;&quot;&quot;</code>3 个双引号</p>
+<h3 id="变量以及变量命名规范"><a class="header-anchor" href="#变量以及变量命名规范">¶</a>变量以及变量命名规范</h3>
+<p>标识符是在程序中用来标识诸如变量、函数、类、对象等名字的符号。在 Python 中，<br>
+用标识符来标识变量，变量在使用前都必须被赋值，变量被赋值后变量才会被创建。在 Python<br>
+中，变量是用一个变量名表示，也就是一个标识符来表示，变量名的命名规则：</p>
+<p>（1）变量名只能是字母、数字或下划线的任意组合。<br>
+（2）变量名的第一个字符不能是数字。<br>
+（3） Python 关键字不能声明为变量名：</p>
+<p>推荐使用驼峰体或者下划线命名</p>
+<blockquote>
+<p>驼峰体: 除首字母外的其他每个单词首字母大写</p>
+<p>下划线: 每个单词之间用下划线分开</p>
+</blockquote>
+<p><strong>类型属于对象，变量是没有类型的，变量只是对象的引用，所谓变量的类型指的是变量所引用的对象的类型。变量的类型随着所赋值的类型的变化而改变。</strong></p>
+<p>变量的数据类型:</p>
+<p>int, 整数, 加减乘除, 余数, 整除</p>
+<p>str, 字符串, ‘, &quot;, ‘’’, “”&quot;都是字符串, 操作: +, *</p>
+<p>bool，布尔值. True, False</p>
+<p>​</p>
+<h3 id="常量"><a class="header-anchor" href="#常量">¶</a>常量</h3>
+<p>Python中不存在绝对的常量，只要字母大写就是常量</p>
+<h3 id="用户交互"><a class="header-anchor" href="#用户交互">¶</a>用户交互</h3>
+<p><code>input()</code></p>
+<p><strong>input获取到数据都是字符串类型, 如果想要进行数学运算或者比较. 必须转化成int()</strong></p>
+<h3 id="条件分支"><a class="header-anchor" href="#条件分支">¶</a>条件分支</h3>
+<pre><code class="language-python">if 条件:    # 引号是将条件与结果分开。
+	结果 	  # 四个空格，或者一个tab键，这个是告诉程序满足这个条件的   
+
+elif 条件2:   
+	结果2
+... 
+else:   
+	结果n 
+</code></pre>
+<p>当条件成立. 执行相应的结果.</p>
+<p>​</p>
+<h3 id="循环分支"><a class="header-anchor" href="#循环分支">¶</a>循环分支</h3>
+<pre><code class="language-python">while 条件:   
+	循环体 
+</code></pre>
+<p>只要条件成立. 就一直执行循环体. 每次执行完循环体. 重新判断条件</p>
+<h3 id="流程控制-break和continue"><a class="header-anchor" href="#流程控制-break和continue">¶</a>流程控制-break和continue</h3>
+<p><code>break</code>: 立刻跳出循环. 打断的意思.</p>
+<p><code>continue</code>: 结束当前这一次循环，跳过后面可能存在的信息，即继续执行下一次循环</p>
+]]></content>
+      <categories>
+        <category>语言学习</category>
+      </categories>
+      <tags>
+        <tag>PYTHON</tag>
       </tags>
   </entry>
   <entry>
@@ -414,412 +966,6 @@ int main()
       </categories>
       <tags>
         <tag>vue3</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Python学习笔记（1）入门</title>
-    <url>/2022/09/15/Python%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%881%EF%BC%89/</url>
-    <content><![CDATA[<p>准备学习Python 记录下学习笔记</p>
-<span id="more"></span>
-<p>IDLE 常用的快捷键</p>
-<table>
-<thead>
-<tr>
-<th>含义</th>
-<th>快捷键</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>增加代码块缩进</td>
-<td>Ctrl+]</td>
-</tr>
-<tr>
-<td>减少代码块缩进</td>
-<td>Ctrl+[</td>
-</tr>
-<tr>
-<td>注释代码块</td>
-<td>Alt+3</td>
-</tr>
-<tr>
-<td>取消代码块注释</td>
-<td>Alt+4</td>
-</tr>
-<tr>
-<td>浏览上一条输入的命令</td>
-<td>Alt+p</td>
-</tr>
-<tr>
-<td>浏览下一条输入的命令</td>
-<td>Alt+n</td>
-</tr>
-<tr>
-<td>补全单词，列出全部可选单词供选择</td>
-<td>Tab</td>
-</tr>
-</tbody>
-</table>
-<h2 id="快速入门"><a class="header-anchor" href="#快速入门">¶</a>快速入门</h2>
-<p>有了其他语言的基础，Python非常好理解，这里简单写一下</p>
-<h3 id="注释"><a class="header-anchor" href="#注释">¶</a>注释</h3>
-<p>单行注释	<code>#</code></p>
-<p>多行注释	<code>'''</code>3 个单引号	<code>&quot;&quot;&quot;</code>3 个双引号</p>
-<h3 id="变量以及变量命名规范"><a class="header-anchor" href="#变量以及变量命名规范">¶</a>变量以及变量命名规范</h3>
-<p>标识符是在程序中用来标识诸如变量、函数、类、对象等名字的符号。在 Python 中，<br>
-用标识符来标识变量，变量在使用前都必须被赋值，变量被赋值后变量才会被创建。在 Python<br>
-中，变量是用一个变量名表示，也就是一个标识符来表示，变量名的命名规则：</p>
-<p>（1）变量名只能是字母、数字或下划线的任意组合。<br>
-（2）变量名的第一个字符不能是数字。<br>
-（3） Python 关键字不能声明为变量名：</p>
-<p>推荐使用驼峰体或者下划线命名</p>
-<blockquote>
-<p>驼峰体: 除首字母外的其他每个单词首字母大写</p>
-<p>下划线: 每个单词之间用下划线分开</p>
-</blockquote>
-<p><strong>类型属于对象，变量是没有类型的，变量只是对象的引用，所谓变量的类型指的是变量所引用的对象的类型。变量的类型随着所赋值的类型的变化而改变。</strong></p>
-<p>变量的数据类型:</p>
-<p>int, 整数, 加减乘除, 余数, 整除</p>
-<p>str, 字符串, ‘, &quot;, ‘’’, “”&quot;都是字符串, 操作: +, *</p>
-<p>bool，布尔值. True, False</p>
-<p>​</p>
-<h3 id="常量"><a class="header-anchor" href="#常量">¶</a>常量</h3>
-<p>Python中不存在绝对的常量，只要字母大写就是常量</p>
-<h3 id="用户交互"><a class="header-anchor" href="#用户交互">¶</a>用户交互</h3>
-<p>​       <code>input()</code></p>
-<p><strong>input获取到数据都是字符串类型, 如果想要进行数学运算或者比较. 必须转化成int()</strong></p>
-<h3 id="条件分支"><a class="header-anchor" href="#条件分支">¶</a>条件分支</h3>
-<pre><code class="language-python">if 条件:    # 引号是将条件与结果分开。
-	结果 	  # 四个空格，或者一个tab键，这个是告诉程序满足这个条件的   
-
-elif 条件2:   
-	结果2
-... 
-else:   
-	结果n 
-</code></pre>
-<p>当条件成立. 执行相应的结果.</p>
-<p>​</p>
-<h3 id="循环分支"><a class="header-anchor" href="#循环分支">¶</a>循环分支</h3>
-<pre><code class="language-python">while 条件:   
-	循环体 
-</code></pre>
-<p>只要条件成立. 就一直执行循环体. 每次执行完循环体. 重新判断条件</p>
-<h3 id="流程控制-break和continue"><a class="header-anchor" href="#流程控制-break和continue">¶</a>流程控制-break和continue</h3>
-<p><code>break</code>: 立刻跳出循环. 打断的意思.</p>
-<p><code>continue</code>: 继续执行下一次循环</p>
-]]></content>
-      <categories>
-        <category>语言学习</category>
-      </categories>
-      <tags>
-        <tag>PYTHON</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Hello World</title>
-    <url>/2022/08/24/hello-world/</url>
-    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<span id="more"></span>
-<h2 id="Quick-Start"><a class="header-anchor" href="#Quick-Start">¶</a>Quick Start</h2>
-<h3 id="Create-a-new-post"><a class="header-anchor" href="#Create-a-new-post">¶</a>Create a new post</h3>
-<pre><code class="language-bash">$ hexo new &quot;My New Post&quot;
-</code></pre>
-<p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a class="header-anchor" href="#Run-server">¶</a>Run server</h3>
-<pre><code class="language-bash">$ hexo server
-</code></pre>
-<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a class="header-anchor" href="#Generate-static-files">¶</a>Generate static files</h3>
-<pre><code class="language-bash">$ hexo generate
-</code></pre>
-<p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a class="header-anchor" href="#Deploy-to-remote-sites">¶</a>Deploy to remote sites</h3>
-<pre><code class="language-bash">$ hexo deploy
-</code></pre>
-<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
-]]></content>
-      <categories>
-        <category>其他</category>
-      </categories>
-      <tags>
-        <tag>others</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>算法学习的一些零碎知识点</title>
-    <url>/2022/08/28/%E9%9B%B6%E9%9B%B6%E7%A2%8E%E7%A2%8E%E7%9A%84%E7%9F%A5%E8%AF%86%E7%82%B9/</url>
-    <content><![CDATA[<p>随笔记录一下日常学习遇到的points</p>
-<span id="more"></span>
-<h3 id="无穷大"><a class="header-anchor" href="#无穷大">¶</a>无穷大</h3>
-<p>在算法竞赛中，我们常常需要用到设置一个常量用来代表“无穷大”。</p>
-<p>比如对于int类型的数，有的人会采用INT_MAX，即0x7fffffff作为无穷大。但是以INT_MAX为无穷大常常面临一个问题，即加一个其他的数会溢出。</p>
-<p>而这种情况在动态规划，或者其他一些递推的算法中常常出现，很有可能导致算法出问题。</p>
-<p>所以在算法竞赛中，我们常采用0x3f3f3f3f来作为无穷大。0x3f3f3f3f主要有如下好处：</p>
-<p>0x3f3f3f3f的十进制为1061109567，和INT_MAX一个数量级，即10<sup>9数量级，而一般场合下的数据都是小于10</sup>9的。<br>
-0x3f3f3f3f * 2 = 2122219134，无穷大相加依然不会溢出。<br>
-可以使用memset(array, 0x3f, sizeof(array))来为数组设初值为0x3f3f3f3f，因为这个数的每个字节都是0x3f。</p>
-<h3 id="memset"><a class="header-anchor" href="#memset">¶</a>memset</h3>
-<p>memset函数是按照字节直接来对数组进行赋值，比如h为一个int类型数组，有四个字节<br>
-<code>memset( h , 0x3f ,sizeof h )</code></p>
-]]></content>
-      <categories>
-        <category>算法</category>
-      </categories>
-      <tags>
-        <tag>others</tag>
-        <tag>ALGO</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>堆排序（数组模拟）</title>
-    <url>/2022/09/04/%E5%A0%86%E6%8E%92%E5%BA%8F%EF%BC%88%E6%95%B0%E7%BB%84%E6%A8%A1%E6%8B%9F%EF%BC%89/</url>
-    <content><![CDATA[<p>堆是特殊的队列，特殊的点就在于它可以依照元素的优先级取出，而不是元素入队的先后顺序。</p>
-<span id="more"></span>
-<p>堆常表现为完全二叉树的形式，因为高度为h的完全二叉树有结点 2<sup>(k-1)到2</sup>k-1个，且结点排布极共规律，因此，通常不必用指针，而是用数组来实现堆的存储。</p>
-<p><img src="/images/%E5%A0%86%E6%8E%92%E5%BA%8F.png" alt="image-20220904145447744"></p>
-<p>堆排序核心操作，建堆</p>
-<pre><code class="language-c++">void down(int u)&#123;
-int t=u;
-
-//构建平衡二叉搜索树
-if( 2*u&lt;=cnt &amp;&amp; h[2*u]&lt;h[t] ) t=2*u;
-if( 2*u+1 &lt;= cnt &amp;&amp; h[2*u+1]&lt;h[t]) t=2*u+1;
-//代表树的位置已经发生变化,递归直到u==t时结束
-if(u!=t)&#123;
-    swap(h[u],h[t]);
-    down(t);
-&#125;
-&#125;
-</code></pre>
-<p>只要理解平衡二叉树的原理就好</p>
-<p>完整代码</p>
-<pre><code class="language-c++">#include &lt;iostream&gt;
-#include &lt;cstring&gt;
-#include &lt;algorithm&gt;
-
-using namespace std;
-
-const int N = 1e5+10;
-
-int n,m;
-//cnt记录结点数，h数组模拟树
-int cnt,h[N];
-
-void down(int u)&#123;
-int t=u;
-
-if( 2*u&lt;=cnt &amp;&amp; h[2*u]&lt;h[t] ) t=2*u;
-if( 2*u+1 &lt;= cnt &amp;&amp; h[2*u+1]&lt;h[t]) t=2*u+1;
-if(u!=t)&#123;
-    swap(h[u],h[t]);
-    down(t);
-&#125;
-&#125;
-
-int main()
-&#123;
-    scanf(&quot;%d%d&quot;, &amp;n ,&amp;m );
-    for (int i = 1; i &lt;= n; i ++ ) 
-	scanf(&quot;%d&quot;, &amp;h[i]);
-
-	//更新cnt
-	cnt=n;
-
-	//从树顶开始向下递归
-	for (int i = n/2; i ; i -- )
-	down(i);
-
-while (m -- )&#123;
-    printf(&quot;%d &quot;,h[1]);
-    //保证每次输出的顶都是最小的
-    h[1]=h[cnt--];
-    down(1);
-&#125;
-&#125;
-</code></pre>
-]]></content>
-      <categories>
-        <category>算法</category>
-      </categories>
-      <tags>
-        <tag>C/C++</tag>
-        <tag>others</tag>
-        <tag>ALGO</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>KMP算法详解</title>
-    <url>/2022/08/27/KMP%E7%AE%97%E6%B3%95%E8%AF%A6%E8%A7%A3/</url>
-    <content><![CDATA[<p>几个月前学过一次kmp，因为太愚笨，没有搞明白暂时放弃了，这几天又开始看，终于搞明白了，再次记录一下我的理解😎</p>
-<span id="more"></span>
-<h3 id="BF算法-O-n-m"><a class="header-anchor" href="#BF算法-O-n-m">¶</a>BF算法 O(n*m)</h3>
-<p><strong>模式匹配</strong>：子串的定位运算成为串的模式匹配或串匹配</p>
-<blockquote>
-<p>假设有两个串 S、T，设S为主串，也称正文串：T为子串，也称模式。在主串 S中查找<br>
-与模式 T相匹配的子串，如果查找成功，返回匹配的子串第一个字符在主串中的位置。<br>
-最笨的办法就是穷举所有 S的所有子串，判断是否与T匹配，该算法称为 BF ( Brute<br>
-Force）算法。</p>
-</blockquote>
-<p>BF算法的思想就是将目标串S的第一个字符与模式串T的第一个字符进行匹配，若相等，则继续比较S的第二个字符和T的第二个字符；若不相等，则比较S的第二个字符和T的第一个字符，依次比较下去，直到得出最后的匹配结果。</p>
-<p>算法实现（C语言版本）</p>
-<pre><code class="language-c">#include &lt;stdio.h&gt;
-#include&lt;string.h&gt;
-//strA是主串，strB是子串
-int mate(char *strA, char *strB) &#123;
-    int i, j;
-    i = j = 0;
-    while (i &lt; strlen(strA) &amp;&amp; j &lt; strlen(strB)) &#123;
-        if(strA[i]==strB[j])&#123;
-            i++;
-            j++;
-        &#125; else&#123;
-            i=i-j+1;
-            j=0;
-        &#125;
-    &#125;
-    //判断字串情况如果到最后则遍历完毕找到匹配位置
-    if(j== strlen(strB))&#123;
-        return i-j+1;
-    &#125;
-    return 0;
-&#125;
-</code></pre>
-<p>可以看出 bf算法本身是没有什么技巧在的 就是简单的暴力枚举 故当数据范围比较大时 bf算法就不再适用</p>
-<h3 id="改进的KMP算法"><a class="header-anchor" href="#改进的KMP算法">¶</a>改进的KMP算法</h3>
-<p>实际上，完全没必要从S的每一个字符开始穷举每一种情况，某K，M，P名字开头的三位大佬对上述算法进行改进，并提出了KMP算法。</p>
-<p>需要了解一些基本概念：</p>
-<ol>
-<li>
-<p>s[ ]是模式串，即比较长的字符串。</p>
-</li>
-<li>
-<p>p[ ]是模板串，即比较短的字符串。</p>
-</li>
-<li>
-<p>前缀：从前往后取若干个字符。</p>
-</li>
-<li>
-<p>后缀：从后往前取若干个字符。</p>
-</li>
-<li>
-<p>部分匹配值：前缀和后缀的最长共有元素的长度。</p>
-</li>
-<li>
-<p>next[ ]是“部分匹配值表”，即next数组，它存储的是每一个下标对应的“部分匹配值”，是<strong>KMP算法的核心</strong>。（后面作详细讲解）。</p>
-</li>
-</ol>
-<p>核心思想：在每次失配时，不是把p串往后移一位，而是把p串往后移动至下一次可以和前面部分匹配的位置，这样就可以跳过大多数的失配步骤。而每次p串移动的步数就是通过查找next[ ]数组确定的。</p>
-<h4 id="next数组的含义："><a class="header-anchor" href="#next数组的含义：">¶</a>next数组的含义：</h4>
-<p>对next[ j ] ，是p[ 1, j ]串中前缀和后缀相同的最大长度（部分匹配值），即 p[ 1, next[ j ] ] = p[ j - next[ j ] + 1, j ]。</p>
-<p>如：</p>
-<p>手动模拟求next数组：</p>
-<p>对 p = “abcab”</p>
-<table>
-<thead>
-<tr>
-<th>p</th>
-<th>a</th>
-<th>b</th>
-<th>c</th>
-<th>a</th>
-<th>b</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>下标</td>
-<td>1</td>
-<td>2</td>
-<td>3</td>
-<td>4</td>
-<td>5</td>
-</tr>
-<tr>
-<td>next[ ]</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>1</td>
-<td>2</td>
-</tr>
-</tbody>
-</table>
-<p>对next[ 1 ] ：前缀 = 空集—————后缀 = 空集—————next[ 1 ] = 0;</p>
-<p>对next[ 2 ] ：前缀 = { a }—————后缀 = { b }—————next[ 2 ] = 0;</p>
-<p>对next[ 3 ] ：前缀 = { a , ab }—————后缀 = { c , bc}—————next[ 3 ] = 0;</p>
-<p>对next[ 4 ] ：前缀 = { a , ab , abc }—————后缀 = { a . ca , bca }—————next[ 4 ] = 1;</p>
-<p>对next[ 5 ] ：前缀 = { a , ab , abc , abca }————后缀 = { b , ab , cab , bcab}————next[ 5 ] = 2;</p>
-<h4 id="KMP主要分两步：求next数组、匹配字符串。"><a class="header-anchor" href="#KMP主要分两步：求next数组、匹配字符串。">¶</a>KMP主要分两步：求next数组、匹配字符串。</h4>
-<p>先说一下如何求 next数组</p>
-<p>next数组其实就是求模板串的相同前后缀的长度</p>
-<p>算法实现：</p>
-<pre><code class="language-c">for(int i = 2, j = 0; i &lt;= m; i++)
-&#123;
-    while(j &amp;&amp; p[i] != p[j+1]) j = next[j];
-
-    if(p[i] == p[j+1]) j++;
-    
-    next[i] = j;
-
-&#125;
-</code></pre>
-<p>可以写出通用公式</p>
-<p>​					{ 0 ,  j=1</p>
-<p>next[j]=	  { lmax+1 , T的相等前缀后缀的最大程度为lmax</p>
-<p>​					{ 1 , 没有相等前缀后缀</p>
-<p>求匹配字符串</p>
-<p>算法实现（c语言版本）</p>
-<pre><code class="language-c">for(int i = 1, j = 0; i &lt;= n; i++)
-&#123;
-    while(j &amp;&amp; s[i] != p[j+1]) j = ne[j];
-    //如果j有对应p串的元素， 且s[i] != p[j+1], 则失配， 移动p串
-    //用while是由于移动后可能仍然失配，所以要继续移动直到匹配或整个p串移到后面（j = 0)
-
-    if(s[i] == p[j+1]) j++;
-    //当前元素匹配，j移向p串下一位
-    if(j == m)
-    &#123;
-        //匹配成功，进行相关操作
-        j = next[j];  //继续匹配下一个子串
-    &#125;
-&#125;
-</code></pre>
-<p>将上述两个代码合并就是KMP算法的代码实现啦</p>
-<pre><code class="language-c">for (int i = 2,j=0; i &lt;= n; i ++ )&#123;
-        while(j&amp;&amp;p[i]!=p[j+1]) j=ne[j];   
-   if(p[i]==p[j+1]) j++;
-    
-    ne[i]=j;
-&#125;
-
-for (int i = 1,j=0; i &lt;= m; i ++ )&#123;
-    while( j &amp;&amp; s[i]!= p[j+1]) j=ne[j];
-    
-    if(s[i]==p[j+1]) j++;
-    
-    if(j==n)&#123;
-        j=ne[j];
-        
-        printf(&quot;%d &quot;,i-n);
-    &#125;
-&#125;
-</code></pre>
-<h4 id="算法复杂度分析"><a class="header-anchor" href="#算法复杂度分析">¶</a>算法复杂度分析</h4>
-<p>设S,T串的长度分别为n、m。KMP 算法的特点是：i不回退，当S[j]≠T[j]时，j回退<br>
-到next[j]，重新开始比较。最坏情况下扫描整个S串，其时间复杂度为 O（n)。计算next数<br>
-组需要扫描整个 工串，其时间复杂度为 0（m），因此总的时间复杂度为 O(n×m)。<br>
-需要注意的是，尽管 BF 算法最坏情况下时间复杂度为 O（n×m)，KMP 算法的时间复杂<br>
-度为 O(n×m)。但是在实际运用中，BF 算法的时间复杂度一般为 Q(n×m)，因此仍然有很多<br>
-地方用 BF 算法进行模式匹配。只有在主串和子串有很多部分匹配的情况下，KMP 才显得更<br>
-优越</p>
-]]></content>
-      <categories>
-        <category>算法</category>
-      </categories>
-      <tags>
-        <tag>ALGO</tag>
-        <tag>KMP</tag>
       </tags>
   </entry>
 </search>
