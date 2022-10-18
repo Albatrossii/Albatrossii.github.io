@@ -1,0 +1,930 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0">
+        <title>Python学习笔记（3）-函数（2） | Albatross&amp;blog</title>
+        <meta name="author" content="Albatross">
+        <meta name="description" content="">
+        <meta name="keywords" content="吃喝玩睡ing">
+        <link rel="icon" href="/images/c.jpg">
+        <script src="https://cdn.staticfile.org/instant.page/5.1.0/instantpage.min.js" type="module"></script>
+        <script src="https://cdn.staticfile.org/font-awesome/6.1.1/js/all.min.js"></script>
+        
+        </script>
+        
+        <link rel="stylesheet" href="/css/fonts.min.css">
+        <link rel="stylesheet" href="/css/particlex.css">
+        
+        <script src="https://cdn.staticfile.org/vue/3.2.33/vue.global.prod.min.js"></script>
+       
+    <meta name="generator" content="Hexo 6.2.0"><link rel="alternate" href="/atom.xml" title="Albatross&blog" type="application/atom+xml">
+</head>
+    <body>
+
+        <div id="loading" style="height:100vh;width:100vw;position:fixed;display:flex;z-index:200;justify-content:space-between;background:#fff;transition:opacity 0.3s ease-out"><div style="position:fixed;height:100vh;width:100vw;display:flex;justify-content:center;align-items:center"><div id="loadcontent" style="width:50vmin;height:50vmin;padding:50px;border-radius:50%;display:flex;justify-content:center;align-items:center;border:solid 10px #a3ddfb;text-align:center"><div><h2>LOADING...</h2><p style="word-break:keep-all">加载过慢请开启缓存(浏览器默认开启)</p><div><img alt="loading" src="/loading.gif"></div></div></div></div></div>
+        <div id="layout">
+            <i data-fa-symbol="calendar-solid" class="fa-solid fa-calendar fa-fw"></i>
+            <i data-fa-symbol="bookmark-solid" class="fa-solid fa-bookmark fa-fw"></i>
+            <i data-fa-symbol="tags-solid" class="fa-solid fa-tags fa-fw"></i>
+            <transition name="into">
+                <div v-show="show_page" style="display: -not-none">
+                    <div id="menu_show">
+                         
+<nav id="menu">
+    <div class="desktop-menu">
+        <a href="/">
+            <span class="title">Albatross&blog</span>
+        </a>
+        
+        <a href="/">
+            <i class="fa-solid fa-house fa-fw"></i>
+            <span>&ensp;home</span>
+        </a>
+        
+        <a href="/about">
+            <i class="fa-solid fa-id-card fa-fw"></i>
+            <span>&ensp;about</span>
+        </a>
+        
+        <a href="/archives">
+            <i class="fa-solid fa-box-archive fa-fw"></i>
+            <span>&ensp;archives</span>
+        </a>
+        
+        <a href="/categories">
+            <i class="fa-solid fa-bookmark fa-fw"></i>
+            <span>&ensp;categories</span>
+        </a>
+        
+        <a href="/tags">
+            <i class="fa-solid fa-tags fa-fw"></i>
+            <span>&ensp;tags</span>
+        </a>
+        
+    </div>
+    <div :class="'phone-menu ' + menu_show" id="phone-menu">
+        <div class="curtain" @click="menu_show = !menu_show" v-show="menu_show"></div>
+        <div :class="'title'" @click="menu_show = !menu_show">
+            <i class="fa-solid fa-bars fa-fw"></i>
+            <span>&emsp;Albatross&blog</span>
+        </div>
+        <transition name="slide">
+        <div class="items" v-show="menu_show">
+            
+            <a href="">
+                <div class="item">
+                    <div style="min-width: 20px; max-width: 50px; width: 10%">
+                        <i class="fa-solid fa-house fa-fw"></i>
+                    </div>
+                    <div style="min-width: 100px; max-width: 150%; width: 20%">home</div>
+                </div>
+            </a>
+            
+            <a href="about">
+                <div class="item">
+                    <div style="min-width: 20px; max-width: 50px; width: 10%">
+                        <i class="fa-solid fa-id-card fa-fw"></i>
+                    </div>
+                    <div style="min-width: 100px; max-width: 150%; width: 20%">about</div>
+                </div>
+            </a>
+            
+            <a href="archives">
+                <div class="item">
+                    <div style="min-width: 20px; max-width: 50px; width: 10%">
+                        <i class="fa-solid fa-box-archive fa-fw"></i>
+                    </div>
+                    <div style="min-width: 100px; max-width: 150%; width: 20%">archives</div>
+                </div>
+            </a>
+            
+            <a href="categories">
+                <div class="item">
+                    <div style="min-width: 20px; max-width: 50px; width: 10%">
+                        <i class="fa-solid fa-bookmark fa-fw"></i>
+                    </div>
+                    <div style="min-width: 100px; max-width: 150%; width: 20%">categories</div>
+                </div>
+            </a>
+            
+            <a href="tags">
+                <div class="item">
+                    <div style="min-width: 20px; max-width: 50px; width: 10%">
+                        <i class="fa-solid fa-tags fa-fw"></i>
+                    </div>
+                    <div style="min-width: 100px; max-width: 150%; width: 20%">tags</div>
+                </div>
+            </a>
+            
+        </div>
+        </transition>
+    </div>
+    <canvas
+    id="background"
+    style="position:fixed;top:0;left:0;width:100vw;height:100vh;pointer-events:none;z-index:-1"
+></canvas>
+<script src="/js/background.js"></script>
+</nav>
+
+
+                    </div>
+                    <div id="main">
+                        
+<div class="article">
+    <div>
+        <h1>Python学习笔记（3）-函数（2） </h1>
+    </div>
+    <div class="info">
+        <span class="date">
+            <span class="icon">
+                <svg class="fa-icon"><use xlink:href="#calendar-solid"></use></svg>
+            </span>
+            2022/10/2
+        </span>
+        
+        <span class="category">
+            <a href="/categories/语言学习/">
+                <span class="icon">
+                    <svg class="fa-icon"><use xlink:href="#bookmark-solid"></use></svg>
+                </span>
+                语言学习
+            </a>
+        </span>
+        
+        
+        <span class="tags">
+            <span class="icon">
+                <svg class="fa-icon"><use xlink:href="#tags-solid"></use></svg>
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/PYTHON/" style="color: #00a596">
+                    PYTHON
+                </a>
+            </span>
+            
+        </span>
+        
+    </div>
+    <div class="content" v-pre>
+        <p>最近在学py，简单记录一下笔记</p>
+<span id="more"></span>
+<h3 id="闭包"><a class="header-anchor" href="#闭包">¶</a>闭包</h3>
+<p>函数名是一个变量, 但它是一个特殊的变量, 与括号配合可以执行函数的变量.</p>
+<h4 id=""><a class="header-anchor" href="#">¶</a></h4>
+<h4 id="函数名的内存地址"><a class="header-anchor" href="#函数名的内存地址">¶</a>函数名的内存地址</h4>
+<pre><code class="language-python">def func():
+    print(&quot;呵呵&quot;)
+
+print(func)
+
+结果:
+&lt;function func at 0x1101e4ea0&gt;
+</code></pre>
+<h4 id="函数名可以赋值给其他变量"><a class="header-anchor" href="#函数名可以赋值给其他变量">¶</a>函数名可以赋值给其他变量</h4>
+<pre><code class="language-python">def func():
+    print(&quot;呵呵&quot;)
+
+print(func)
+
+a = func    # 把函数当成一个变量赋值给另一个变量
+a()     # 函数调用 func()
+</code></pre>
+<h4 id="函数名可以当做容器类的元素"><a class="header-anchor" href="#函数名可以当做容器类的元素">¶</a>函数名可以当做容器类的元素</h4>
+<pre><code class="language-python">def func1():
+    print(&quot;呵呵&quot;)
+
+def func2():
+    print(&quot;呵呵&quot;)
+
+def func3():
+    print(&quot;呵呵&quot;)
+
+def func4():
+    print(&quot;呵呵&quot;)
+
+
+lst = [func1, func2, func3]
+for i in lst:
+    i()
+</code></pre>
+<h4 id="函数名可以当做函数的参数"><a class="header-anchor" href="#函数名可以当做函数的参数">¶</a>函数名可以当做函数的参数</h4>
+<pre><code class="language-python">def func():
+    print(&quot;吃了么&quot;)
+
+
+def func2(fn):
+    print(&quot;我是func2&quot;)
+    fn()    # 执行传递过来的fn
+    print(&quot;我是func2&quot;)
+
+func2(func)     # 把函数func当成参数传递给func2的参数fn.
+</code></pre>
+<h4 id="函数名可以作为函数的返回值"><a class="header-anchor" href="#函数名可以作为函数的返回值">¶</a>函数名可以作为函数的返回值</h4>
+<pre><code class="language-python">def func_1():
+    print(&quot;这里是函数1&quot;)
+    def func_2():
+        print(&quot;这里是函数2&quot;)
+    print(&quot;这里是函数1&quot;)
+    return func_2
+
+fn = func_1()   # 执行函数1.  函数1返回的是函数2, 这时fn指向的就是上面函数2
+fn()    # 执行上面返回的函数
+</code></pre>
+<p>闭包. 其实很简单. 就是内层函数使用了外层函数中的变量, 就是闭包</p>
+<pre><code class="language-python">def outer():
+    a = 10
+    def inner():
+        print(a)  # 这个就是闭包
+    return inner  # 闭包通常都是返回内层函数
+</code></pre>
+<p>闭包有什么用呢. 注意看了. 当我们外部访问了这个outer()函数. 得到的结果就是inner函数</p>
+<pre><code class="language-python">a = outer()
+</code></pre>
+<p>此时. 我们拿到了一个变量a. 而这个变量a是outer()的返回值. 也就是inner函数. 所以. 我们可以</p>
+<pre><code class="language-python">a()  # 此时执行的是inner这个函数    
+</code></pre>
+<p>由于函数inner的执行时间是在outer()外部. 这就决定了inner执行的时间我们是不确定的，而变量a是一个局部变量. 正常情况下执行玩儿outer(), 它就没有意义了。但是, 此时由于inner函数执行时间的不确定， 又必须保证inner能正常执行，python就规定， 闭包函数中使用的变量会常驻于内存，而且， 在outer()外部， 是无法改变这个值的. 故称: 闭包。 <u>目的有两个: 其一是不许外面改变这个变量. 其二是让这个变量常驻于内存。</u></p>
+<p>闭包的应用: 装饰器</p>
+<p>​</p>
+<h3 id="装饰器"><a class="header-anchor" href="#装饰器">¶</a>装饰器</h3>
+<p>装饰器是干嘛的呢?  它是一种固定的语法. 可以让我们在不修改原有函数内部代码的基础上, 给函数增加新的功能.</p>
+<pre><code class="language-python">def add():
+    pass
+def delete():
+    pass
+def update():
+    pass
+def search():
+    pass
+</code></pre>
+<p>此时, 我想给每个函数添加一个新功能. 记录日志. 记录一下. 在xxx时间执行的xxx函数.</p>
+<pre><code class="language-python">def add():
+    # 记录日志的代码
+    pass
+def delete():
+    # 记录日志的代码
+    pass
+def update():
+    # 记录日志的代码
+    pass
+def search():
+    # 记录日志的代码
+    pass
+</code></pre>
+<p>设想一下, 如果我现在想更换日志格式: xxx函数在xxx时间执行了. 你怎么办.</p>
+<p>传统办法:  改代码. 修改每个函数. --&gt; 太蠢了. 如果这一段代码有1000次重复. 你要修改1000次.</p>
+<p>高级办法:  把记录日志的代码提取成函数. 然后每个函数分别调用.</p>
+<pre><code class="language-python">def log():
+    # 记录日志的代码
+    pass
+    
+def add():
+    log()
+    pass
+def delete():
+    log()
+    pass
+def update():
+    log()
+    pass
+def search():
+    log()
+    pass
+</code></pre>
+<p>这样的话只要修改log()函数就可以完成我们想要的结果了. 但是, 随着需求的进一步增加. 你会发现你这几个函数没有消停的时候了.  例如, 不论执行增删改查任何操作之前都要进行登录验证.</p>
+<pre><code class="language-python">def add():
+    while 1:
+        uname = input(&quot;&gt;&gt;&gt;&quot;)
+        pwd = input(&quot;&gt;&gt;&gt;&quot;)
+        if uname == 'jolin' and pwd == &quot;123&quot;:
+            log()
+            pass
+            
+            break
+        else:
+            print(&quot;密码错误&quot;)
+            
+def delete():
+    log()
+    pass
+def update():
+    log()
+    pass
+def search():
+    log()
+    pass
+</code></pre>
+<p>发现没有, 如果继续下去. 你会发现你这个add方法永无宁日. 不停的再改. 而新增的代码可能早就被复杂的而又不属于新增的业务逻辑所污染.</p>
+<p>那怎么办呢?  在程序设计上我们的程序要遵循开闭原则</p>
+<p>开: 对添加新功能开放</p>
+<p>闭: 对修改函数中的源代码封闭.</p>
+<p>普通话: 在不修改源代码内部的基础上给函数添加新功能. 这正好契合我们的装饰器.</p>
+<h4 id="装饰器雏形"><a class="header-anchor" href="#装饰器雏形">¶</a>装饰器雏形</h4>
+<pre><code class="language-python">def wrapper(fn):
+    def inner():
+        &quot;&quot;&quot; 在执行fn之前 &quot;&quot;&quot;
+        fn()  # 这里是一个闭包的效果. 外面函数中有一个fn: 局部变量被内层函数使用. 
+        &quot;&quot;&quot; 在执行fn之后 &quot;&quot;&quot;
+    return inner
+    
+def add():
+    pass
+def delete():
+    pass
+def update():
+    pass
+def search():
+    pass 
+</code></pre>
+<p>上面的wrapper就是一个装饰器. 其实看起来没什么特别的, 就是一个闭包而已. 那这东西怎么用呢?</p>
+<pre><code class="language-python">add = wrapper(add) 
+add()
+</code></pre>
+<p>其他的都不看. 就看第一行代码. add = wrapper(add) 把add函数作为参数传递给wrapper. 那么wrapper()中的fn就是外面的add函数. 然后wrapper返回inner. 此时注意了. add这个变量被修改. 重新指向inner这个函数.</p>
+<p>那么. 注意了. 此时我们用add()执行的时候. 实际上执行的是inner()这个函数. 而inner中执行的是fn(). fn是原来的add()  饶了一大圈. 执行的还是原来的add() .</p>
+<p>最开始, 在访问wrapper()的一瞬间是这样的:</p>
+<p>![image-20221002100002130](/images/装饰器1 (1).png)</p>
+<p>然后. 内存中产生inner() 并返回inner</p>
+<p>![image-20221002095934944](/images/装饰器1 (2).png)</p>
+<p>再然后. wrapper返回的inner重新赋值给add</p>
+<p>![image-20221002100016066](/images/装饰器1 (3).png)</p>
+<pre><code class="language-python">def wrapper(fn):
+    def inner():
+        &quot;&quot;&quot; 在执行fn之前 &quot;&quot;&quot;
+        while 1:
+        uname = input(&quot;&gt;&gt;&gt;&quot;)
+        pwd = input(&quot;&gt;&gt;&gt;&quot;)
+        if uname == 'jolin' and pwd == &quot;123&quot;:
+             log()
+             fn()
+            break
+        else:
+            print(&quot;密码错误&quot;)
+        &quot;&quot;&quot; 在执行fn之后 &quot;&quot;&quot;
+    return inner
+    
+def add():
+    pass
+def delete():
+    pass
+def update():
+    pass
+def search():
+    pass 
+add = wrapper(add)
+add()
+</code></pre>
+<p><code>add = wrapper(add)</code>看着是真的难受. 不光你们看着不爽. python的作者也不爽. 怎么办呢. python提供了一种语法糖. 可以帮助我们简化这句话</p>
+<pre><code>@wrapper   # 相当于add = wrapper(add)
+def add():
+    pass
+</code></pre>
+<p>@后面加上装饰器的名字(装饰器函数名) 就是语法糖. 相当于写了一个<code>add = warpper(add) </code></p>
+<h4 id="通用装饰器写法"><a class="header-anchor" href="#通用装饰器写法">¶</a>通用装饰器写法</h4>
+<pre><code class="language-python"> def wrapper(fn):
+    def inner(*args, **kwargs):
+        &quot;&quot;&quot; 在执行fn之前 &quot;&quot;&quot;
+        ret = fn(*args, **kwargs)
+        &quot;&quot;&quot; 在执行fn之后 &quot;&quot;&quot;
+        return ret  # 把fn执行之后的结果返回
+    return inner
+</code></pre>
+<h4 id="同一个函数被多个装饰器装饰"><a class="header-anchor" href="#同一个函数被多个装饰器装饰">¶</a>同一个函数被多个装饰器装饰</h4>
+<pre><code class="language-python">def wrapper1(fn):
+    def inner(*args, **kwargs):
+        print(&quot;before wrapper1&quot;)
+        ret = fn(*args, **kwargs)
+        print(&quot;after wrapper1&quot;)
+        return ret
+    return inner
+
+
+def wrapper2(fn):
+    def inner(*args, **kwargs):
+        print(&quot;before wrapper2&quot;)
+        ret = fn(*args, **kwargs)
+        print(&quot;after wrapper2&quot;)
+        return ret
+    return inner
+
+
+def wrapper3(fn):
+    def inner(*args, **kwargs):
+        print(&quot;before wrapper3&quot;)
+        ret = fn(*args, **kwargs)
+        print(&quot;after wrapper3&quot;)
+        return ret
+    return inner
+
+
+@wrapper1
+@wrapper2
+@wrapper3
+def func():
+    print(&quot;target function&quot;)
+
+func()
+
+# 结果
+before wrapper1
+before wrapper2
+before wrapper3
+target function
+after wrapper3
+after wrapper2
+after wrapper1
+</code></pre>
+<p>看结果应该就能明白.  wrapper1装饰的是warpper2装饰的结果.wrapper2装饰的是wrapper3装饰的结果… 以此类推. 最接近目标函数的是wrapper3.  所以目标函数之前和之后执行的是wrapper3. 然后外面套上一层wrapper2. 最后wrapper1</p>
+<h4 id="带参数的装饰器"><a class="header-anchor" href="#带参数的装饰器">¶</a>带参数的装饰器</h4>
+<p>有时候我们可能需要通过参数来控制装饰器装饰的效果. 比如, 我现在想玩游戏开挂. 但是呢.  好多外挂在我面前, 我想自由切换怎么办?  难道要写很多个装饰器么. NO, 我们可以通过参数来控制装饰器内部的执行流程</p>
+<pre><code class="language-python">def gua(fn):
+    def inner(*args, **kwargs):
+        ret = fn(*args, **kwargs)
+        return ret
+    return inner
+    
+@gua
+def play():
+    pass
+play()  
+</code></pre>
+<p>此时我们只是开挂了. 开什么挂还不知道. 这里就可以选择使用带参数的装饰器了</p>
+<pre><code class="language-python">def gua_bi(kind_of_gua):
+    def gua(fn):
+        def inner(*args, **kwargs):
+            print(&quot;我要使用%s&quot; % kind_of_gua)
+            ret = fn(*args, **kwargs)
+            return ret
+        return inner
+    return gua  # 注意这句话. 返回的是一个装饰器
+    
+@gua_bi(&quot;耄耋&quot;) #先执行函数的调用 函数返回的是一个装饰器 和@组合成语法糖 @gua
+def play_1():
+    pass
+@gua_bi(&quot;饕餮&quot;)
+def play_2():
+    pass
+play_1()    
+</code></pre>
+<p>此时注意了. <code>@gua_bi(&quot;饕餮&quot;)</code>  这句话要拆开来看. 先执行的是后半段.  <code>gua_bi(&quot;饕餮&quot;)</code>  这就是一个普通函数的调用. 执行完这个函数. 返回的是<code>gua</code>. 再和前面的@组合. 正好是<code>@gua</code>. 还是原来装饰器的样子</p>
+<h3 id="迭代器"><a class="header-anchor" href="#迭代器">¶</a>迭代器</h3>
+<p>迭代器最大的作用个就是统一了容器类型循环遍历的标准</p>
+<p>我们之前一直在用可迭代对象进行迭代操作. 那么到底什么是可迭代对象. 本小节主要讨论可迭代对象. 首先我们先回顾一下目前我们所熟知的可迭代对象有哪些:</p>
+<p>str, list, tuple, dict, set. 那为什么我们可以称他们为可迭代对象呢? 因为他们都遵循了可迭代协议. 什么是可迭代协议. 首先我们先看一段错误代码:</p>
+<pre><code class="language-python"># 对的
+s = &quot;abc&quot;
+for c in s:
+    print(c)
+
+# 错的
+for i in 123:
+    print(i)
+
+结果:
+Traceback (most recent call last):
+  File &quot;/Users/sylar/PycharmProjects/oldboy/iterator.py&quot;, line 8, in &lt;module&gt;
+    for i in 123:
+TypeError: 'int' object is not iterable
+</code></pre>
+<p>注意看报错信息中有这样一句话<code>'int' object is not iterable </code> 翻译过来就是整数类型对象是不可迭代的. <code>iterable</code>表示可迭代的. 表示可迭代协议. 那么如何进行验证你的数据类型是否符合可迭代协议. 我们可以通过<code>dir</code>函数来查看类中定义好的所有方法.</p>
+<pre><code class="language-python">s = &quot;我的哈哈哈&quot;
+print(dir(s))       # 可以打印对象中的方法和函数
+print(dir(str))     # 也可以打印类中声明的方法和函数
+</code></pre>
+<p>在打印结果中. 寻找<code>__iter__ </code>如果能找到. 那么这个类的对象就是一个可迭代对象.</p>
+<pre><code class="language-python">print(&quot;__iter__&quot; in dir(s)) # True
+</code></pre>
+<p>我们发现在字符串中可以找到<code>__iter__</code>. 继续看一下<code>list</code>,<code> tuple</code>,<code> dict</code>,<code> set</code></p>
+<pre><code class="language-python">print(&quot;__iter__&quot; in dir(tuple)) # True
+print(&quot;__iter__&quot; in dir(list)) # True
+print(&quot;__iter__&quot; in dir(open(&quot;护士少妇嫩模.txt&quot;)))  # 文件对象 # True
+print(&quot;__iter__&quot; in dir(set)) # True
+print(&quot;__iter__&quot; in dir(dict)) # True
+print(&quot;__iter__&quot; in dir(int)) # False
+</code></pre>
+<p>我们发现这几个可以进行for循环的东西都有<code>__iter__</code>函数, 包括<code>range</code>也有. 可以自己试一下.</p>
+<p>这是查看一个对象是否是可迭代对象的第一种办法. 我们还可以通过<code>isinstence()</code>函数来查看一个对象是什么类型的</p>
+<pre><code class="language-python">l = [1,2,3]
+l_iter = l.__iter__()
+from collections import Iterable
+from collections import Iterator
+print(isinstance(l,Iterable))    #True
+print(isinstance(l,Iterator))    #False
+print(isinstance(l_iter,Iterator))    #True
+print(isinstance(l_iter,Iterable))    #True
+</code></pre>
+<p>综上. 我们可以确定. 如果对象中有<code>__iter__</code>函数. 那么我们认为这个对象遵守了可迭代协议. 就可以获取到相应的迭代器. 这里的<code>__iter__</code>是帮助我们获取到对象的迭代器. 我们使用迭代器中的<code>__next__()</code>来获取到一个迭代器中的元素.  那么我们之前讲的for的工作原理到底是什么? 继续看代码</p>
+<pre><code>s = &quot;我爱北京天安门&quot;
+c = s.__iter__()    # 获取迭代器
+print(c.__next__())     # 使用迭代器进行迭代. 获取一个元素   我
+print(c.__next__())     # 爱
+print(c.__next__())     # 北
+print(c.__next__())     # 京
+print(c.__next__())     # 天
+print(c.__next__())     # 安
+print(c.__next__())     # 门
+print(c.__next__())     # StopIteration
+</code></pre>
+<p>for循环的机制:</p>
+<pre><code class="language-python">for i in [1,2,3]:
+    print(i)
+</code></pre>
+<p>使用while循环+迭代器来模拟for循环(必须要掌握)</p>
+<pre><code class="language-python">lst = [1,2,3]
+lst_iter = lst.__iter__()
+while True:
+    try:
+        i = lst_iter.__next__()
+        print(i)
+    except StopIteration:
+        break
+</code></pre>
+<p>list可以一次性把迭代器中的内容全部拿空. 并装载在一个新列表中</p>
+<pre><code class="language-python">s = &quot;我要吃饭, 你吃不吃&quot;.__iter__()
+print(list(s)) # ['我', '要', '吃', '饭', ',', ' ', '你', '吃', '不', '吃']
+</code></pre>
+<blockquote>
+<p>总结:</p>
+<p>​    <code>Iterable</code>: 可迭代对象. 内部包含<code>__iter__()</code>函数</p>
+<p>​    Iterator: 迭代器. 内部包含<code>__iter__() </code>同时包含<code>__next__()</code></p>
+<p>​     迭代器的特点:</p>
+<p>​       1. 节省内存.</p>
+<p>​       2. 惰性机制</p>
+<p>​       3. 不能反复, 只能向下执行.</p>
+</blockquote>
+<h3 id="生成器"><a class="header-anchor" href="#生成器">¶</a>生成器</h3>
+<p>生成器的本质就是迭代器.  在python中有两种方式来获取生成器:</p>
+<ol>
+<li>
+<p>通过生成器函数</p>
+</li>
+<li>
+<p>通过生成器表达式来实现生成器</p>
+</li>
+</ol>
+<p>首先, 我们先看一个很简单的函数:</p>
+<pre><code class="language-python">def func():
+    print(&quot;111&quot;)
+    return 222
+
+ret = func()
+print(ret)
+
+结果: 
+111
+222
+</code></pre>
+<p>将函数中的return换成yield就是生成器</p>
+<pre><code class="language-python">def func():
+    print(&quot;111&quot;)
+    yield 222
+
+ret = func()
+print(ret)
+
+结果: 
+&lt;generator object func at 0x10567ff68&gt;
+</code></pre>
+<p>运行的结果和上面不一样. 为什么呢. 由于函数中存在了yield. 那么这个函数就是一个生成器函数. 这个时候. 我们再执行这个函数的时候. 就不再是函数的执行了. 而是获取这个生成器. 如何使用呢? 想想迭代器. 生成器的本质是迭代器. 所以. 我们可以直接执行<code>__next__()</code>来执行以下生成器.</p>
+<pre><code>def func():
+    print(&quot;111&quot;)
+    yield 222
+
+gener = func()  # 这个时候函数不会执行. 而是获取到生成器
+ret = gener.__next__()  # 这个时候函数才会执行. yield的作用和return一样. 也是返回数据
+print(ret)
+结果: 
+111
+222
+</code></pre>
+<p>那么我们可以看到, yield和return的效果是一样的.  有什么区别呢?  yield是分段来执行一个函数. return呢? 直接停止执行函数.</p>
+<pre><code class="language-python">def func():
+    print(&quot;111&quot;)
+    yield 222
+    print(&quot;333&quot;)
+    yield 444
+
+gener = func()
+ret = gener.__next__()
+print(ret)
+ret2 = gener.__next__()
+print(ret2)
+ret3 = gener.__next__()  # 最后一个yield执行完毕. 再次__next__()程序报错, 也就是说. 和return无关了.
+print(ret3)
+
+结果:
+111
+Traceback (most recent call last):
+222
+333
+  File &quot;/Users/sylar/PycharmProjects/oldboy/iterator.py&quot;, line 55, in &lt;module&gt;
+444
+    ret3 = gener.__next__()  # 最后一个yield执行完毕. 再次__next__()程序报错, 也就是说. 和return无关了.
+StopIteration
+</code></pre>
+<p>当程序运行完最后一个yield. 那么后面继续进行__next__()程序会报错.</p>
+<p>好了生成器说完了. 生成器有什么作用呢? 我们来看这样一个需求. 老男孩向JACK JONES订购10000套学生服. JACK JONES就比较实在. 直接造出来10000套衣服.</p>
+<pre><code class="language-python">def cloth():
+    lst = []
+    for i in range(0, 10000):
+        lst.append(&quot;衣服&quot;+str(i))
+    return lst
+cl = cloth()
+</code></pre>
+<p>但是呢, 问题来了. 老男孩现在没有这么多学生啊. 一次性给我这么多. 我往哪里放啊. 很尴尬啊. 最好的效果是什么样呢?  我要1套. 你给我1套. 一共10000套. 是不是最完美的.</p>
+<pre><code class="language-python">def cloth():
+    for i in range(0, 10000):
+        yield &quot;衣服&quot;+str(i)
+cl = cloth()
+print(cl.__next__())
+print(cl.__next__())
+print(cl.__next__())
+print(cl.__next__())
+</code></pre>
+<p>区别: 第一种是直接一次性全部拿出来. 会很占用内存. 第二种使用生成器. 一次就一个. 用多少生成多少.  生成器是一个一个的指向下一个.  不会回去, <code>__next__()</code>到哪, 指针就指到哪儿. 下一次继续获取指针指向的值.</p>
+<p>接下来我们来看<code>send</code>方法,<code> send</code>和<code>__next__()</code>一样都可以让生成器执行到下一个<code>yield</code>.</p>
+<pre><code class="language-python">def eat():
+    print(&quot;我吃什么啊&quot;)
+    a = yield &quot;馒头&quot;
+    print(&quot;a=&quot;,a)
+    b = yield &quot;大饼&quot;
+    print(&quot;b=&quot;,b)
+    c = yield &quot;韭菜盒子&quot;
+    print(&quot;c=&quot;,c)
+    yield &quot;GAME OVER&quot;
+
+
+gen = eat()     # 获取生成器
+ret1 = gen.__next__()
+print(ret1)
+ret2 = gen.send(&quot;胡辣汤&quot;)
+print(ret2)
+ret3 = gen.send(&quot;狗粮&quot;)
+print(ret3)
+ret4 = gen.send(&quot;猫粮&quot;)
+print(ret4)
+</code></pre>
+<p>send和<code>__next__()</code>区别:</p>
+<ol>
+<li>
+<p>send和next()都是让生成器向下走一次</p>
+</li>
+<li>
+<p>send可以给上一个yield的位置传递值, 不能给最后一个yield发送值. 在第一次执行生成器代码的时候不能使用send()</p>
+</li>
+</ol>
+<p>生成器可以使用for循环来循环获取内部的元素:</p>
+<pre><code class="language-python">def func():
+    print(111)
+    yield 222
+    print(333)
+    yield 444
+    print(555)
+    yield 666
+
+gen = func()
+for i in gen:
+    print(i)
+
+结果:
+111
+222
+333
+444
+555
+666
+</code></pre>
+<h3 id="列表推导式-生成器表达式以及其他推导式"><a class="header-anchor" href="#列表推导式-生成器表达式以及其他推导式">¶</a>列表推导式, 生成器表达式以及其他推导式</h3>
+<p>给出一个列表, 通过循环, 向列表中添加1-13  :</p>
+<pre><code class="language-python">lst = []
+for i in range(1, 15):
+    lst.append(i)
+print(lst)
+</code></pre>
+<p>替换成列表推导式:</p>
+<pre><code class="language-python">lst = [i for i in range(1, 15)]
+print(lst)
+</code></pre>
+<p>列表推导式是通过一行来构建你要的列表, 列表推导式看起来代码简单. 但是出现错误之后很难排查.</p>
+<p>列表推导式的常用写法:</p>
+<p>[ 结果 for 变量 in 可迭代对象]</p>
+<p>例. 从 pythonx1 一直到pythonx255 写入列表<code>lst</code>:</p>
+<pre><code class="language-python">lst = ['python x %s' % i for i in range(1,255)]
+print(lst)
+</code></pre>
+<p>我们还可以对列表中的数据进行筛选</p>
+<p>筛选模式:</p>
+<p>[ 结果 for 变量 in 可迭代对象 if 条件 ]</p>
+<pre><code class="language-python"># 获取1-100内所有的偶数
+lst = [i for i in range(1, 100) if i % 2 == 0]
+print(lst)
+</code></pre>
+<p>列表是不可变的数据类型 故用()得到的不是列表推导式</p>
+<p>生成器表达式和列表推导式的语法基本上是一样的. 只是把[]替换成()</p>
+<pre><code class="language-python">gen = (i for i in range(10))
+print(gen)
+
+结果: 
+&lt;generator object &lt;genexpr&gt; at 0x106768f10&gt;
+</code></pre>
+<p>打印的结果就是一个生成器. 我们可以使用for循环来循环这个生成器:</p>
+<pre><code class="language-python">gen = (&quot;麻花藤我第%s次爱你&quot; % i for i in range(10))
+for i in gen:
+    print(i)
+</code></pre>
+<p>生成器表达式也可以进行筛选:</p>
+<pre><code class="language-python"># 获取1-100内能被3整除的数
+gen = (i for i in range(1,100) if i % 3 == 0)
+for num in gen:
+    print(num)
+
+# 100以内能被3整除的数的平方
+gen = (i * i for i in range(100) if i % 3 == 0)
+for num in gen:
+    print(num)
+
+# 寻找名字中带有两个e的人的名字
+names = [['Tom', 'Billy', 'Jefferson', 'Andrew', 'Wesley', 'Steven', 'Joe'],
+          ['Alice', 'Jill', 'Ana', 'Wendy', 'Jennifer', 'Sherry', 'Eva']]
+
+# 不用推导式和表达式
+result = []
+for first in names:
+    for name in first:
+        if name.count(&quot;e&quot;) &gt;= 2:
+            result.append(name)
+
+print(result)
+
+# 推导式
+gen = (name for first in names for name in first if name.count(&quot;e&quot;) &gt;= 2)
+for name in gen:
+    print(name)
+</code></pre>
+<p>生成器表达式和列表推导式的区别:</p>
+<ol>
+<li>
+<p>列表推导式比较耗内存. 一次性加载. 生成器表达式几乎不占用内存. 使用的时候才分配和使用内存</p>
+</li>
+<li>
+<p>得到的值不一样. 列表推导式得到的是一个列表. 生成器表达式获取的是一个生成器.</p>
+</li>
+</ol>
+<p>举个栗子.</p>
+<p>同样一篮子鸡蛋. 列表推导式: 直接拿到一篮子鸡蛋.  生成器表达式: 拿到一个老母鸡. 需要鸡蛋就给你下鸡蛋.</p>
+<p>生成器的惰性机制: 生成器只有在访问的时候才取值. 说白了. 你找他要他才给你值. 不找他要. 他是不会执行的.</p>
+<pre><code class="language-python">def func():
+    print(111)
+    yield 222
+
+g = func()  # 生成器g
+g1 = (i for i in g) # 生成器g1. 但是g1的数据来源于g
+g2 = (i for i in g1)    # 生成器g2. 来源g1
+
+print(list(g))  # 获取g中的数据. 这时func()才会被执行. 打印111.获取到222. g完毕.
+print(list(g1))  # 获取g1中的数据. g1的数据来源是g. 但是g已经取完了. g1 也就没有数据了
+print(list(g2))  # 和g1同理
+</code></pre>
+<p>深坑==&gt; 生成器. 要值得时候才拿值.</p>
+<p>字典推导式:</p>
+<p>根据名字应该也能猜到. 推到出来的是字典</p>
+<pre><code class="language-python"># 把字典中的key和value互换
+dic = &#123;'a': 1, 'b': '2'&#125;
+new_dic = &#123;dic[key]: key for key in dic&#125;
+print(new_dic)
+
+# 在以下list中. 从lst1中获取的数据和lst2中相对应的位置的数据组成一个新字典
+lst1 = ['jay', 'jj', 'sylar']
+lst2 = ['周杰伦', '林俊杰', 'jolin']
+dic = &#123;lst1[i]: lst2[i] for i in range(len(lst1))&#125;
+print(dic)
+</code></pre>
+<p>集合推导式:</p>
+<p>集合推导式可以帮我们直接生成一个集合. 集合的特点: 无序, 不重复. 所以集合推导式自带去重功能</p>
+<pre><code class="language-python">lst = [1, -1, 8, -8, 12]
+# 绝对值去重
+s = &#123;abs(i) for i in lst&#125;
+print(s)
+</code></pre>
+<p>总结: 推导式有, 列表推导式, 字典推导式, 集合推导式, 没有元组推导式</p>
+<p>生成器表达式: (结果 for 变量 in 可迭代对象 if 条件筛选)</p>
+<p>生成器表达式可以直接获取到生成器对象. 生成器对象可以直接进行for循环. 生成器具有惰性机制.</p>
+<p>最后一个知识点: yield from</p>
+<p>在python3中提供了一种可以直接把可迭代对象中的每一个数据作为生成器的结果进行返回</p>
+<pre><code class="language-python">def gen():
+    lst = [&quot;麻花藤&quot;, &quot;胡辣汤&quot;, &quot;微星牌饼铛&quot;, &quot;Mac牌锅铲&quot;]
+    yield from lst
+
+g = gen()
+for el in g:
+print(el)
+</code></pre>
+<p>小坑: yield from是将列表中的每一个元素返回. 所以. 如果写两个yield from 并不会产生交替的效果.</p>
+<pre><code class="language-python">def gen():
+    lst = [&quot;麻花藤&quot;, &quot;胡辣汤&quot;, &quot;微星牌饼铛&quot;, &quot;Mac牌锅铲&quot;]
+    lst2 = [&quot;饼铛还是微星的好&quot;, &quot;联想不能煮鸡蛋&quot;, &quot;微星就可以&quot;, &quot;还可以烙饼&quot;]
+    yield from lst
+    yield from lst2
+
+
+g = gen()
+for el in g:
+    print(el)
+
+效果:
+
+麻花藤
+胡辣汤
+微星牌饼铛
+Mac牌锅铲
+饼铛还是微星的好
+联想不能煮鸡蛋
+微星就可以
+还可以烙饼
+</code></pre>
+<h4 id="匿名函数"><a class="header-anchor" href="#匿名函数">¶</a>匿名函数</h4>
+<p>为了解决一些简单的需求而设计的一句话函数</p>
+<pre><code class="language-python"># 计算n的n次方
+def func(n):
+    return n**n
+print(func(10))
+
+f = lambda n: n**n
+print(f(10))
+</code></pre>
+<p>lambda表示的是匿名函数. 不需要用def来声明, 一句话就可以声明出一个函数</p>
+<p>语法:</p>
+<p>函数名 = lambda 参数: 返回值</p>
+<p>注意:</p>
+<ol>
+<li>
+<p>函数的参数可以有多个. 多个参数之间用<strong>逗号</strong>隔开</p>
+</li>
+<li>
+<p>匿名函数不管多复杂. 只能写一行, 且逻辑结束后直接返回数据</p>
+</li>
+<li>
+<p>返回值和正常的函数一样, 可以是任意数据类型</p>
+</li>
+</ol>
+<p>匿名函数并不是说一定没有名字. 这里前面的变量就是一个函数名. 说他是匿名原因是我们通过__name__查看的时候是没有名字的. 统一都叫lambda. 在调用的时候没有什么特别之处. 像正常的函数调用即可</p>
+
+    </div>
+    
+</div>
+                         
+
+
+<footer id="footer">
+    
+
+    <div class="footer-wrap">
+        <div>
+            © 2022 - 2022 Albatross&amp;blog
+            <span class="footer-icon">
+                <i class="fa-solid fa-font-awesome fa-fw"></i>
+            </span>
+            @Albatross
+        </div>
+
+        <div></div>
+        <div>Based on the <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo Engine</a> & <a
+                target="_blank" rel="noopener" href="https://github.com/argvchs/hexo-theme-particlex">ParticleX Theme</a></div>
+        
+    </div>
+    <!--这一段是不蒜子的访问量统计代码-->
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+    </script>
+ 
+    <span id="busuanzi_value_page_pv"><i class="fa fa-spinner"></i></span> Hits   
+</footer>
+
+
+                        
+                    </div>
+                </div>
+            </transition>
+            <div id="img_show">
+                <img id="img_content" alt="img_show">
+            </div>
+        </div>
+        <script src="https://cdn.staticfile.org/highlight.js/11.5.1/highlight.min.js"></script>
+        <script src="/js/particlex.js"></script>
+        <script src="/js/showimg.js"></script>
+        
+        
+
+    <script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/wanko.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"log":false});</script></body>
+    <canvas
+        id="background"
+        style="position:fixed;top:0;left:0;width:100vw;height:100vh;pointer-events:none;z-index:-1"
+    ></canvas>
+    <script src="/js/background.js"></script>
+    <div id="cursor"></div>
+<script src="/css/cursor.css"></script>
+<script src="/js/cursor.js"></script>
+</html>

@@ -1,0 +1,468 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0">
+        <title>有向图的拓扑排序 | Albatross&amp;blog</title>
+        <meta name="author" content="Albatross">
+        <meta name="description" content="">
+        <meta name="keywords" content="吃喝玩睡ing">
+        <link rel="icon" href="/images/c.jpg">
+        <script src="https://cdn.staticfile.org/instant.page/5.1.0/instantpage.min.js" type="module"></script>
+        <script src="https://cdn.staticfile.org/font-awesome/6.1.1/js/all.min.js"></script>
+        
+        </script>
+        
+        <link rel="stylesheet" href="/css/fonts.min.css">
+        <link rel="stylesheet" href="/css/particlex.css">
+        
+        <script src="https://cdn.staticfile.org/vue/3.2.33/vue.global.prod.min.js"></script>
+       
+    <meta name="generator" content="Hexo 6.2.0"><link rel="alternate" href="/atom.xml" title="Albatross&blog" type="application/atom+xml">
+</head>
+    <body>
+
+        <div id="loading" style="height:100vh;width:100vw;position:fixed;display:flex;z-index:200;justify-content:space-between;background:#fff;transition:opacity 0.3s ease-out"><div style="position:fixed;height:100vh;width:100vw;display:flex;justify-content:center;align-items:center"><div id="loadcontent" style="width:50vmin;height:50vmin;padding:50px;border-radius:50%;display:flex;justify-content:center;align-items:center;border:solid 10px #a3ddfb;text-align:center"><div><h2>LOADING...</h2><p style="word-break:keep-all">加载过慢请开启缓存(浏览器默认开启)</p><div><img alt="loading" src="/loading.gif"></div></div></div></div></div>
+        <div id="layout">
+            <i data-fa-symbol="calendar-solid" class="fa-solid fa-calendar fa-fw"></i>
+            <i data-fa-symbol="bookmark-solid" class="fa-solid fa-bookmark fa-fw"></i>
+            <i data-fa-symbol="tags-solid" class="fa-solid fa-tags fa-fw"></i>
+            <transition name="into">
+                <div v-show="show_page" style="display: -not-none">
+                    <div id="menu_show">
+                         
+<nav id="menu">
+    <div class="desktop-menu">
+        <a href="/">
+            <span class="title">Albatross&blog</span>
+        </a>
+        
+        <a href="/">
+            <i class="fa-solid fa-house fa-fw"></i>
+            <span>&ensp;home</span>
+        </a>
+        
+        <a href="/about">
+            <i class="fa-solid fa-id-card fa-fw"></i>
+            <span>&ensp;about</span>
+        </a>
+        
+        <a href="/archives">
+            <i class="fa-solid fa-box-archive fa-fw"></i>
+            <span>&ensp;archives</span>
+        </a>
+        
+        <a href="/categories">
+            <i class="fa-solid fa-bookmark fa-fw"></i>
+            <span>&ensp;categories</span>
+        </a>
+        
+        <a href="/tags">
+            <i class="fa-solid fa-tags fa-fw"></i>
+            <span>&ensp;tags</span>
+        </a>
+        
+    </div>
+    <div :class="'phone-menu ' + menu_show" id="phone-menu">
+        <div class="curtain" @click="menu_show = !menu_show" v-show="menu_show"></div>
+        <div :class="'title'" @click="menu_show = !menu_show">
+            <i class="fa-solid fa-bars fa-fw"></i>
+            <span>&emsp;Albatross&blog</span>
+        </div>
+        <transition name="slide">
+        <div class="items" v-show="menu_show">
+            
+            <a href="">
+                <div class="item">
+                    <div style="min-width: 20px; max-width: 50px; width: 10%">
+                        <i class="fa-solid fa-house fa-fw"></i>
+                    </div>
+                    <div style="min-width: 100px; max-width: 150%; width: 20%">home</div>
+                </div>
+            </a>
+            
+            <a href="about">
+                <div class="item">
+                    <div style="min-width: 20px; max-width: 50px; width: 10%">
+                        <i class="fa-solid fa-id-card fa-fw"></i>
+                    </div>
+                    <div style="min-width: 100px; max-width: 150%; width: 20%">about</div>
+                </div>
+            </a>
+            
+            <a href="archives">
+                <div class="item">
+                    <div style="min-width: 20px; max-width: 50px; width: 10%">
+                        <i class="fa-solid fa-box-archive fa-fw"></i>
+                    </div>
+                    <div style="min-width: 100px; max-width: 150%; width: 20%">archives</div>
+                </div>
+            </a>
+            
+            <a href="categories">
+                <div class="item">
+                    <div style="min-width: 20px; max-width: 50px; width: 10%">
+                        <i class="fa-solid fa-bookmark fa-fw"></i>
+                    </div>
+                    <div style="min-width: 100px; max-width: 150%; width: 20%">categories</div>
+                </div>
+            </a>
+            
+            <a href="tags">
+                <div class="item">
+                    <div style="min-width: 20px; max-width: 50px; width: 10%">
+                        <i class="fa-solid fa-tags fa-fw"></i>
+                    </div>
+                    <div style="min-width: 100px; max-width: 150%; width: 20%">tags</div>
+                </div>
+            </a>
+            
+        </div>
+        </transition>
+    </div>
+    <canvas
+    id="background"
+    style="position:fixed;top:0;left:0;width:100vw;height:100vh;pointer-events:none;z-index:-1"
+></canvas>
+<script src="/js/background.js"></script>
+</nav>
+
+
+                    </div>
+                    <div id="main">
+                        
+<div class="article">
+    <div>
+        <h1>有向图的拓扑排序 </h1>
+    </div>
+    <div class="info">
+        <span class="date">
+            <span class="icon">
+                <svg class="fa-icon"><use xlink:href="#calendar-solid"></use></svg>
+            </span>
+            2022/9/26
+        </span>
+        
+        <span class="category">
+            <a href="/categories/算法/">
+                <span class="icon">
+                    <svg class="fa-icon"><use xlink:href="#bookmark-solid"></use></svg>
+                </span>
+                算法
+            </a>
+        </span>
+        
+        
+        <span class="tags">
+            <span class="icon">
+                <svg class="fa-icon"><use xlink:href="#tags-solid"></use></svg>
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/others/" style="color: #ff7d73">
+                    others
+                </a>
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/ALGO/" style="color: #00bcd4">
+                    ALGO
+                </a>
+            </span>
+            
+        </span>
+        
+    </div>
+    <div class="content" v-pre>
+        <p>在生活中，有些事物可以用有向无环图（DAG）表示，这种有向无环图也被称之为“流程图”。比如：施工流程图，生产流程图，图中的每一个顶点代表着一项具体的工序，每条有向边则反应了两个工序的前后次序。</p>
+<span id="more"></span>
+<h2 id="有向图的拓扑排序"><a class="header-anchor" href="#有向图的拓扑排序">¶</a>有向图的拓扑排序</h2>
+<p>比如《数据结构》一书中，给出的这个生活中的案例：</p>
+<p><img src="/images/%E6%8B%93%E6%89%91%E6%8E%92%E5%BA%8F%EF%BC%881%EF%BC%89.jpg" alt="image-20220926172838381"></p>
+<p>拓扑排序（TorpSort）是指用有向图中各个顶点构成有序序列。</p>
+<p>上面的列子经过拓扑排序后就可以是这样的：</p>
+<p><img src="/images/%E6%8B%93%E6%89%91%E6%8E%92%E5%BA%8F%EF%BC%882%EF%BC%89.jpg" alt="image-20220926172838381"></p>
+<p>之后要科普两个点，以便更好的理解DAG</p>
+<p>入度：有多少条边指向自己</p>
+<p>出度：向外指了多少条边</p>
+<p>我们根据已知可以推断出DAG的一些特点：</p>
+<ul>
+<li>一个有向无环图至少存在一个入度为0的点</li>
+<li>如果每个顶点的入度都大于0，那么它必然存在回路</li>
+</ul>
+<p>那么对于拓扑排序，我们可否有以下思路：</p>
+<p>只要想找到任何一个入度为0的点，然后输出该顶点，并从图中删除改顶点以及与其相连的所有边（相当于挖墙脚，即便删除掉该点原图还是一个DAG）。对改变后的图重复这一过程，知道所以有顶点输出为止。这个输出的顶点的序列就是我们要找的拓扑排序后的序列。</p>
+<p>综合考虑，这个题用邻接表的方式写比较好，下面用的是acwing上y总宽搜的模板，数组模拟链表和队列：</p>
+<pre><code class="language-c++">//模拟链表
+int h[N], e[N], ne[N], idx;
+//在输入的时候要注意记录入度的数量
+int d[N];
+//模拟队列
+int q[N];
+
+bool topsort()
+&#123;
+    //初始化 头节点置空
+     memset(h, -1, sizeof h);
+    
+    //模拟队列
+    int hh = 0, tt = -1;
+
+    // d[i] 存储点i的入度 
+    for (int i = 1; i &lt;= n; i ++ )
+        if (!d[i])
+            //将元素的下标添加进入队尾
+            q[ ++ tt] = i;
+    
+	//循环结束条件 队列中元素为空
+    while (hh &lt;= tt)
+    &#123;
+        //取出队头
+        int t = q[hh ++ ];
+		//按照队头遍历链表
+        for (int i = h[t]; ~i ; i = ne[i])
+        &#123;
+            int j = e[i];
+            //删除一个点后入度为0的点 将其加入序列中
+            if (-- d[j] == 0)
+                q[ ++ tt] = j;
+        &#125;
+    &#125;
+    //若为topsort则队列长度应该刚好等于序列长度
+    return tt == n-1;
+&#125;
+</code></pre>
+<p>参考某位大佬给的比较完整的解法</p>
+<pre><code class="language-c++">  #include &quot;stdafx.h&quot;
+  #include&lt;stdio.h&gt;
+  #include&lt;string.h&gt;
+  #define MAXNODE 20
+  typedef struct
+  &#123;
+    char vertex;
+  &#125;VerNode;
+ 
+  typedef struct
+  &#123;
+    int adj;
+  &#125;Arc;
+ 
+  typedef struct
+  &#123;
+    VerNode vexs[MAXNODE];
+    Arc arcs[MAXNODE][MAXNODE];
+    int m_numOfVexs;
+  &#125;Graph;
+ 
+  int mFind(char aim, VerNode* arry)
+  &#123;
+    int pos=-1;
+    int i=0;
+    for(i=0; i&lt;MAXNODE; i++)
+    &#123;
+      if(aim==arry[i].vertex)
+      &#123;
+        pos=i;
+        return pos;
+      &#125;
+    &#125;
+    return pos;
+  &#125;
+ 
+  void showGraph(Graph aGraph, int num)
+  &#123;
+    int i=0;
+    int j=0;
+    printf(&quot;\n NODES:\n&quot;);
+    for(i=0; i&lt;num; i++)
+    &#123;
+      printf(&quot; %c&quot;, aGraph.vexs[i].vertex);
+    &#125;
+    printf(&quot;\n ARCS:\n&quot;);
+    for(i=0; i&lt;num; i++)
+    &#123;
+      for(j=0; j&lt;num; j++)
+      &#123;
+        printf(&quot; %d&quot;, aGraph.arcs[i][j].adj);
+      &#125;
+      printf(&quot; \n&quot;);
+    &#125;
+  &#125;
+ 
+  //添加顶点
+  void addVexs(Graph* aGraph, char vex)
+  &#123;
+    aGraph-&gt;m_numOfVexs++;
+    aGraph-&gt;vexs[aGraph-&gt;m_numOfVexs].vertex=vex;
+  &#125;
+ 
+  //添加边
+  void addArcs(Graph* aGraph, char aStart, char aEnd)
+  &#123;
+    int p_x=mFind(aStart,aGraph-&gt;vexs);
+    int p_y=mFind(aEnd,aGraph-&gt;vexs);
+    aGraph-&gt;arcs[p_x][p_y].adj=1;
+  &#125;
+ 
+  //图的初始化
+  void initGraph(Graph* aGraph)
+  &#123;
+    int i=0;
+    int j=0;
+    aGraph-&gt;m_numOfVexs=-1;
+    for(i=0; i&lt;MAXNODE; i++)
+    &#123;
+      for(j=0; j&lt;MAXNODE; j++)
+        aGraph-&gt;arcs[i][j].adj=0;
+    &#125;
+  &#125;
+ 
+  int getInDegree(int i, Graph* aGraph)
+  &#123;
+    int InDegree=0;
+    int j=0;
+    for(j=0; j&lt;aGraph-&gt;m_numOfVexs; j++)
+      InDegree+=aGraph-&gt;arcs[j][i].adj;
+    return InDegree;
+  &#125;
+ 
+  int topSort(Graph* aGraph)
+  &#123;
+    int i;
+    int isOK=1;
+    int vexsIsOut[MAXNODE];
+    for(i=0; i&lt;aGraph-&gt;m_numOfVexs; i++)
+    &#123;
+      vexsIsOut[i]=0;
+    &#125;
+    while(isOK==1)
+    &#123;
+      isOK=0;
+      for(i=0; i&lt;aGraph-&gt;m_numOfVexs; i++)
+      &#123;
+        if(vexsIsOut[i]==0&amp;&amp;getInDegree(i,aGraph)==0)
+        &#123;
+          int j;
+          printf(&quot;%c &quot;,aGraph-&gt;vexs[i].vertex);
+          vexsIsOut[i]=1;
+          for(j=0; j&lt;aGraph-&gt;m_numOfVexs; j++)
+          &#123;
+            aGraph-&gt;arcs[i][j].adj=0;
+          &#125;
+          isOK=1;
+        &#125;
+      &#125;
+    &#125;
+    for(i=0; i&lt;aGraph-&gt;m_numOfVexs; i++)
+    &#123;
+      if(vexsIsOut[i]==0)
+        return 0;
+    &#125;
+    return 1;
+  &#125;
+ 
+  int main(void)
+  &#123;
+    char node='a';
+    char input1='a';
+    char input2='a';
+    //将图初始化
+    Graph g_graph;
+    initGraph(&amp;g_graph);
+ 
+    //根据用户的输入添加顶点
+    printf(&quot;Please input the vexs( end with #):\n&quot;);
+    while(1)
+    &#123;
+      if(node=='#')
+        break;
+      if(scanf(&quot;%c,&quot;,&amp;node)==1)
+      &#123;
+        if(node=='\n')
+          continue;
+        addVexs(&amp;g_graph,node);
+      &#125;
+    &#125;
+ 
+    //根据用户的输入添加边
+    printf(&quot;Please input arcs, just like this \&quot;startNod,endNode\&quot; \n&quot;);
+    while(1)
+    &#123;
+      if(input1=='#')
+        break;
+      if(scanf(&quot;%c,%c&quot;,&amp;input1, &amp;input2)==2)
+      &#123;
+        if(input1=='\n'||input2=='\n')
+          continue;
+        addArcs(&amp;g_graph, input1, input2);
+      &#125;
+    &#125;
+ 
+    //输出图
+    showGraph(g_graph, g_graph.m_numOfVexs);
+ 
+    printf(&quot;The topsort is: \n&quot;);
+    if(topSort(&amp;g_graph)==0)
+      printf(&quot;There is a circle in the graph!! \n&quot;);
+    return 0;
+  &#125;
+</code></pre>
+
+    </div>
+    
+</div>
+                         
+
+
+<footer id="footer">
+    
+
+    <div class="footer-wrap">
+        <div>
+            © 2022 - 2022 Albatross&amp;blog
+            <span class="footer-icon">
+                <i class="fa-solid fa-font-awesome fa-fw"></i>
+            </span>
+            @Albatross
+        </div>
+
+        <div></div>
+        <div>Based on the <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo Engine</a> & <a
+                target="_blank" rel="noopener" href="https://github.com/argvchs/hexo-theme-particlex">ParticleX Theme</a></div>
+        
+    </div>
+    <!--这一段是不蒜子的访问量统计代码-->
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+    </script>
+ 
+    <span id="busuanzi_value_page_pv"><i class="fa fa-spinner"></i></span> Hits   
+</footer>
+
+
+                        
+                    </div>
+                </div>
+            </transition>
+            <div id="img_show">
+                <img id="img_content" alt="img_show">
+            </div>
+        </div>
+        <script src="https://cdn.staticfile.org/highlight.js/11.5.1/highlight.min.js"></script>
+        <script src="/js/particlex.js"></script>
+        <script src="/js/showimg.js"></script>
+        
+        
+
+    <script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/wanko.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"log":false});</script></body>
+    <canvas
+        id="background"
+        style="position:fixed;top:0;left:0;width:100vw;height:100vh;pointer-events:none;z-index:-1"
+    ></canvas>
+    <script src="/js/background.js"></script>
+    <div id="cursor"></div>
+<script src="/css/cursor.css"></script>
+<script src="/js/cursor.js"></script>
+</html>

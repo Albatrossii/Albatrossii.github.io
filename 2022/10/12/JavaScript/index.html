@@ -1,0 +1,999 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0">
+        <title>JavaScript | Albatross&amp;blog</title>
+        <meta name="author" content="Albatross">
+        <meta name="description" content="">
+        <meta name="keywords" content="吃喝玩睡ing">
+        <link rel="icon" href="/images/c.jpg">
+        <script src="https://cdn.staticfile.org/instant.page/5.1.0/instantpage.min.js" type="module"></script>
+        <script src="https://cdn.staticfile.org/font-awesome/6.1.1/js/all.min.js"></script>
+        
+        </script>
+        
+        <link rel="stylesheet" href="/css/fonts.min.css">
+        <link rel="stylesheet" href="/css/particlex.css">
+        
+        <script src="https://cdn.staticfile.org/vue/3.2.33/vue.global.prod.min.js"></script>
+       
+    <meta name="generator" content="Hexo 6.2.0"><link rel="alternate" href="/atom.xml" title="Albatross&blog" type="application/atom+xml">
+</head>
+    <body>
+
+        <div id="loading" style="height:100vh;width:100vw;position:fixed;display:flex;z-index:200;justify-content:space-between;background:#fff;transition:opacity 0.3s ease-out"><div style="position:fixed;height:100vh;width:100vw;display:flex;justify-content:center;align-items:center"><div id="loadcontent" style="width:50vmin;height:50vmin;padding:50px;border-radius:50%;display:flex;justify-content:center;align-items:center;border:solid 10px #a3ddfb;text-align:center"><div><h2>LOADING...</h2><p style="word-break:keep-all">加载过慢请开启缓存(浏览器默认开启)</p><div><img alt="loading" src="/loading.gif"></div></div></div></div></div>
+        <div id="layout">
+            <i data-fa-symbol="calendar-solid" class="fa-solid fa-calendar fa-fw"></i>
+            <i data-fa-symbol="bookmark-solid" class="fa-solid fa-bookmark fa-fw"></i>
+            <i data-fa-symbol="tags-solid" class="fa-solid fa-tags fa-fw"></i>
+            <transition name="into">
+                <div v-show="show_page" style="display: -not-none">
+                    <div id="menu_show">
+                         
+<nav id="menu">
+    <div class="desktop-menu">
+        <a href="/">
+            <span class="title">Albatross&blog</span>
+        </a>
+        
+        <a href="/">
+            <i class="fa-solid fa-house fa-fw"></i>
+            <span>&ensp;home</span>
+        </a>
+        
+        <a href="/about">
+            <i class="fa-solid fa-id-card fa-fw"></i>
+            <span>&ensp;about</span>
+        </a>
+        
+        <a href="/archives">
+            <i class="fa-solid fa-box-archive fa-fw"></i>
+            <span>&ensp;archives</span>
+        </a>
+        
+        <a href="/categories">
+            <i class="fa-solid fa-bookmark fa-fw"></i>
+            <span>&ensp;categories</span>
+        </a>
+        
+        <a href="/tags">
+            <i class="fa-solid fa-tags fa-fw"></i>
+            <span>&ensp;tags</span>
+        </a>
+        
+    </div>
+    <div :class="'phone-menu ' + menu_show" id="phone-menu">
+        <div class="curtain" @click="menu_show = !menu_show" v-show="menu_show"></div>
+        <div :class="'title'" @click="menu_show = !menu_show">
+            <i class="fa-solid fa-bars fa-fw"></i>
+            <span>&emsp;Albatross&blog</span>
+        </div>
+        <transition name="slide">
+        <div class="items" v-show="menu_show">
+            
+            <a href="">
+                <div class="item">
+                    <div style="min-width: 20px; max-width: 50px; width: 10%">
+                        <i class="fa-solid fa-house fa-fw"></i>
+                    </div>
+                    <div style="min-width: 100px; max-width: 150%; width: 20%">home</div>
+                </div>
+            </a>
+            
+            <a href="about">
+                <div class="item">
+                    <div style="min-width: 20px; max-width: 50px; width: 10%">
+                        <i class="fa-solid fa-id-card fa-fw"></i>
+                    </div>
+                    <div style="min-width: 100px; max-width: 150%; width: 20%">about</div>
+                </div>
+            </a>
+            
+            <a href="archives">
+                <div class="item">
+                    <div style="min-width: 20px; max-width: 50px; width: 10%">
+                        <i class="fa-solid fa-box-archive fa-fw"></i>
+                    </div>
+                    <div style="min-width: 100px; max-width: 150%; width: 20%">archives</div>
+                </div>
+            </a>
+            
+            <a href="categories">
+                <div class="item">
+                    <div style="min-width: 20px; max-width: 50px; width: 10%">
+                        <i class="fa-solid fa-bookmark fa-fw"></i>
+                    </div>
+                    <div style="min-width: 100px; max-width: 150%; width: 20%">categories</div>
+                </div>
+            </a>
+            
+            <a href="tags">
+                <div class="item">
+                    <div style="min-width: 20px; max-width: 50px; width: 10%">
+                        <i class="fa-solid fa-tags fa-fw"></i>
+                    </div>
+                    <div style="min-width: 100px; max-width: 150%; width: 20%">tags</div>
+                </div>
+            </a>
+            
+        </div>
+        </transition>
+    </div>
+    <canvas
+    id="background"
+    style="position:fixed;top:0;left:0;width:100vw;height:100vh;pointer-events:none;z-index:-1"
+></canvas>
+<script src="/js/background.js"></script>
+</nav>
+
+
+                    </div>
+                    <div id="main">
+                        
+<div class="article">
+    <div>
+        <h1>JavaScript </h1>
+    </div>
+    <div class="info">
+        <span class="date">
+            <span class="icon">
+                <svg class="fa-icon"><use xlink:href="#calendar-solid"></use></svg>
+            </span>
+            2022/10/12
+        </span>
+        
+        <span class="category">
+            <a href="/categories/语言学习/">
+                <span class="icon">
+                    <svg class="fa-icon"><use xlink:href="#bookmark-solid"></use></svg>
+                </span>
+                语言学习
+            </a>
+        </span>
+        
+        
+        <span class="tags">
+            <span class="icon">
+                <svg class="fa-icon"><use xlink:href="#tags-solid"></use></svg>
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/others/" style="color: #ffa2c4">
+                    others
+                </a>
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/JAVASCRIPT/" style="color: #ff7d73">
+                    JAVASCRIPT
+                </a>
+            </span>
+            
+        </span>
+        
+    </div>
+    <div class="content" v-pre>
+        <p>acwing web应用课学习笔记</p>
+<span id="more"></span>
+<h2 id="JS的调用方式与执行顺序"><a class="header-anchor" href="#JS的调用方式与执行顺序">¶</a>JS的调用方式与执行顺序</h2>
+<h3 id="使用方式"><a class="header-anchor" href="#使用方式">¶</a>使用方式</h3>
+<p>HTML页面中的任意位置加上<code>&lt;script type=&quot;module&quot;&gt;&lt;/script&gt;</code>标签即可。</p>
+<p>常见使用方式有以下几种：</p>
+<p>直接在<code>&lt;script type=&quot;module&quot;&gt;&lt;/script&gt;</code>标签内写JS代码。<br>
+直接引入文件：<code>&lt;script type=&quot;module&quot; src=&quot;/static/js/index.js&quot;&gt;&lt;/script&gt;</code>。<br>
+将所需的代码通过import关键字引入到当前作用域。</p>
+<p><code>type=&quot;module&quot;</code>能够限制变量作用域，若不加则为全局变量，其他页面也可以引用</p>
+<p>例如：</p>
+<p><code>/static/js/index.js</code>文件中的内容为：</p>
+<pre><code class="language-javascript">let name = &quot;acwing&quot;;
+function print() &#123;
+    console.log(&quot;Hello World!&quot;);
+&#125;
+
+export &#123;
+    name,
+    print
+&#125;
+</code></pre>
+<p><code>exprt</code>中为想要暴露在外的内容，即允许其他模块引用</p>
+<p><code>&lt;script type=&quot;module&quot;&gt;&lt;/script&gt;</code>中的内容为：</p>
+<pre><code class="language-javascript">&lt;script type=&quot;module&quot;&gt;
+    import &#123; name, print &#125; from &quot;/static/js/index.js&quot;;
+    console.log(name);
+print();
+&lt;/script&gt;
+</code></pre>
+<h3 id="执行顺序"><a class="header-anchor" href="#执行顺序">¶</a>执行顺序</h3>
+<ol>
+<li>类似于HTML与CSS，<u>按从上到下的顺序执行</u>；</li>
+<li>事件驱动执行；</li>
+</ol>
+<h3 id="HTML-CSS-JavaScript三者之间的关系"><a class="header-anchor" href="#HTML-CSS-JavaScript三者之间的关系">¶</a>HTML, CSS, JavaScript三者之间的关系</h3>
+<ol>
+<li>CSS控制HTML</li>
+<li>JavaScript控制HTML与CSS</li>
+<li>为了方便开发与维护，<u>尽量按照上述顺序写代码</u>。例如：不要在HTML中调用JavaScript中的函数。</li>
+</ol>
+<h2 id="变量与运算符"><a class="header-anchor" href="#变量与运算符">¶</a>变量与运算符</h2>
+<h3 id="let与const"><a class="header-anchor" href="#let与const">¶</a>let与const</h3>
+<p>用来声明变量，作用范围为当前作用域。</p>
+<ul>
+<li>
+<p>let用来定义变量（可只声明不赋值）；</p>
+</li>
+<li>
+<p>const用来定义常量；</p>
+</li>
+</ul>
+<p>例如：</p>
+<pre><code class="language-javascript">let s = &quot;acwing&quot;, x = 5;
+
+let d = &#123;
+    name: &quot;yxc&quot;,//声明时name可以加引号也可不加
+    age: 18,
+&#125;
+
+const n = 100;
+</code></pre>
+<h3 id="变量类型"><a class="header-anchor" href="#变量类型">¶</a>变量类型</h3>
+<ul>
+<li><code>number</code>：数值变量，例如1, 2.5</li>
+<li><code>string</code>：字符串，例如<code>&quot;acwing&quot;</code>, <code>'yxc'</code>，单引号与双引号均可。字符串中的每个字符为只读类型。</li>
+<li><code>boolean</code>：布尔值，例如true, false</li>
+<li><code>object</code>：对象，类似于C++中的指针，例如[1, 2, 3]，{name: “yxc”, age: 18}，null</li>
+<li><code>undefined</code>：未定义的变量</li>
+</ul>
+<p>类似于Python，JavaScript中的变量类型可以动态变化。</p>
+<p>从字典中取出数据。第一种情况关键字可变</p>
+<pre><code class="language-javascript">console.log(d['name'],d[&quot;age&quot;]);
+console.log(d.name,d.age)
+</code></pre>
+<p>字典中定义用<code>：</code></p>
+<p>外面赋值用<code>=</code></p>
+<h3 id="运算符"><a class="header-anchor" href="#运算符">¶</a>运算符</h3>
+<p>与C++、Python、Java类似，不同点：</p>
+<ul>
+<li><code>**</code>表示乘方</li>
+<li>等于与不等于用<code>===</code>和<code>!==</code>（同时判断类型和数值，若少一个等号只能判断表面上的数值）</li>
+</ul>
+<h2 id="输入与输出"><a class="header-anchor" href="#输入与输出">¶</a>输入与输出</h2>
+<h3 id="输入"><a class="header-anchor" href="#输入">¶</a>输入</h3>
+<ul>
+<li>
+<p>从HTML与用户的交互中输入信息，例如通过<code>input</code>、<code>textarea</code>等标签获取用户的键盘输入，通过<code>click</code>、<code>hover</code>等事件获取用户的鼠标输入。</p>
+</li>
+<li>
+<p>通过<code>Ajax</code>与<code>WebSocket</code>从服务器端获取输入</p>
+</li>
+<li>
+<p>标准输入</p>
+<pre><code class="language-javascript">let fs = require('fs');
+let buf = '';
+
+process.stdin.on('readable', function() &#123;
+    let chunk = process.stdin.read();
+    if (chunk) buf += chunk.toString();
+&#125;);
+
+process.stdin.on('end', function() &#123;
+    buf.split('\n').forEach(function(line) &#123;
+        let tokens = line.split(' ').map(function(x) &#123; return parseInt(x); &#125;);
+        if (tokens.length != 2) return;
+        console.log(tokens.reduce(function(a, b) &#123; return a + b; &#125;));
+    &#125;);
+&#125;);
+</code></pre>
+<h4 id="补充"><a class="header-anchor" href="#补充">¶</a>补充</h4>
+<pre><code class="language-javascript">letfs= require('fs') //**使用fs模块来实现所有有关文件及目录的创建、写入及删除操作。
+letpath = require('path'); //用于处理文件与目录的路径。
+</code></pre>
+<p>process.stdin属性是流程模块的内置应用程序编程接口，用于侦听用户输入。流程对象的stdin属性是可读流。它使用on()函数来监听事件。</p>
+<p><strong>用法:</strong></p>
+<pre><code>process.stdin.on();
+</code></pre>
+<p>**返回值：**它不返回任何值。</p>
+<p>**参数：**此属性从用户处获取输入。</p>
+</li>
+</ul>
+<h3 id="输出"><a class="header-anchor" href="#输出">¶</a>输出</h3>
+<ul>
+<li>
+<p>调试用<code>console.log</code>，会将信息输出到浏览器控制台</p>
+</li>
+<li>
+<p>改变当前页面的HTML与CSS</p>
+</li>
+<li>
+<p>通过<code>Ajax</code>与<code>WebSocket</code>将结果返回到服务器</p>
+<ul>
+<li>使用 <strong>window.alert()</strong> 弹出警告框。</li>
+<li>使用 <strong>document.write()</strong> 方法将内容写到 HTML 文档中。</li>
+<li>使用 <strong>innerHTML</strong> 写入到 HTML 元素。</li>
+<li>使用 <strong>console.log()</strong> 写入到浏览器的控制台。</li>
+</ul>
+<blockquote>
+<p>严格来说，JavaScript 没有任何打印或者输出的函数，以上几种方式都只不过是一种数据展示的方法，最接近输出的方法应该是console，但这种方法只是一种调试辅助工具。</p>
+</blockquote>
+</li>
+</ul>
+<h3 id="格式化字符串"><a class="header-anchor" href="#格式化字符串">¶</a>格式化字符串</h3>
+<p>字符串中填入数值：</p>
+<pre><code class="language-javascript">let name = 'yxc', age = 18;
+let s = `My name is $&#123;name&#125;, I'm $&#123;age&#125; years old.`;
+</code></pre>
+<p>定义多行字符串：</p>
+<pre><code class="language-javascript">let s = 
+`&lt;div&gt;
+
+    &lt;h2&gt;标题&lt;/h2&gt;
+    &lt;p&gt;段落&lt;/p&gt;
+
+/div&gt;
+</code></pre>
+<p>保留两位小数如何输出</p>
+<pre><code class="language-js">let x = 1.234567;
+let s = `$&#123;x.toFixed(2)&#125;`;
+</code></pre>
+<h2 id="判断语句"><a class="header-anchor" href="#判断语句">¶</a>判断语句</h2>
+<p>JavaScript中的<code>if-else</code>语句与C++、Python、Java中类似。</p>
+<p>例如：</p>
+<pre><code class="language-javascript">let score = 90;
+if (score &gt;= 85) &#123;
+    console.log(&quot;A&quot;);
+&#125; else if (score &gt;= 70) &#123;
+    console.log(&quot;B&quot;);
+&#125; else if (score &gt;= 60) &#123;
+    console.log(&quot;C&quot;);
+&#125; else &#123;
+    console.log(&quot;D&quot;);
+&#125;
+</code></pre>
+<p>JavaScript中的逻辑运算符也与C++、Java中类似：</p>
+<ul>
+<li>&amp;&amp;表示与</li>
+<li>||表示或</li>
+<li>!表示非</li>
+</ul>
+<h2 id="循环语句"><a class="header-anchor" href="#循环语句">¶</a>循环语句</h2>
+<p>JavaScript中的循环语句与C++中类似，也包含for、while、do while循环。</p>
+<h3 id="for循环"><a class="header-anchor" href="#for循环">¶</a>for循环</h3>
+<pre><code class="language-javascript">for (let i = 0; i &lt; 10; i++) &#123;
+    console.log(i);
+&#125;
+</code></pre>
+<p>枚举对象或数组时可以使用：</p>
+<ul>
+<li><code>for-in</code>循环，可以枚举数组中的下标，以及对象中的<code>key</code></li>
+<li><code>for-of</code>循环，可以枚举数组中的值，以及对象中的<code>value</code></li>
+</ul>
+<h3 id="while循环"><a class="header-anchor" href="#while循环">¶</a>while循环</h3>
+<pre><code class="language-javascript">let i = 0;
+while (i &lt; 10) &#123;
+    console.log(i);
+    i++;
+&#125;
+</code></pre>
+<h3 id="do-while循环"><a class="header-anchor" href="#do-while循环">¶</a>do while循环</h3>
+<p><code>do while</code>语句与<code>while</code>语句非常相似。唯一的区别是，<code>do while</code>语句限制性循环体后检查条件。不管条件的值如何，我们都要至少执行一次循环。</p>
+<pre><code class="language-javascript">let i = 0;
+do &#123;
+    console.log(i);
+    i++;
+&#125; while (i &lt; 10);
+
+
+</code></pre>
+<h2 id="对象"><a class="header-anchor" href="#对象">¶</a>对象</h2>
+<p>英文名称：<code>Object</code>。<br>
+类似于C++中的map，由key:value对构成。</p>
+<ul>
+<li>value可以是变量、数组、对象、函数等。</li>
+<li>函数定义中的this用来引用该函数的“拥有者”。</li>
+</ul>
+<p>例如：</p>
+<pre><code class="language-javascript">let person = &#123;
+    name: &quot;yxc&quot;,
+    age: 18,
+    money: 0,
+    add_money: function (x) &#123;
+        this.money += x;
+    &#125;
+&#125;
+</code></pre>
+<p>对象属性与函数的调用方式：</p>
+<ul>
+<li><code>person.name</code>、<code>person.add_money()</code></li>
+<li><code>person[&quot;name&quot;]</code>、<code>[person[&quot;add_money&quot;]()</code></li>
+</ul>
+<h2 id="数组"><a class="header-anchor" href="#数组">¶</a>数组</h2>
+<p>数组是一种特殊的对象。<br>
+类似于C++中的数组，但是数组中的元素类型可以不同。</p>
+<ul>
+<li>
+<p>数组中的元素可以是变量、数组、对象、函数。</p>
+<p>例如：</p>
+</li>
+</ul>
+<pre><code class="language-javascript">let a = [1, 2, &quot;a&quot;, &quot;yxc&quot;];
+
+let b = [
+    1,  // 变量
+    &quot;yxc&quot;,  // 变量
+    ['a', 'b', 3],  // 数组
+    function () &#123;  // 函数
+        console.log(&quot;Hello World&quot;);
+    &#125;,
+    &#123; name: &quot;yxc&quot;, age: 18 &#125;  // 对象
+];
+</code></pre>
+<h3 id="访问数组中的元素"><a class="header-anchor" href="#访问数组中的元素">¶</a>访问数组中的元素</h3>
+<p>通过下标。</p>
+<p>例如：</p>
+<pre><code class="language-javascript">a[0] = 1; // 访问数组a[]的第0个元素
+console.log(a[0]);
+</code></pre>
+<h3 id="数组的常用属性和函数"><a class="header-anchor" href="#数组的常用属性和函数">¶</a>数组的常用属性和函数</h3>
+<ul>
+<li>属性<code>length</code>：返回数组长度。注意<code>length</code>是属性，不是函数，因此调用的时候不要加()</li>
+<li>函数<code>push()</code>：向数组末尾添加元素</li>
+<li>函数<code>pop()</code>：删除数组末尾的元素</li>
+<li>函数<code>splice(a, b)</code>：删除从a开始的b个元素</li>
+<li>函数<code>sort()</code>：将整个数组从小到大排序</li>
+</ul>
+<p>​		自定义比较函数：<code>array.sort(cmp)</code>，函数cmp输入两个需要比较的元素，返回一个实数，负数表示第一个参数小于第二个参数，0表示相等，正数表示大于。</p>
+<h3 id="函数"><a class="header-anchor" href="#函数">¶</a>函数</h3>
+<p>函数是用对象来实现的。<br>
+函数也C++中的函数类似。</p>
+<h3 id="定义方式"><a class="header-anchor" href="#定义方式">¶</a>定义方式</h3>
+<pre><code class="language-javascript">function add(a, b) &#123;
+    return a + b;
+&#125;
+
+let add = function (a, b) &#123;
+    return a + b;
+&#125;
+
+let add = (a, b) =&gt; &#123;
+    return a + b;
+&#125;
+</code></pre>
+<h3 id="返回值"><a class="header-anchor" href="#返回值">¶</a>返回值</h3>
+<p>如果未定义返回值，则返回<code>undefined</code>。</p>
+<h2 id="类"><a class="header-anchor" href="#类">¶</a>类</h2>
+<p>与C++中的Class类似。但是不存在私有成员。</p>
+<ul>
+<li>
+<p><code>this</code>指向类的实例。</p>
+<h3 id="定义"><a class="header-anchor" href="#定义">¶</a>定义</h3>
+<pre><code class="language-javascript">class Point &#123;
+
+      constructor(x, y) &#123;  // 构造函数
+
+          this.x = x;  // 成员变量
+
+          this.y = y;
+
+        this.init();
+    &#125;
+    
+    init() &#123;
+        this.sum = this.x + this.y;  // 成员变量可以在任意的成员函数中定义
+    &#125;
+    
+    toString() &#123;  // 成员函数
+        return '(' + this.x + ', ' + this.y + ')';
+    &#125;
+
+&#125;
+
+let p = new Point(3, 4);//用new关键字创建
+console.log(p.toString());
+</code></pre>
+<h3 id="继承"><a class="header-anchor" href="#继承">¶</a>继承</h3>
+<pre><code class="language-javascript"> class ColorPoint extends Point &#123;
+      constructor(x, y, color) &#123;
+          super(x, y); // 这里的super表示父类的构造函数
+          this.color = color;
+      &#125;
+
+    toString() &#123;
+        return this.color + ' ' + super.toString(); // 调用父类的toString()
+    &#125;
+
+&#125;
+</code></pre>
+</li>
+</ul>
+<h3 id="注意："><a class="header-anchor" href="#注意：">¶</a>注意：</h3>
+<ul>
+<li>
+<p><code>super</code>这个关键字，既可以当作函数使用，也可以当作对象使用。</p>
+<p>​		作为函数调用时，代表父类的构造函数，且只能用在子类的构造函数之中。</p>
+</li>
+</ul>
+<p>​				<code>super</code>作为对象时，指向父类的原型对象。</p>
+<p>​			   在每次继承父函数后，必须要先使用super调用一下，并且this这个属性必须在super之后调用</p>
+<ul>
+<li>
+<p>在子类的构造函数中，<u>只有调用<code>super</code>之后，才可以使用<code>this</code>关键字</u>。</p>
+</li>
+<li>
+<p>成员重名时，子类的成员会覆盖父类的成员。类似于C++中的多态。</p>
+</li>
+<li>
+<p>在子类的构造函数中，<u>只有调用super之后，才可以使用this关键字</u>。</p>
+</li>
+<li>
+<p>成员重名时，子类的成员会覆盖父类的成员。类似于JAVA中的多态。</p>
+</li>
+<li>
+<p>js的调用具有一定的惰性，只有调用的时候，有错误的函数才会报错</p>
+</li>
+<li>
+<p>用在构造器里面的super指代父类的构造函数，用在其他成员里的super指代子类的对象</p>
+</li>
+</ul>
+<h3 id="静态方法"><a class="header-anchor" href="#静态方法">¶</a>静态方法</h3>
+<p>在成员函数前添加<code>static</code>关键字即可。静态方法不会被类的实例继承，只能通过类来调用，但是静态成员函数是可以被继承的，静态成员变量可以被子类调用。例如：</p>
+<pre><code class="language-javascript">class Point &#123;
+    constructor(x, y) &#123;
+        this.x = x;
+        this.y = y;
+    &#125;
+
+    toString() &#123;
+        return '(' + this.x + ', ' + this.y + ')';
+    &#125;
+    
+    static print_class_name() &#123;
+        console.log(&quot;Point&quot;);
+    &#125;
+
+&#125;
+
+let p = new Point(1, 2);
+Point.print_class_name();
+p.print_class_name();  // 会报错
+</code></pre>
+<h3 id="静态变量"><a class="header-anchor" href="#静态变量">¶</a>静态变量</h3>
+<p>在ES6中，只能通过<code>class.propname</code>定义和访问。例如：</p>
+<pre><code class="language-javascript">class Point &#123;
+    constructor(x, y) &#123;
+        this.x = x;
+        this.y = y;
+
+        Point.cnt++;
+    &#125;
+    
+    toString() &#123;
+        return '(' + this.x + ', ' + this.y + ')';
+    &#125;
+
+&#125;
+
+Point.cnt = 0;
+
+let p = new Point(1, 2);
+let q = new Point(3, 4);
+
+console.log(Point.cnt);
+</code></pre>
+<h2 id="事件"><a class="header-anchor" href="#事件">¶</a>事件</h2>
+<p>JavaScript的代码一般通过事件触发。</p>
+<p>可以通过<code>addEventListener</code>函数为元素绑定事件的触发函数。</p>
+<p>常见的触发函数有：</p>
+<h3 id="鼠标"><a class="header-anchor" href="#鼠标">¶</a>鼠标</h3>
+<ul>
+<li><code>click</code>：鼠标左键点击</li>
+<li><code>dblclick</code>：鼠标左键双击</li>
+<li><code>contextmenu</code>：鼠标右键点击（理解为触发右键）</li>
+<li><code>mousedown</code>：鼠标按下，包括左键、滚轮、右键</li>
+</ul>
+<p>​			<code>event.button</code>：0表示左键，1表示中键，2表示右键</p>
+<ul>
+<li>
+<p><code>mouseup</code>：鼠标弹起，包括左键、滚轮、右键</p>
+</li>
+<li>
+<p>mouseup：鼠标弹起，包括左键、滚轮、右键</p>
+</li>
+</ul>
+<p>​			<code>event.button</code>：0表示左键，1表示中键，2表示右键</p>
+<pre><code class="language-javascript">//可以对定义的div添加事件，首先需要获取
+let div = document.querySelector('div');
+
+let manner = function () &#123;
+    // 前面的是触发事件的类型，后面的添加对应的函数
+    div.addEventListener(&quot;contextmenu&quot;,function(event)&#123;
+        console.log(event.type)
+    &#125;);
+&#125;
+
+//将函数暴露出去的函数
+export &#123;
+    manner,
+&#125;
+</code></pre>
+<p>使元素获得感触到事件的前提是能够聚焦，比如<code>div</code>可以使用<code>tabindex</code>属性</p>
+<h3 id="键盘"><a class="header-anchor" href="#键盘">¶</a>键盘</h3>
+<ul>
+<li>
+<p><code>keydown</code>：某个键是否被按住，事件会连续触发</p>
+<p>​		<code>event.code</code>：返回按的是哪个键</p>
+<p>​		<code>event.altKey</code>、<code>event.ctrlKey</code>、<code>event.shiftKey</code>分别表示是否同时按下了<code>alt</code>、<code>ctrl</code>、<code>shift</code>键。</p>
+</li>
+<li>
+<p><code>keyup</code>：某个按键是否被释放</p>
+<p>​		<code>event</code>常用属性同上</p>
+</li>
+<li>
+<p><code>keypress</code>：紧跟在<code>keydown</code>事件后触发，只有按下字符键时触发。适用于判定用户输入的字符。</p>
+<p>​		<code>event</code>常用属性同上</p>
+<p><code>keydown</code>、<code>keyup</code>、<code>keypress</code>的关系类似于鼠标的<code>mousedown</code>、<code>mouseup</code>、<code>click</code></p>
+</li>
+</ul>
+<h3 id="表单"><a class="header-anchor" href="#表单">¶</a>表单</h3>
+<ul>
+<li><code>focus</code>：聚焦某个元素</li>
+<li><code>blur</code>：取消聚焦某个元素</li>
+<li><code>change</code>：某个元素的内容发生了改变</li>
+</ul>
+<h3 id="窗口"><a class="header-anchor" href="#窗口">¶</a>窗口</h3>
+<p>需要作用到<code>window</code>元素上。</p>
+<p>`resize：当窗口大小放生变化</p>
+<p><code>scroll</code>：滚动指定的元素</p>
+<p><code>load</code>：当元素被加载完成</p>
+<h2 id="常用库"><a class="header-anchor" href="#常用库">¶</a>常用库</h2>
+<h3 id="jQuery"><a class="header-anchor" href="#jQuery">¶</a>jQuery</h3>
+<h4 id="使用方式-v2"><a class="header-anchor" href="#使用方式-v2">¶</a>使用方式</h4>
+<ul>
+<li>在<code>&lt;head&gt;</code>元素中添加：</li>
+</ul>
+<pre><code class="language-javascript">&lt;script src=&quot;https://cdn.acwing.com/static/jquery/js/jquery-3.3.1.min.js&quot;&gt;&lt;/script&gt;
+</code></pre>
+<ul>
+<li>
+<p>按jQuery官网提示下载</p>
+<h4 id="选择器"><a class="header-anchor" href="#选择器">¶</a>选择器</h4>
+<p><code>$(selector)</code>，例如：</p>
+</li>
+</ul>
+<pre><code class="language-javascript">$('div');
+$('.big-div');
+$('div &gt; p')
+</code></pre>
+<p>selector类似于CSS选择器。</p>
+<h4 id="事件-v2"><a class="header-anchor" href="#事件-v2">¶</a>事件</h4>
+<p><code>$(selector).on(event, func)</code>绑定事件，例如：</p>
+<pre><code class="language-javascript">$('div').on('click', function (e) &#123;
+    console.log(&quot;click div&quot;);
+&#125;)
+</code></pre>
+<p><code>$(selector).off(event, func</code>)删除事件，例如：</p>
+<pre><code class="language-js">$('div').on('click', function (e) &#123;
+    console.log(&quot;click div&quot;);
+
+$('div').off('click');
+
+&#125;);
+</code></pre>
+<p>当存在多个相同类型的事件触发函数时，可以通过<code>click.name</code>来区分，例如：</p>
+<pre><code class="language-javascript">$('div').on('click.first', function (e) &#123;
+    console.log(&quot;click div&quot;);
+
+$('div').off('click.first');
+
+&#125;);
+</code></pre>
+<p>在事件触发的函数中的<code>return false</code>等价于同时执行：</p>
+<ul>
+<li><code>e.stopPropagation()</code>：阻止事件向上传递，父标签的事件不再触发</li>
+<li><code>e.preventDefault()</code>：阻止事件的默认行为</li>
+</ul>
+<p>也可以不使用<code>on</code>，使用<code>click</code>，但是<code>click</code>不能改名字</p>
+<h4 id="元素的隐藏、展现"><a class="header-anchor" href="#元素的隐藏、展现">¶</a>元素的隐藏、展现</h4>
+<p>单位都是毫秒</p>
+<ul>
+<li><code>$A.hide()</code>：隐藏，可以添加参数，表示消失时间</li>
+<li><code>$A.show()</code>：展现，可以添加参数，表示出现时间</li>
+<li><code>$A.fadeOut()</code>：慢慢消失，可以添加参数，表示消失时间</li>
+<li><code>$A.fadeIn()</code>：慢慢出现，可以添加参数，表示出现时间</li>
+</ul>
+<h4 id="元素的添加、删除"><a class="header-anchor" href="#元素的添加、删除">¶</a>元素的添加、删除</h4>
+<ul>
+<li><code>$('&lt;div class=&quot;mydiv&quot;&gt;&lt;span&gt;Hello World&lt;/span&gt;&lt;/div&gt;')</code>：构造一个jQuery对象</li>
+<li><code>$A.append($B)</code>：将$B添加到$A的末尾</li>
+<li><code>$A.prepend($B)</code>：将$B添加到$A的开头</li>
+<li><code>$A.remove()</code>：删除元素$A</li>
+<li><code>$A.empty()</code>：清空元素$A的所有儿子</li>
+</ul>
+<h4 id="对类的操作"><a class="header-anchor" href="#对类的操作">¶</a>对类的操作</h4>
+<ul>
+<li><code>$A.addClass(class_name)</code>：添加某个类</li>
+<li><code>$A.removeClass(class_name)</code>：删除某个类</li>
+<li><code>$A.hasClass(class_name)</code>：判断某个类是否存在</li>
+</ul>
+<h4 id="对CSS的操作"><a class="header-anchor" href="#对CSS的操作">¶</a>对CSS的操作</h4>
+<ul>
+<li>
+<p><code>$(&quot;div&quot;).css(&quot;background-color&quot;)</code>：获取某个CSS的属性</p>
+</li>
+<li>
+<p><code>$(&quot;div&quot;).css(&quot;background-color&quot;,&quot;yellow&quot;)</code>：设置某个CSS的属性</p>
+<p>同时设置多个CSS的属性（传入一个对象进去）：</p>
+</li>
+</ul>
+<pre><code class="language-javascript">$('div').css(&#123;
+    width: &quot;200px&quot;,
+    height: &quot;200px&quot;,
+    &quot;background-color&quot;: &quot;orange&quot;,//若属性中包含‘-’，可能出现歧义，故需要把属性名括起来
+&#125;);
+</code></pre>
+<h4 id="对标签属性的操作"><a class="header-anchor" href="#对标签属性的操作">¶</a>对标签属性的操作</h4>
+<p>也可是自定义属性的值</p>
+<p><code>$('div').attr('id')</code>：获取属性<br>
+<code>$('div').attr('id', 'ID')</code>：设置属性</p>
+<h4 id="对HTML内容、文本的操作"><a class="header-anchor" href="#对HTML内容、文本的操作">¶</a>对HTML内容、文本的操作</h4>
+<p>不需要背每个标签该用哪种，用到的时候Google或者百度即可。</p>
+<p><u>不加参数是获取，加上参数是修改</u></p>
+<p><code>$A.html()</code>：获取、修改HTML内容<br>
+<code>$A.text()</code>：获取、修改文本信息<br>
+<code>$A.val()</code>：获取、修改文本的值</p>
+<h4 id="查找"><a class="header-anchor" href="#查找">¶</a>查找</h4>
+<ul>
+<li><code>$(selector).parent(filter)</code>：查找父元素</li>
+<li><code>$(selector).parents(filter)</code>：查找所有祖先元素</li>
+<li><code>$(selector).children(filter)</code>：在所有子元素中查找</li>
+<li><code>$(selector).find(filter)</code>：在所有后代元素中查找</li>
+</ul>
+<h4 id="ajax"><a class="header-anchor" href="#ajax">¶</a>ajax</h4>
+<h5 id="GET方法："><a class="header-anchor" href="#GET方法：">¶</a>GET方法：</h5>
+<pre><code class="language-javascript">$.ajax(&#123;
+    url: url,
+    type: &quot;GET&quot;,
+    data: &#123;
+    &#125;,
+    dataType: &quot;json&quot;,
+    success: function (resp) &#123;
+&#125;,
+
+&#125;);
+</code></pre>
+<h5 id="POST方法："><a class="header-anchor" href="#POST方法：">¶</a>POST方法：</h5>
+<pre><code class="language-javascript">$.ajax(&#123;
+    url: url,
+    type: &quot;POST&quot;,
+    data: &#123;
+    &#125;,
+    dataType: &quot;json&quot;,
+    success: function (resp) &#123;
+&#125;,
+
+&#125;);
+</code></pre>
+<h3 id="setTimeout与setInterval"><a class="header-anchor" href="#setTimeout与setInterval">¶</a>setTimeout与setInterval</h3>
+<p><code>setTimeout(func, delay)</code><br>
+<code>delay</code>毫秒后，执行函数<code>func()</code>。</p>
+<h4 id="clearTimeout"><a class="header-anchor" href="#clearTimeout">¶</a>clearTimeout()</h4>
+<p>关闭定时器，例如：</p>
+<p>定时器函数返回值是一个唯一的id，可以通过id对其进行关闭</p>
+<pre><code class="language-javascript">let timeout_id = setTimeout(() =&gt; &#123;
+    console.log(&quot;Hello World!&quot;)
+&#125;, 2000);  // 2秒后在控制台输出&quot;Hello World&quot;
+
+clearTimeout(timeout_id);  // 清除定时器
+</code></pre>
+<h4 id="setInterval-func-delay"><a class="header-anchor" href="#setInterval-func-delay">¶</a>setInterval(func, delay)</h4>
+<p>每隔<code>delay</code>毫秒，执行一次函数<code>func()</code>。<br>
+第一次在第<code>delay</code>毫秒后执行。</p>
+<h4 id="clearInterval"><a class="header-anchor" href="#clearInterval">¶</a>clearInterval()</h4>
+<p>关闭周期执行的函数，例如：</p>
+<pre><code class="language-javascript">let interval_id = setInterval(() =&gt; &#123;
+    console.log(&quot;Hello World!&quot;)
+&#125;, 2000);  // 每隔2秒，输出一次&quot;Hello World&quot;
+
+clearInterval(interval_id);  // 清除周期执行的函数
+</code></pre>
+<h3 id="requestAnimationFrame"><a class="header-anchor" href="#requestAnimationFrame">¶</a>requestAnimationFrame</h3>
+<p><code>requestAnimationFrame(func)</code><br>
+该函数会在下次浏览器刷新页面之前执行一次，通常会用递归写法使其每秒执行60次<code>func</code>函数。调用时会传入一个参数，表示函数执行的时间戳，单位为毫秒。</p>
+<p>例如：</p>
+<pre><code class="language-js">let step = (timestamp) =&gt; &#123;  // 每帧将div的宽度增加1像素
+    let div = document.querySelector('div');
+    div.style.width = div.clientWidth + 1 + 'px';
+    requestAnimationFrame(step);
+&#125;;
+requestAnimationFrame(step);
+</code></pre>
+<p>与<code>setTimeout</code>和<code>setInterval</code>的区别：</p>
+<p><code>requestAnimationFrame</code>渲染动画的效果更好，性能更加。</p>
+<p>该函数可以保证每两次调用之间的时间间隔相同，但<code>setTimeout</code>与<code>setInterval</code>不能保证这点。<code>setTmeout</code>两次调用之间的间隔包含回调函数的执行时间；<code>setInterval</code>只能保证按固定时间间隔将回调函数压入栈中，前端js是单线程执行，但具体的执行时间间隔仍然受回调函数的执行时间影响。</p>
+<p>当页面在后台时，因为页面不再渲染，因此<code>requestAnimationFrame</code>不再执行。但<code>setTimeout</code>与<code>setInterva</code>函数会继续执行。</p>
+<p><img src="/images/requestAnimationFrame.png" alt="image-20221014140838312">如果想要获取或者继续调用每一帧执行的<code>requestAnimationFrame</code>函数，必须保证<code>func_id</code>是被实时更新得到的，否则每次帧率更新都会返回一个新的函数id</p>
+<h3 id="Map与Set"><a class="header-anchor" href="#Map与Set">¶</a>Map与Set</h3>
+<h4 id="Map"><a class="header-anchor" href="#Map">¶</a>Map</h4>
+<p>Map 对象保存键值对。</p>
+<ul>
+<li>用<code>for...of</code>或者<code>forEach</code>可以按插入顺序遍历。</li>
+</ul>
+<p><img src="/images/js_map.png" alt="image-20221014142135640"></p>
+<ul>
+<li>键值可以为任意值，包括函数、对象或任意基本类型。</li>
+</ul>
+<p>常用API：</p>
+<ul>
+<li><code>set(key, value)</code>：插入键值对，如果<code>key</code>已存在，则会覆盖原有的value</li>
+<li><code>get(key)</code>：查找关键字，如果不存在，返回<code>undefined</code></li>
+<li><code>size</code>：返回键值对数量</li>
+<li><code>has(key)</code>：返回是否包含关键字<code>key</code></li>
+<li><code>delete(key)</code>：删除关键字<code>key</code></li>
+<li><code>clear()</code>：删除所有元素</li>
+</ul>
+<h4 id="Set"><a class="header-anchor" href="#Set">¶</a>Set</h4>
+<p><code>Set</code> 对象允许你存储任何类型的唯一值，无论是原始值或者是对象引用。</p>
+<ul>
+<li>
+<p>用<code>for...of</code>或者<code>forEach</code>可以按插入顺序遍历。</p>
+<p>常用API：</p>
+</li>
+<li>
+<p><code>add()</code>：添加元素</p>
+</li>
+<li>
+<p><code>has()</code>：返回是否包含某个元素</p>
+</li>
+<li>
+<p><code>size</code>：返回元素数量</p>
+</li>
+<li>
+<p><code>delete()</code>：删除某个元素</p>
+</li>
+<li>
+<p><code>clear()</code>：删除所有元素</p>
+</li>
+</ul>
+<h3 id="localStorage"><a class="header-anchor" href="#localStorage">¶</a>localStorage</h3>
+<p>可以在用户的浏览器上存储键值对。</p>
+<p>常用API：</p>
+<ul>
+<li>
+<p><code>setItem(key, value)</code>：插入</p>
+</li>
+<li>
+<p><code>getItem(key)</code>：查找</p>
+</li>
+<li>
+<p><code>removeItem(key)</code>：删除</p>
+</li>
+<li>
+<p><code>clear()</code>：清空</p>
+<h3 id="JSON"><a class="header-anchor" href="#JSON">¶</a>JSON</h3>
+</li>
+</ul>
+<p>JSON对象用于序列化对象、数组、数值、字符串、布尔值和null。</p>
+<p>常用API：</p>
+<ul>
+<li><code>JSON.parse()</code>：将字符串解析成对象</li>
+<li><code>JSON.stringify()</code>：将对象转化为字符串</li>
+</ul>
+<h3 id="日期"><a class="header-anchor" href="#日期">¶</a>日期</h3>
+<p>返回值为整数的API，数值为<code>1970-1-1 00:00:00 UTC</code>（世界标准时间）到某个时刻所经过的毫秒数：</p>
+<ul>
+<li><code>Date.now()</code>：返回现在时刻。</li>
+<li><code>Date.parse(&quot;2022-04-15T15:30:00.000+08:00&quot;)</code>：返回北京时间2022年4月15日 15:30:00的时刻。</li>
+</ul>
+<h4 id="与Date对象的实例相关的API："><a class="header-anchor" href="#与Date对象的实例相关的API：">¶</a>与Date对象的实例相关的API：</h4>
+<ul>
+<li>
+<p><code>new Date()</code>：返回现在时刻。</p>
+</li>
+<li>
+<p><code>new Date(&quot;2022-04-15T15:30:00.000+08:00&quot;)</code>：返回北京时间2022年4月15日 15:30:00的时刻。</p>
+</li>
+<li>
+<p>两个<code>Date</code>对象实例的差值为毫秒数</p>
+</li>
+<li>
+<p><code>getDay()</code>：返回星期，0表示星期日，1-6表示星期一至星期六</p>
+</li>
+<li>
+<p><code>getDate()</code>：返回日，数值为1-31</p>
+</li>
+<li>
+<p><code>getMonth()</code>：返回月，数值为0-11</p>
+</li>
+<li>
+<p><code>getFullYear()</code>：返回年份</p>
+</li>
+<li>
+<p><code>getHours()</code>：返回小时</p>
+</li>
+<li>
+<p><code>getMinutes()</code>：返回分钟</p>
+</li>
+<li>
+<p><code>getSeconds()</code>：返回秒</p>
+</li>
+<li>
+<p><code>getMilliseconds()</code>：返回毫秒</p>
+<h3 id="WebSocket"><a class="header-anchor" href="#WebSocket">¶</a>WebSocket</h3>
+</li>
+</ul>
+<p>与服务器建立全双工连接。</p>
+<p>常用API：</p>
+<ul>
+<li><code>new WebSocket('ws://localhost:8080')</code>;：建立ws连接。</li>
+<li><code>send()</code>：向服务器端发送一个字符串。一般用JSON将传入的对象序列化为字符串。</li>
+<li><code>onopen</code>：类似于<code>onclick</code>，当连接建立时触发。</li>
+<li><code>onmessage</code>：当从服务器端接收到消息时触发。</li>
+<li><code>close()</code>：关闭连接。</li>
+<li><code>onclose</code>：当连接关闭后触发。</li>
+</ul>
+<h3 id="window"><a class="header-anchor" href="#window">¶</a>window</h3>
+<ul>
+<li><code>window.open(&quot;https://www.acwing.com&quot;)</code>在新标签栏中打开页面。</li>
+<li><code>location.reload()</code>刷新页面。</li>
+<li><code>location.href = &quot;https://www.acwing.com&quot;</code>：在当前标签栏中打开页面。</li>
+</ul>
+<h3 id="canvas"><a class="header-anchor" href="#canvas">¶</a>canvas</h3>
+<p><a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/API/Canvas_API/Tutorial">Canvas 教程 - Web API 接口参考 | MDN (mozilla.org)</a></p>
+
+    </div>
+    
+</div>
+                         
+
+
+<footer id="footer">
+    
+
+    <div class="footer-wrap">
+        <div>
+            © 2022 - 2022 Albatross&amp;blog
+            <span class="footer-icon">
+                <i class="fa-solid fa-font-awesome fa-fw"></i>
+            </span>
+            @Albatross
+        </div>
+
+        <div></div>
+        <div>Based on the <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo Engine</a> & <a
+                target="_blank" rel="noopener" href="https://github.com/argvchs/hexo-theme-particlex">ParticleX Theme</a></div>
+        
+    </div>
+    <!--这一段是不蒜子的访问量统计代码-->
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+    </script>
+ 
+    <span id="busuanzi_value_page_pv"><i class="fa fa-spinner"></i></span> Hits   
+</footer>
+
+
+                        
+                    </div>
+                </div>
+            </transition>
+            <div id="img_show">
+                <img id="img_content" alt="img_show">
+            </div>
+        </div>
+        <script src="https://cdn.staticfile.org/highlight.js/11.5.1/highlight.min.js"></script>
+        <script src="/js/particlex.js"></script>
+        <script src="/js/showimg.js"></script>
+        
+        
+
+    <script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/wanko.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"log":false});</script></body>
+    <canvas
+        id="background"
+        style="position:fixed;top:0;left:0;width:100vw;height:100vh;pointer-events:none;z-index:-1"
+    ></canvas>
+    <script src="/js/background.js"></script>
+    <div id="cursor"></div>
+<script src="/css/cursor.css"></script>
+<script src="/js/cursor.js"></script>
+</html>

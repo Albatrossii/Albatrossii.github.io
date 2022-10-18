@@ -1,0 +1,509 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0">
+        <title>Python学习笔记（3）-函数（1） | Albatross&amp;blog</title>
+        <meta name="author" content="Albatross">
+        <meta name="description" content="">
+        <meta name="keywords" content="吃喝玩睡ing">
+        <link rel="icon" href="/images/c.jpg">
+        <script src="https://cdn.staticfile.org/instant.page/5.1.0/instantpage.min.js" type="module"></script>
+        <script src="https://cdn.staticfile.org/font-awesome/6.1.1/js/all.min.js"></script>
+        
+        </script>
+        
+        <link rel="stylesheet" href="/css/fonts.min.css">
+        <link rel="stylesheet" href="/css/particlex.css">
+        
+        <script src="https://cdn.staticfile.org/vue/3.2.33/vue.global.prod.min.js"></script>
+       
+    <meta name="generator" content="Hexo 6.2.0"><link rel="alternate" href="/atom.xml" title="Albatross&blog" type="application/atom+xml">
+</head>
+    <body>
+
+        <div id="loading" style="height:100vh;width:100vw;position:fixed;display:flex;z-index:200;justify-content:space-between;background:#fff;transition:opacity 0.3s ease-out"><div style="position:fixed;height:100vh;width:100vw;display:flex;justify-content:center;align-items:center"><div id="loadcontent" style="width:50vmin;height:50vmin;padding:50px;border-radius:50%;display:flex;justify-content:center;align-items:center;border:solid 10px #a3ddfb;text-align:center"><div><h2>LOADING...</h2><p style="word-break:keep-all">加载过慢请开启缓存(浏览器默认开启)</p><div><img alt="loading" src="/loading.gif"></div></div></div></div></div>
+        <div id="layout">
+            <i data-fa-symbol="calendar-solid" class="fa-solid fa-calendar fa-fw"></i>
+            <i data-fa-symbol="bookmark-solid" class="fa-solid fa-bookmark fa-fw"></i>
+            <i data-fa-symbol="tags-solid" class="fa-solid fa-tags fa-fw"></i>
+            <transition name="into">
+                <div v-show="show_page" style="display: -not-none">
+                    <div id="menu_show">
+                         
+<nav id="menu">
+    <div class="desktop-menu">
+        <a href="/">
+            <span class="title">Albatross&blog</span>
+        </a>
+        
+        <a href="/">
+            <i class="fa-solid fa-house fa-fw"></i>
+            <span>&ensp;home</span>
+        </a>
+        
+        <a href="/about">
+            <i class="fa-solid fa-id-card fa-fw"></i>
+            <span>&ensp;about</span>
+        </a>
+        
+        <a href="/archives">
+            <i class="fa-solid fa-box-archive fa-fw"></i>
+            <span>&ensp;archives</span>
+        </a>
+        
+        <a href="/categories">
+            <i class="fa-solid fa-bookmark fa-fw"></i>
+            <span>&ensp;categories</span>
+        </a>
+        
+        <a href="/tags">
+            <i class="fa-solid fa-tags fa-fw"></i>
+            <span>&ensp;tags</span>
+        </a>
+        
+    </div>
+    <div :class="'phone-menu ' + menu_show" id="phone-menu">
+        <div class="curtain" @click="menu_show = !menu_show" v-show="menu_show"></div>
+        <div :class="'title'" @click="menu_show = !menu_show">
+            <i class="fa-solid fa-bars fa-fw"></i>
+            <span>&emsp;Albatross&blog</span>
+        </div>
+        <transition name="slide">
+        <div class="items" v-show="menu_show">
+            
+            <a href="">
+                <div class="item">
+                    <div style="min-width: 20px; max-width: 50px; width: 10%">
+                        <i class="fa-solid fa-house fa-fw"></i>
+                    </div>
+                    <div style="min-width: 100px; max-width: 150%; width: 20%">home</div>
+                </div>
+            </a>
+            
+            <a href="about">
+                <div class="item">
+                    <div style="min-width: 20px; max-width: 50px; width: 10%">
+                        <i class="fa-solid fa-id-card fa-fw"></i>
+                    </div>
+                    <div style="min-width: 100px; max-width: 150%; width: 20%">about</div>
+                </div>
+            </a>
+            
+            <a href="archives">
+                <div class="item">
+                    <div style="min-width: 20px; max-width: 50px; width: 10%">
+                        <i class="fa-solid fa-box-archive fa-fw"></i>
+                    </div>
+                    <div style="min-width: 100px; max-width: 150%; width: 20%">archives</div>
+                </div>
+            </a>
+            
+            <a href="categories">
+                <div class="item">
+                    <div style="min-width: 20px; max-width: 50px; width: 10%">
+                        <i class="fa-solid fa-bookmark fa-fw"></i>
+                    </div>
+                    <div style="min-width: 100px; max-width: 150%; width: 20%">categories</div>
+                </div>
+            </a>
+            
+            <a href="tags">
+                <div class="item">
+                    <div style="min-width: 20px; max-width: 50px; width: 10%">
+                        <i class="fa-solid fa-tags fa-fw"></i>
+                    </div>
+                    <div style="min-width: 100px; max-width: 150%; width: 20%">tags</div>
+                </div>
+            </a>
+            
+        </div>
+        </transition>
+    </div>
+    <canvas
+    id="background"
+    style="position:fixed;top:0;left:0;width:100vw;height:100vh;pointer-events:none;z-index:-1"
+></canvas>
+<script src="/js/background.js"></script>
+</nav>
+
+
+                    </div>
+                    <div id="main">
+                        
+<div class="article">
+    <div>
+        <h1>Python学习笔记（3）-函数（1） </h1>
+    </div>
+    <div class="info">
+        <span class="date">
+            <span class="icon">
+                <svg class="fa-icon"><use xlink:href="#calendar-solid"></use></svg>
+            </span>
+            2022/9/30
+        </span>
+        
+        <span class="category">
+            <a href="/categories/语言学习/">
+                <span class="icon">
+                    <svg class="fa-icon"><use xlink:href="#bookmark-solid"></use></svg>
+                </span>
+                语言学习
+            </a>
+        </span>
+        
+        
+        <span class="tags">
+            <span class="icon">
+                <svg class="fa-icon"><use xlink:href="#tags-solid"></use></svg>
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/PYTHON/" style="color: #00bcd4">
+                    PYTHON
+                </a>
+            </span>
+            
+        </span>
+        
+    </div>
+    <div class="content" v-pre>
+        <p>最近在学py，简单记录一下笔记</p>
+<span id="more"></span>
+<h3 id="初识函数"><a class="header-anchor" href="#初识函数">¶</a>初识函数</h3>
+<p>函数: 对代码块和功能的封装和定义</p>
+<p>在<code>py</code>中定义函数的方法：</p>
+<pre><code class="language-python">def 函数名():
+    函数体
+</code></pre>
+<p>函数名的命名规则和使用和变量基本一样</p>
+<p>函数体: 就是函数被执行之后要执行的代码</p>
+<p>函数的调用: 使用函数名可以调用函数, 写法: 函数名(), 这个时候函数的函数体会被执行</p>
+<h3 id="函数的返回值"><a class="header-anchor" href="#函数的返回值">¶</a>函数的返回值</h3>
+<p>执行完函数之后. 我们可以使用return来返回结果.</p>
+<p>函数中return的使用:</p>
+<ol>
+<li>
+<p>函数中遇到return, 此函数结束, 不再继续执行.</p>
+</li>
+<li>
+<p>给函数的调用者一个访问结果</p>
+</li>
+<li>
+<p>函数的返回值可以有多个结果,调用者可以接收一个tuple, 调用者可以直接解构成多个变量</p>
+</li>
+<li>
+<p>如果return什么都不写 或者 干脆不写return .那么返回的就是None</p>
+</li>
+</ol>
+<h3 id="函数的参数"><a class="header-anchor" href="#函数的参数">¶</a>函数的参数</h3>
+<p>参数, 函数在调用的时候指定具体的一个变量的值. 就是参数.  语法:</p>
+<pre><code class="language-python">def 函数名(参数列表):
+    函数体
+</code></pre>
+<p>关于参数:</p>
+<ol>
+<li>形参</li>
+</ol>
+<p>写在函数声明的位置的变量叫形参.  形式上的一个完整. 表示这个函数需要xxx</p>
+<ol start="2">
+<li>实参</li>
+</ol>
+<p>在函数调用的时候给函数传递的值. 叫实参, 实际执行的时候给函数传递的信息. 表示给函数xxx</p>
+<ol start="3">
+<li>传参</li>
+</ol>
+<p>给函数传递信息的时候将实际参数交给形式参数的过程被称为传参.</p>
+<h4 id="实参"><a class="header-anchor" href="#实参">¶</a>实参</h4>
+<h5 id="位置参数"><a class="header-anchor" href="#位置参数">¶</a>位置参数</h5>
+<pre><code class="language-python">def yue(chat, address, age):    # 形参
+    print(&quot;拿出手机&quot;)
+    print(&quot;打开&quot;+chat)
+    print(&quot;找到&quot;+address+&quot;附近的&quot;+str(age)+&quot;好友&quot;)
+
+yue(&quot;微信&quot;, &quot;北京&quot;, 18)    # 实参
+
+结果:
+拿出手机
+打开微信
+找到北京附近的18岁好友
+</code></pre>
+<p>按照位置的顺序分别把&quot;微信&quot;, “北京”, 18 赋值给 chat, address, age. 在传参过程中. 系统会默认按照位置把实参赋值到形参.</p>
+<h5 id="关键字参数"><a class="header-anchor" href="#关键字参数">¶</a>关键字参数</h5>
+<p>如果是少量的参数还算OK, 没有问题. 但是如果函数在定义的时候参数非常多怎么办? 程序员必须记住, 我有哪些参数, 而且还有记住每个参数的位置, 否则函数就不能正常调用了. 那则么办呢? python提出了一种叫做关键字参数. 我们不需要记住每个参数的位置. 只要记住每个参数的名字就可以了</p>
+<pre><code class="language-python">def yue(chat, address, age):    # 形参
+    print(&quot;拿出手机&quot;)
+    print(&quot;打开&quot;+chat)
+    print(&quot;找到&quot;+address+&quot;附近的&quot;+str(age)+&quot;好友&quot;)
+
+yue(chat=&quot;微信&quot;, age=18, address=&quot;北京)    # 实参
+
+结果:
+拿出手机
+打开微信
+找到北京附近的18岁好友
+</code></pre>
+<h5 id="混合参数"><a class="header-anchor" href="#混合参数">¶</a>混合参数</h5>
+<p>可以把上面两种参数混合着使用. 也就是说在调用函数的时候即可以给出位置参数, 也可以指定关键字参数.</p>
+<pre><code class="language-python">yue(&quot;微信&quot;, age=18, address=&quot;上海&quot;)    # 正确.第一个位置赋值给chat, 后面的参数开始指定关键字.
+yue(age=&quot;18&quot;, &quot;微信&quot;, address=&quot;广州&quot;)    # 错误, 最开始使用了关键字参数, 那么后面的微信的位置就串了, 容易出现混乱
+</code></pre>
+<p><u>在使用混合参数的时候, 关键字参数必须在位置参数后面</u></p>
+<h4 id="形参"><a class="header-anchor" href="#形参">¶</a>形参</h4>
+<p>在函数声明的位置编写的变量</p>
+<h5 id="位置参数-v2"><a class="header-anchor" href="#位置参数-v2">¶</a>位置参数</h5>
+<p>按照位置来赋值</p>
+<h5 id="默认值参数"><a class="header-anchor" href="#默认值参数">¶</a>默认值参数</h5>
+<p>在函数声明的时候, 就可以给出函数参数的默认值. 在调用的时候可以给出具体的值, 也可以不给值, 使用默认值.</p>
+<pre><code class="language-python">def stu_info(name, age, sex='男'):
+    print(&quot;录入学生信息&quot;)
+    print(name, age, sex)
+    print(&quot;录入完毕&quot;)
+
+stu_info(&quot;张强强&quot;, 18)
+</code></pre>
+<p><u>必须先声明位置参数, 才能声明默认值参数.</u></p>
+<p>如果默认值参数是一个可变的数据类型，会出现一点小问题</p>
+<pre><code class="language-python">def func(val,lst[]):
+	list.append(val)
+	print(lst)
+	
+func(1)	#第一次输出没有问题 [1]
+func(2)	#两次访问的是同一个列表 [1,2]
+func(3,[])	#[3] 
+</code></pre>
+<p>可变的数据类型,在每次使用的时候都被共享</p>
+<h5 id="动态传参"><a class="header-anchor" href="#动态传参">¶</a>动态传参</h5>
+<p><code>*</code>动态接收位置参数, 在参数位置编写表示接收任意内容，会被打包成元组</p>
+<pre><code class="language-python">def chi(*food):
+    print(&quot;我要吃&quot;, food)
+
+chi(&quot;大米饭&quot;, &quot;小米饭&quot;)
+
+结果:
+我要吃 ('大米饭', '小米饭')    # 多个参数传递进去. 收到的内容是元组tuple
+</code></pre>
+<p>动态接收参数的时候要注意: 动态参数必须在位置参数后面</p>
+<pre><code class="language-python">def chi(*food, a, b):
+    print(&quot;我要吃&quot;, food, a, b)
+
+chi(&quot;大米饭&quot;, &quot;小米饭&quot;, &quot;黄瓜&quot;, &quot;茄子&quot;)
+</code></pre>
+<p><strong>这时程序运行会报错. 因为前面传递进去的所有位置参数都被*food接收了. a和b永远接收不到参数</strong></p>
+<p>可以这样改写</p>
+<pre><code class="language-python">def chi(*food, a, b):
+    print(&quot;我要吃&quot;, food, a, b)
+
+chi(&quot;大米饭&quot;, &quot;小米饭&quot;, a=&quot;黄瓜&quot;, b=&quot;茄子&quot;)   # 必须用关键字参数来指定
+</code></pre>
+<p>或者先写位置参数，再用动态参数</p>
+<p><code>**</code>动态接收关键字参数</p>
+<p>在python中可以动态的位置参数, 但是*这种情况只能接收位置参数无法接收关键字参数. 在python中使用**来接收动态关键字参数</p>
+<pre><code class="language-python">def func(**kwargs):
+    print(kwargs)
+
+func(a=1, b=2, c=3)
+func(a=1, b=2)
+
+结果:
+&#123;'a': 1, 'b': 2, 'c': 3&#125;
+&#123;'a': 1, 'b': 2&#125;
+</code></pre>
+<p><strong>顺序的问题</strong>  在函数调用的时候, 如果先给出关键字参数, 则整个参数列表会报错.</p>
+<p>所以关键字参数必须在位置参数后面. 由于实参是这个顺序. 所以形参接收的时候也是这个顺序. 也就是说位置参数必须在关键字参数前面. 动态接收关键字参数也要在后面</p>
+<p>*<em>最终顺序(<em>重点):</em></em></p>
+<p>​     位置参数 &gt; <code> *args</code> &gt; 默认值参数 &gt; <code>**kwargs</code></p>
+<p>​     <strong>这四种参数可以任意的进行使用. 如果想接收所有的参数:</strong></p>
+<pre><code class="language-python">def func(*args, **kwargs):
+    print(args, kwargs)
+
+func(&quot;麻花藤&quot;,&quot;马晕&quot;,wtf=&quot;胡辣汤&quot;)
+</code></pre>
+<p>动态参数的另一种传参方式:</p>
+<pre><code class="language-python">def fun(*args):
+    print(args)
+
+
+lst = [1, 4, 7]
+fun(lst[0], lst[1], lst[2])
+
+fun(*lst)   # 可以使用*把一个列表按顺序打散
+s = &quot;臣妾做不到&quot;
+fun(*s)     # 字符串也可以打散, (可迭代对象)
+</code></pre>
+<p>在实参位置上给一个序列,列表,可迭代对象前面加个*表示把这个序列按顺序打散.</p>
+<p>在形参的位置上的* 表示把接收到的参数组合成一个元组</p>
+<p>如果是一个字典, 那么也可以打散. 不过需要用两个*</p>
+<pre><code class="language-python">def fun(**kwargs):
+    print(kwargs)
+
+dic = &#123;'a':1, 'b':2&#125;
+fun(**dic)
+</code></pre>
+<h4 id="函数的注释"><a class="header-anchor" href="#函数的注释">¶</a>函数的注释</h4>
+<pre><code class="language-python">def chi(food, drink):
+    &quot;&quot;&quot;
+    这里是函数的注释, 先写一下当前这个函数是干什么的, 比如我这个函数就是一个吃
+    :param food: 参数food是什么意思
+    :param drink: 参数drink是什么意思
+    :return: 返回的是什么东东
+    &quot;&quot;&quot;
+    print(food, drink)
+    return &quot;very good&quot;
+</code></pre>
+<h3 id="函数的嵌套和作用域"><a class="header-anchor" href="#函数的嵌套和作用域">¶</a>函数的嵌套和作用域</h3>
+<p>作用域: 一个变量能使用的作用范围</p>
+<p>仔细分析以下代码.</p>
+<pre><code class="language-python">a = 10  # 函数外面有个a
+def func():
+    a = 20  # 函数里面也有个a
+    print(a)  #  此时打印的结果?
+
+func()   #  此时打印的结果?
+</code></pre>
+<p>注意, 在python中. 你可以认为变量的使用是遵循就近原则的.</p>
+<p>在函数外面的变量被称为全局变量. 它的作用域是整个py文件.  在函数内部的变量被称为局部变量.作用范围仅限于函数内部.</p>
+<p>我们可以通过<code>globals()</code>和<code>locals()</code>查看全局和局部作用域中的内容</p>
+<pre><code class="language-python">a = 10
+def func():
+    a = 40
+    b = 20
+    def abc():
+        print(&quot;哈哈&quot;)
+    print(a, b)     # 这里使用的是局部作用域
+    print(globals())    # 打印全局作用域中的内容
+    print(locals())     # 打印局部作用域中的内容
+
+func()
+</code></pre>
+<p><code>globals()</code>查看全局作用域</p>
+<p><code>locals()</code>查看当前作用域</p>
+<p>函数与函数之间可以互相的调用. 也可以互相的嵌套</p>
+<pre><code class="language-python">def fun1():
+    print(111)
+   
+def fun2():
+    print(222)
+    fun1()
+   
+fun2()
+print(111)
+
+# 函数的嵌套
+def fun2():
+    print(222)
+    def fun3():
+        print(666)
+    print(444)
+    fun3()
+    print(888)
+    
+print(33)
+fun2()
+print(555)
+</code></pre>
+<h3 id="global和nonlocal关键字"><a class="header-anchor" href="#global和nonlocal关键字">¶</a>global和nonlocal关键字</h3>
+<pre><code class="language-python">a = 100
+def func():
+    a += 1  # 报错.  
+    print(a)
+
+func()
+print(a)
+</code></pre>
+<p>注意报错那句话</p>
+<p>这句话相当于a = a + 1 先计算右边. 右边会把全局变量a引入进来使用. 然后重新赋值给a. 但是，python中不允许函数内部改变外面变量的值. 这样做很不安全. python规定. 在函数内部想要修改全局变量. 必须使用global关键字把外面的变量引入才可以进行修改(赋值).</p>
+<pre><code class="language-python">a = 100
+def func():
+    global a
+    a += 1   
+    print(a)
+
+func()
+print(a) # 101
+</code></pre>
+<p>相同的. nonlocal也是一样的操作. 它负责在内层函数中引入外层函数的局部变量</p>
+<pre><code class="language-python">a = 10
+def func1():
+    a = 20
+    def func2():
+        nonlocal a #  有它没它两个结果
+        a = 30
+        print(a)
+    func2()
+    print(a)
+
+
+func1()
+
+结果:
+加了nonlocal
+30
+30
+不加nonlocal
+30
+20
+</code></pre>
+<p>python程序在加载的时候，会给解释器内置需要的一些变量加载，加载的位置叫内置名称空间</p>
+<p>接下来就开始执行自己的py文件，自己创建的这些变量统一放在全局名称空间中</p>
+<p>当程序执行到函数的时候，函数内部会有自己的变量，Python会为每一个正在执行的函数单独开辟内存，该内存被称为局部名称空间</p>
+<p><img src="/images/Python%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%883%EF%BC%89-%E5%87%BD%E6%95%B0%EF%BC%881.1%EF%BC%89.png" alt="image-20220929133108221"></p>
+<p><img src="/images/Python%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%883%EF%BC%89-%E5%87%BD%E6%95%B0%EF%BC%881.2%EF%BC%89.png" alt="image-20220929133501169"></p>
+
+    </div>
+    
+</div>
+                         
+
+
+<footer id="footer">
+    
+
+    <div class="footer-wrap">
+        <div>
+            © 2022 - 2022 Albatross&amp;blog
+            <span class="footer-icon">
+                <i class="fa-solid fa-font-awesome fa-fw"></i>
+            </span>
+            @Albatross
+        </div>
+
+        <div></div>
+        <div>Based on the <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo Engine</a> & <a
+                target="_blank" rel="noopener" href="https://github.com/argvchs/hexo-theme-particlex">ParticleX Theme</a></div>
+        
+    </div>
+    <!--这一段是不蒜子的访问量统计代码-->
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+    </script>
+ 
+    <span id="busuanzi_value_page_pv"><i class="fa fa-spinner"></i></span> Hits   
+</footer>
+
+
+                        
+                    </div>
+                </div>
+            </transition>
+            <div id="img_show">
+                <img id="img_content" alt="img_show">
+            </div>
+        </div>
+        <script src="https://cdn.staticfile.org/highlight.js/11.5.1/highlight.min.js"></script>
+        <script src="/js/particlex.js"></script>
+        <script src="/js/showimg.js"></script>
+        
+        
+
+    <script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/wanko.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"log":false});</script></body>
+    <canvas
+        id="background"
+        style="position:fixed;top:0;left:0;width:100vw;height:100vh;pointer-events:none;z-index:-1"
+    ></canvas>
+    <script src="/js/background.js"></script>
+    <div id="cursor"></div>
+<script src="/css/cursor.css"></script>
+<script src="/js/cursor.js"></script>
+</html>
