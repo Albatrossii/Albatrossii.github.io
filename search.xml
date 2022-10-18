@@ -1,594 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>C++ STL简介</title>
-    <url>/2022/09/05/C++%20STL%E7%AE%80%E4%BB%8B/</url>
-    <content><![CDATA[<p>C/C++常用stl及api用法</p>
-<span id="more"></span>
-<p>每个容器都有的api</p>
-<p><code>size() </code> 返回元素个数 O(1)</p>
-<p><code> empty()</code>  返回是否为空	O(1)</p>
-<p><code>clear()</code> 清空	队列无	O(n)</p>
-<h3 id="vector"><a class="header-anchor" href="#vector">¶</a>vector</h3>
-<p>vector, 变长数组，倍增的思想<br>
-<code>clear()</code>  清空<br>
-<code>front()/back()</code>取队头或者对位<br>
-<code>push_back()/pop_back()</code>  插入最后一个数\删除最后一个数<br>
-``begin()/end()`  迭代器</p>
-<p>​    支持比较运算，按字典序</p>
-<blockquote>
-<p>定义一个长度为n,ing且里面的每一个数字都初始化为m的vector数组</p>
-<p><code>vector&lt;int&gt; a(n,m)</code></p>
-<p>系统为某一程序分配空间时所需时间，与空间大小无关，与申请所需要的次数有关</p>
-<p>vector具有空间不足，自动扩容（倍增）的机制，并且完成自我复制</p>
-</blockquote>
-<h3 id="pair-int-int"><a class="header-anchor" href="#pair-int-int">¶</a>pair&lt;int, int&gt;</h3>
-<p>相当于二元结构体，并内置比较函数</p>
-<p>​    <code>first</code>, 第一个元素<br>
-​    <code>second</code>, 第二个元素<br>
-​    支持比较运算，以<code>first</code>为第一关键字，以<code>second</code>为第二关键字（字典序）</p>
-<h3 id="string，字符串"><a class="header-anchor" href="#string，字符串">¶</a>string，字符串</h3>
-<p>​    <code>length()</code>  返回字符串长度<br>
-​    <code>substr(起始下标，(子串长度))</code>  返回子串<br>
-<code>c_str()</code> 返回字符串所在字符数组的起始地址</p>
-<h3 id="queue-队列"><a class="header-anchor" href="#queue-队列">¶</a>queue, 队列</h3>
-<p><code>push()</code>  向队尾插入一个元素<br>
-<code>front()</code>  返回队头元素<br>
-<code>back()</code>  返回队尾元素<br>
-<code>pop()</code>  弹出队头元素</p>
-<h3 id="priority-queue"><a class="header-anchor" href="#priority-queue">¶</a>priority_queue</h3>
-<p>priority_queue, 优先队列，默认是大根堆</p>
-<p>​    <code>push()</code>  插入一个元素<br>
-<code>top()</code>  返回堆顶元素<br>
-​    <code>pop()</code>  弹出堆顶元素<br>
-​    定义成小根堆的方式：<code>priority_queue&lt;int, vector&lt;int&gt;, greater&lt;int&gt;&gt; q</code>;</p>
-<blockquote>
-<p>greater表示内置类型从大到小排序，less表示内置类型从小到大排序。</p>
-</blockquote>
-<h3 id="stack-栈"><a class="header-anchor" href="#stack-栈">¶</a>stack, 栈</h3>
-<p><code>push()</code>  向栈顶插入一个元素</p>
-<p><code> top()</code>  返回栈顶元素</p>
-<p><code> pop()</code>  弹出栈顶元素</p>
-<h3 id="deque-双端队列"><a class="header-anchor" href="#deque-双端队列">¶</a>deque, 双端队列</h3>
-<p>效率很低撒~</p>
-<p>​    <code>front()/back()</code><br>
-​    <code>push_back()/pop_back()</code><br>
-​    <code>push_front()/pop_front()</code><br>
-​    <code>begin()/end()</code><br>
-​</p>
-<h3 id="set-map-multiset-multimap"><a class="header-anchor" href="#set-map-multiset-multimap">¶</a>set, map, multiset, multimap</h3>
-<p>基于平衡二叉树（红黑树），动态维护有序序列</p>
-<p>​    <code>size()</code><br>
-​    <code>empty()</code><br>
-​    <code>clear()</code><br>
-​    <code>begin()/end()</code><br>
-​    <code>++, --</code> 返回前驱和后继，时间复杂度 O(logn)</p>
-<h4 id="set-multiset"><a class="header-anchor" href="#set-multiset">¶</a>set/multiset</h4>
-<p><code>insert()</code>  插入一个数</p>
-<p><code>find()</code>  查找一个数</p>
-<p><code>count()</code>  返回某一个数的个数</p>
-<p><code> erase()</code></p>
-<ol>
-<li>
-<p>输入一个数x，删除所有x	O(k+logn) k是个数</p>
-</li>
-<li>
-<p>输入一个迭代器，删除这个迭代器</p>
-</li>
-<li>
-<p>​        输入是一个数x，删除所有x   O(k + logn)</p>
-</li>
-<li>
-<p>​        输入一个迭代器，删除这个迭代器</p>
-</li>
-</ol>
-<p><code> lower_bound()/upper_bound()</code><br>
-<code>lower_bound(x)</code>  返回大于等于x的最小的数的迭代器<br>
-<code> upper_bound(x)</code>  返回大于x的最小的数的迭代器</p>
-<h4 id="map-multimap"><a class="header-anchor" href="#map-multimap">¶</a>map/multimap</h4>
-<p>​    <code>insert()</code>  插入的数是一个pair（表现为映射）<br>
-<code> erase()</code>  输入的参数是pair或者迭代器<br>
-​    <code>find()</code><br>
-​     注意multimap不支持此操作。 时间复杂度是 O(logn)<br>
-​    <code>lower_bound()/upper_bound()</code></p>
-<h4 id="unordered-set-unordered-map-unordered-multiset-unordered-multimap-哈希表"><a class="header-anchor" href="#unordered-set-unordered-map-unordered-multiset-unordered-multimap-哈希表">¶</a>unordered_set, unordered_map, unordered_multiset, unordered_multimap, 哈希表</h4>
-<p>​	内部无序</p>
-<p>​    和上面类似，增删改查的时间复杂度是 O(1)<br>
-​    不支持 <code>lower_bound()/upper_bound()</code>， 迭代器的++，–</p>
-<h3 id="bitset-圧位"><a class="header-anchor" href="#bitset-圧位">¶</a>bitset, 圧位</h3>
-<p>省八位空间</p>
-<blockquote>
-<p>bitset是一个多位二进制数，每八位占用一个字节，因为支持基本的位运算，所以可用于状态压缩，n位bitset执行一次位运算的时间复杂度可视为n/32.</p>
-<p><code>bitset&lt;10000&gt; s;</code></p>
-</blockquote>
-<p>支持的符号操作</p>
-<p><code> ~, &amp;, |, ^</code><br>
-<code> &gt;&gt;, &lt;&lt;</code><br>
-<code>==, !=</code></p>
-<p><code>count()</code>  返回有多少个1</p>
-<p><code>any()</code>  判断是否至少有一个1<br>
-<code>none()</code>  判断是否全为0</p>
-<p><code>set() </code> 把所有位置成1<br>
-<code>set(k, v)</code>  将第k位变成v<br>
-<code>reset()</code>  把所有位变成0<br>
-<code>flip()</code>  等价于~<br>
-<code>flip(k)</code> 把第k位取反</p>
-]]></content>
-      <categories>
-        <category>语言学习</category>
-      </categories>
-      <tags>
-        <tag>C/C++</tag>
-        <tag>others</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>KMP算法详解</title>
-    <url>/2022/08/27/KMP%E7%AE%97%E6%B3%95%E8%AF%A6%E8%A7%A3/</url>
-    <content><![CDATA[<p>几个月前学过一次kmp，因为太愚笨，没有搞明白暂时放弃了，这几天又开始看，终于搞明白了，再次记录一下我的理解😎</p>
-<span id="more"></span>
-<h3 id="BF算法-O-n-m"><a class="header-anchor" href="#BF算法-O-n-m">¶</a>BF算法 O(n*m)</h3>
-<p><strong>模式匹配</strong>：子串的定位运算成为串的模式匹配或串匹配</p>
-<blockquote>
-<p>假设有两个串 S、T，设S为主串，也称正文串：T为子串，也称模式。在主串 S中查找<br>
-与模式 T相匹配的子串，如果查找成功，返回匹配的子串第一个字符在主串中的位置。<br>
-最笨的办法就是穷举所有 S的所有子串，判断是否与T匹配，该算法称为 BF ( Brute<br>
-Force）算法。</p>
-</blockquote>
-<p>BF算法的思想就是将目标串S的第一个字符与模式串T的第一个字符进行匹配，若相等，则继续比较S的第二个字符和T的第二个字符；若不相等，则比较S的第二个字符和T的第一个字符，依次比较下去，直到得出最后的匹配结果。</p>
-<p>算法实现（C语言版本）</p>
-<pre><code class="language-c">#include &lt;stdio.h&gt;
-#include&lt;string.h&gt;
-//strA是主串，strB是子串
-int mate(char *strA, char *strB) &#123;
-    int i, j;
-    i = j = 0;
-    while (i &lt; strlen(strA) &amp;&amp; j &lt; strlen(strB)) &#123;
-        if(strA[i]==strB[j])&#123;
-            i++;
-            j++;
-        &#125; else&#123;
-            i=i-j+1;
-            j=0;
-        &#125;
-    &#125;
-    //判断字串情况如果到最后则遍历完毕找到匹配位置
-    if(j== strlen(strB))&#123;
-        return i-j+1;
-    &#125;
-    return 0;
-&#125;
-</code></pre>
-<p>可以看出 bf算法本身是没有什么技巧在的 就是简单的暴力枚举 故当数据范围比较大时 bf算法就不再适用</p>
-<h3 id="改进的KMP算法"><a class="header-anchor" href="#改进的KMP算法">¶</a>改进的KMP算法</h3>
-<p>实际上，完全没必要从S的每一个字符开始穷举每一种情况，某K，M，P名字开头的三位大佬对上述算法进行改进，并提出了KMP算法。</p>
-<p>需要了解一些基本概念：</p>
-<ol>
-<li>
-<p>s[ ]是模式串，即比较长的字符串。</p>
-</li>
-<li>
-<p>p[ ]是模板串，即比较短的字符串。</p>
-</li>
-<li>
-<p>前缀：从前往后取若干个字符。</p>
-</li>
-<li>
-<p>后缀：从后往前取若干个字符。</p>
-</li>
-<li>
-<p>部分匹配值：前缀和后缀的最长共有元素的长度。</p>
-</li>
-<li>
-<p>next[ ]是“部分匹配值表”，即next数组，它存储的是每一个下标对应的“部分匹配值”，是<strong>KMP算法的核心</strong>。（后面作详细讲解）。</p>
-</li>
-</ol>
-<p>核心思想：在每次失配时，不是把p串往后移一位，而是把p串往后移动至下一次可以和前面部分匹配的位置，这样就可以跳过大多数的失配步骤。而每次p串移动的步数就是通过查找next[ ]数组确定的。</p>
-<h4 id="next数组的含义："><a class="header-anchor" href="#next数组的含义：">¶</a>next数组的含义：</h4>
-<p>对next[ j ] ，是p[ 1, j ]串中前缀和后缀相同的最大长度（部分匹配值），即 p[ 1, next[ j ] ] = p[ j - next[ j ] + 1, j ]。</p>
-<p>如：</p>
-<p>手动模拟求next数组：</p>
-<p>对 p = “abcab”</p>
-<table>
-<thead>
-<tr>
-<th>p</th>
-<th>a</th>
-<th>b</th>
-<th>c</th>
-<th>a</th>
-<th>b</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>下标</td>
-<td>1</td>
-<td>2</td>
-<td>3</td>
-<td>4</td>
-<td>5</td>
-</tr>
-<tr>
-<td>next[ ]</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>1</td>
-<td>2</td>
-</tr>
-</tbody>
-</table>
-<p>对next[ 1 ] ：前缀 = 空集—————后缀 = 空集—————next[ 1 ] = 0;</p>
-<p>对next[ 2 ] ：前缀 = { a }—————后缀 = { b }—————next[ 2 ] = 0;</p>
-<p>对next[ 3 ] ：前缀 = { a , ab }—————后缀 = { c , bc}—————next[ 3 ] = 0;</p>
-<p>对next[ 4 ] ：前缀 = { a , ab , abc }—————后缀 = { a . ca , bca }—————next[ 4 ] = 1;</p>
-<p>对next[ 5 ] ：前缀 = { a , ab , abc , abca }————后缀 = { b , ab , cab , bcab}————next[ 5 ] = 2;</p>
-<h4 id="KMP主要分两步：求next数组、匹配字符串。"><a class="header-anchor" href="#KMP主要分两步：求next数组、匹配字符串。">¶</a>KMP主要分两步：求next数组、匹配字符串。</h4>
-<p>先说一下如何求 next数组</p>
-<p>next数组其实就是求模板串的相同前后缀的长度</p>
-<p>算法实现：</p>
-<pre><code class="language-c">for(int i = 2, j = 0; i &lt;= m; i++)
-&#123;
-    while(j &amp;&amp; p[i] != p[j+1]) j = next[j];
-
-    if(p[i] == p[j+1]) j++;
-    
-    next[i] = j;
-
-&#125;
-</code></pre>
-<p>可以写出通用公式</p>
-<p>​					{ 0 ,  j=1</p>
-<p>next[j]=	  { lmax+1 , T的相等前缀后缀的最大程度为lmax</p>
-<p>​					{ 1 , 没有相等前缀后缀</p>
-<p>求匹配字符串</p>
-<p>算法实现（c语言版本）</p>
-<pre><code class="language-c">for(int i = 1, j = 0; i &lt;= n; i++)
-&#123;
-    while(j &amp;&amp; s[i] != p[j+1]) j = ne[j];
-    //如果j有对应p串的元素， 且s[i] != p[j+1], 则失配， 移动p串
-    //用while是由于移动后可能仍然失配，所以要继续移动直到匹配或整个p串移到后面（j = 0)
-
-    if(s[i] == p[j+1]) j++;
-    //当前元素匹配，j移向p串下一位
-    if(j == m)
-    &#123;
-        //匹配成功，进行相关操作
-        j = next[j];  //继续匹配下一个子串
-    &#125;
-&#125;
-</code></pre>
-<p>将上述两个代码合并就是KMP算法的代码实现啦</p>
-<pre><code class="language-c">for (int i = 2,j=0; i &lt;= n; i ++ )&#123;
-        while(j&amp;&amp;p[i]!=p[j+1]) j=ne[j];   
-   if(p[i]==p[j+1]) j++;
-    
-    ne[i]=j;
-&#125;
-
-for (int i = 1,j=0; i &lt;= m; i ++ )&#123;
-    while( j &amp;&amp; s[i]!= p[j+1]) j=ne[j];
-    
-    if(s[i]==p[j+1]) j++;
-    
-    if(j==n)&#123;
-        j=ne[j];
-        
-        printf(&quot;%d &quot;,i-n);
-    &#125;
-&#125;
-</code></pre>
-<h4 id="算法复杂度分析"><a class="header-anchor" href="#算法复杂度分析">¶</a>算法复杂度分析</h4>
-<p>设S,T串的长度分别为n、m。KMP 算法的特点是：i不回退，当S[j]≠T[j]时，j回退<br>
-到next[j]，重新开始比较。最坏情况下扫描整个S串，其时间复杂度为 O（n)。计算next数<br>
-组需要扫描整个 工串，其时间复杂度为 0（m），因此总的时间复杂度为 O(n×m)。<br>
-需要注意的是，尽管 BF 算法最坏情况下时间复杂度为 O（n×m)，KMP 算法的时间复杂<br>
-度为 O(n×m)。但是在实际运用中，BF 算法的时间复杂度一般为 Q(n×m)，因此仍然有很多<br>
-地方用 BF 算法进行模式匹配。只有在主串和子串有很多部分匹配的情况下，KMP 才显得更<br>
-优越</p>
-]]></content>
-      <categories>
-        <category>算法</category>
-      </categories>
-      <tags>
-        <tag>KMP</tag>
-        <tag>ALGO</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Python学习笔记（3）-函数（1）</title>
-    <url>/2022/09/30/Python%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%883%EF%BC%89-%E5%87%BD%E6%95%B0%EF%BC%881%EF%BC%89/</url>
-    <content><![CDATA[<p>最近在学py，简单记录一下笔记</p>
-<span id="more"></span>
-<h3 id="初识函数"><a class="header-anchor" href="#初识函数">¶</a>初识函数</h3>
-<p>函数: 对代码块和功能的封装和定义</p>
-<p>在<code>py</code>中定义函数的方法：</p>
-<pre><code class="language-python">def 函数名():
-    函数体
-</code></pre>
-<p>函数名的命名规则和使用和变量基本一样</p>
-<p>函数体: 就是函数被执行之后要执行的代码</p>
-<p>函数的调用: 使用函数名可以调用函数, 写法: 函数名(), 这个时候函数的函数体会被执行</p>
-<h3 id="函数的返回值"><a class="header-anchor" href="#函数的返回值">¶</a>函数的返回值</h3>
-<p>执行完函数之后. 我们可以使用return来返回结果.</p>
-<p>函数中return的使用:</p>
-<ol>
-<li>
-<p>函数中遇到return, 此函数结束, 不再继续执行.</p>
-</li>
-<li>
-<p>给函数的调用者一个访问结果</p>
-</li>
-<li>
-<p>函数的返回值可以有多个结果,调用者可以接收一个tuple, 调用者可以直接解构成多个变量</p>
-</li>
-<li>
-<p>如果return什么都不写 或者 干脆不写return .那么返回的就是None</p>
-</li>
-</ol>
-<h3 id="函数的参数"><a class="header-anchor" href="#函数的参数">¶</a>函数的参数</h3>
-<p>参数, 函数在调用的时候指定具体的一个变量的值. 就是参数.  语法:</p>
-<pre><code class="language-python">def 函数名(参数列表):
-    函数体
-</code></pre>
-<p>关于参数:</p>
-<ol>
-<li>形参</li>
-</ol>
-<p>写在函数声明的位置的变量叫形参.  形式上的一个完整. 表示这个函数需要xxx</p>
-<ol start="2">
-<li>实参</li>
-</ol>
-<p>在函数调用的时候给函数传递的值. 叫实参, 实际执行的时候给函数传递的信息. 表示给函数xxx</p>
-<ol start="3">
-<li>传参</li>
-</ol>
-<p>给函数传递信息的时候将实际参数交给形式参数的过程被称为传参.</p>
-<h4 id="实参"><a class="header-anchor" href="#实参">¶</a>实参</h4>
-<h5 id="位置参数"><a class="header-anchor" href="#位置参数">¶</a>位置参数</h5>
-<pre><code class="language-python">def yue(chat, address, age):    # 形参
-    print(&quot;拿出手机&quot;)
-    print(&quot;打开&quot;+chat)
-    print(&quot;找到&quot;+address+&quot;附近的&quot;+str(age)+&quot;好友&quot;)
-
-yue(&quot;微信&quot;, &quot;北京&quot;, 18)    # 实参
-
-结果:
-拿出手机
-打开微信
-找到北京附近的18岁好友
-</code></pre>
-<p>按照位置的顺序分别把&quot;微信&quot;, “北京”, 18 赋值给 chat, address, age. 在传参过程中. 系统会默认按照位置把实参赋值到形参.</p>
-<h5 id="关键字参数"><a class="header-anchor" href="#关键字参数">¶</a>关键字参数</h5>
-<p>如果是少量的参数还算OK, 没有问题. 但是如果函数在定义的时候参数非常多怎么办? 程序员必须记住, 我有哪些参数, 而且还有记住每个参数的位置, 否则函数就不能正常调用了. 那则么办呢? python提出了一种叫做关键字参数. 我们不需要记住每个参数的位置. 只要记住每个参数的名字就可以了</p>
-<pre><code class="language-python">def yue(chat, address, age):    # 形参
-    print(&quot;拿出手机&quot;)
-    print(&quot;打开&quot;+chat)
-    print(&quot;找到&quot;+address+&quot;附近的&quot;+str(age)+&quot;好友&quot;)
-
-yue(chat=&quot;微信&quot;, age=18, address=&quot;北京)    # 实参
-
-结果:
-拿出手机
-打开微信
-找到北京附近的18岁好友
-</code></pre>
-<h5 id="混合参数"><a class="header-anchor" href="#混合参数">¶</a>混合参数</h5>
-<p>可以把上面两种参数混合着使用. 也就是说在调用函数的时候即可以给出位置参数, 也可以指定关键字参数.</p>
-<pre><code class="language-python">yue(&quot;微信&quot;, age=18, address=&quot;上海&quot;)    # 正确.第一个位置赋值给chat, 后面的参数开始指定关键字.
-yue(age=&quot;18&quot;, &quot;微信&quot;, address=&quot;广州&quot;)    # 错误, 最开始使用了关键字参数, 那么后面的微信的位置就串了, 容易出现混乱
-</code></pre>
-<p><u>在使用混合参数的时候, 关键字参数必须在位置参数后面</u></p>
-<h4 id="形参"><a class="header-anchor" href="#形参">¶</a>形参</h4>
-<p>在函数声明的位置编写的变量</p>
-<h5 id="位置参数-v2"><a class="header-anchor" href="#位置参数-v2">¶</a>位置参数</h5>
-<p>按照位置来赋值</p>
-<h5 id="默认值参数"><a class="header-anchor" href="#默认值参数">¶</a>默认值参数</h5>
-<p>在函数声明的时候, 就可以给出函数参数的默认值. 在调用的时候可以给出具体的值, 也可以不给值, 使用默认值.</p>
-<pre><code class="language-python">def stu_info(name, age, sex='男'):
-    print(&quot;录入学生信息&quot;)
-    print(name, age, sex)
-    print(&quot;录入完毕&quot;)
-
-stu_info(&quot;张强强&quot;, 18)
-</code></pre>
-<p><u>必须先声明位置参数, 才能声明默认值参数.</u></p>
-<p>如果默认值参数是一个可变的数据类型，会出现一点小问题</p>
-<pre><code class="language-python">def func(val,lst[]):
-	list.append(val)
-	print(lst)
-	
-func(1)	#第一次输出没有问题 [1]
-func(2)	#两次访问的是同一个列表 [1,2]
-func(3,[])	#[3] 
-</code></pre>
-<p>可变的数据类型,在每次使用的时候都被共享</p>
-<h5 id="动态传参"><a class="header-anchor" href="#动态传参">¶</a>动态传参</h5>
-<p><code>*</code>动态接收位置参数, 在参数位置编写表示接收任意内容，会被打包成元组</p>
-<pre><code class="language-python">def chi(*food):
-    print(&quot;我要吃&quot;, food)
-
-chi(&quot;大米饭&quot;, &quot;小米饭&quot;)
-
-结果:
-我要吃 ('大米饭', '小米饭')    # 多个参数传递进去. 收到的内容是元组tuple
-</code></pre>
-<p>动态接收参数的时候要注意: 动态参数必须在位置参数后面</p>
-<pre><code class="language-python">def chi(*food, a, b):
-    print(&quot;我要吃&quot;, food, a, b)
-
-chi(&quot;大米饭&quot;, &quot;小米饭&quot;, &quot;黄瓜&quot;, &quot;茄子&quot;)
-</code></pre>
-<p><strong>这时程序运行会报错. 因为前面传递进去的所有位置参数都被*food接收了. a和b永远接收不到参数</strong></p>
-<p>可以这样改写</p>
-<pre><code class="language-python">def chi(*food, a, b):
-    print(&quot;我要吃&quot;, food, a, b)
-
-chi(&quot;大米饭&quot;, &quot;小米饭&quot;, a=&quot;黄瓜&quot;, b=&quot;茄子&quot;)   # 必须用关键字参数来指定
-</code></pre>
-<p>或者先写位置参数，再用动态参数</p>
-<p><code>**</code>动态接收关键字参数</p>
-<p>在python中可以动态的位置参数, 但是*这种情况只能接收位置参数无法接收关键字参数. 在python中使用**来接收动态关键字参数</p>
-<pre><code class="language-python">def func(**kwargs):
-    print(kwargs)
-
-func(a=1, b=2, c=3)
-func(a=1, b=2)
-
-结果:
-&#123;'a': 1, 'b': 2, 'c': 3&#125;
-&#123;'a': 1, 'b': 2&#125;
-</code></pre>
-<p><strong>顺序的问题</strong>  在函数调用的时候, 如果先给出关键字参数, 则整个参数列表会报错.</p>
-<p>所以关键字参数必须在位置参数后面. 由于实参是这个顺序. 所以形参接收的时候也是这个顺序. 也就是说位置参数必须在关键字参数前面. 动态接收关键字参数也要在后面</p>
-<p>*<em>最终顺序(<em>重点):</em></em></p>
-<p>​     位置参数 &gt; <code> *args</code> &gt; 默认值参数 &gt; <code>**kwargs</code></p>
-<p>​     <strong>这四种参数可以任意的进行使用. 如果想接收所有的参数:</strong></p>
-<pre><code class="language-python">def func(*args, **kwargs):
-    print(args, kwargs)
-
-func(&quot;麻花藤&quot;,&quot;马晕&quot;,wtf=&quot;胡辣汤&quot;)
-</code></pre>
-<p>动态参数的另一种传参方式:</p>
-<pre><code class="language-python">def fun(*args):
-    print(args)
-
-
-lst = [1, 4, 7]
-fun(lst[0], lst[1], lst[2])
-
-fun(*lst)   # 可以使用*把一个列表按顺序打散
-s = &quot;臣妾做不到&quot;
-fun(*s)     # 字符串也可以打散, (可迭代对象)
-</code></pre>
-<p>在实参位置上给一个序列,列表,可迭代对象前面加个*表示把这个序列按顺序打散.</p>
-<p>在形参的位置上的* 表示把接收到的参数组合成一个元组</p>
-<p>如果是一个字典, 那么也可以打散. 不过需要用两个*</p>
-<pre><code class="language-python">def fun(**kwargs):
-    print(kwargs)
-
-dic = &#123;'a':1, 'b':2&#125;
-fun(**dic)
-</code></pre>
-<h4 id="函数的注释"><a class="header-anchor" href="#函数的注释">¶</a>函数的注释</h4>
-<pre><code class="language-python">def chi(food, drink):
-    &quot;&quot;&quot;
-    这里是函数的注释, 先写一下当前这个函数是干什么的, 比如我这个函数就是一个吃
-    :param food: 参数food是什么意思
-    :param drink: 参数drink是什么意思
-    :return: 返回的是什么东东
-    &quot;&quot;&quot;
-    print(food, drink)
-    return &quot;very good&quot;
-</code></pre>
-<h3 id="函数的嵌套和作用域"><a class="header-anchor" href="#函数的嵌套和作用域">¶</a>函数的嵌套和作用域</h3>
-<p>作用域: 一个变量能使用的作用范围</p>
-<p>仔细分析以下代码.</p>
-<pre><code class="language-python">a = 10  # 函数外面有个a
-def func():
-    a = 20  # 函数里面也有个a
-    print(a)  #  此时打印的结果?
-
-func()   #  此时打印的结果?
-</code></pre>
-<p>注意, 在python中. 你可以认为变量的使用是遵循就近原则的.</p>
-<p>在函数外面的变量被称为全局变量. 它的作用域是整个py文件.  在函数内部的变量被称为局部变量.作用范围仅限于函数内部.</p>
-<p>我们可以通过<code>globals()</code>和<code>locals()</code>查看全局和局部作用域中的内容</p>
-<pre><code class="language-python">a = 10
-def func():
-    a = 40
-    b = 20
-    def abc():
-        print(&quot;哈哈&quot;)
-    print(a, b)     # 这里使用的是局部作用域
-    print(globals())    # 打印全局作用域中的内容
-    print(locals())     # 打印局部作用域中的内容
-
-func()
-</code></pre>
-<p><code>globals()</code>查看全局作用域</p>
-<p><code>locals()</code>查看当前作用域</p>
-<p>函数与函数之间可以互相的调用. 也可以互相的嵌套</p>
-<pre><code class="language-python">def fun1():
-    print(111)
-   
-def fun2():
-    print(222)
-    fun1()
-   
-fun2()
-print(111)
-
-# 函数的嵌套
-def fun2():
-    print(222)
-    def fun3():
-        print(666)
-    print(444)
-    fun3()
-    print(888)
-    
-print(33)
-fun2()
-print(555)
-</code></pre>
-<h3 id="global和nonlocal关键字"><a class="header-anchor" href="#global和nonlocal关键字">¶</a>global和nonlocal关键字</h3>
-<pre><code class="language-python">a = 100
-def func():
-    a += 1  # 报错.  
-    print(a)
-
-func()
-print(a)
-</code></pre>
-<p>注意报错那句话</p>
-<p>这句话相当于a = a + 1 先计算右边. 右边会把全局变量a引入进来使用. 然后重新赋值给a. 但是，python中不允许函数内部改变外面变量的值. 这样做很不安全. python规定. 在函数内部想要修改全局变量. 必须使用global关键字把外面的变量引入才可以进行修改(赋值).</p>
-<pre><code class="language-python">a = 100
-def func():
-    global a
-    a += 1   
-    print(a)
-
-func()
-print(a) # 101
-</code></pre>
-<p>相同的. nonlocal也是一样的操作. 它负责在内层函数中引入外层函数的局部变量</p>
-<pre><code class="language-python">a = 10
-def func1():
-    a = 20
-    def func2():
-        nonlocal a #  有它没它两个结果
-        a = 30
-        print(a)
-    func2()
-    print(a)
-
-
-func1()
-
-结果:
-加了nonlocal
-30
-30
-不加nonlocal
-30
-20
-</code></pre>
-<p>python程序在加载的时候，会给解释器内置需要的一些变量加载，加载的位置叫内置名称空间</p>
-<p>接下来就开始执行自己的py文件，自己创建的这些变量统一放在全局名称空间中</p>
-<p>当程序执行到函数的时候，函数内部会有自己的变量，Python会为每一个正在执行的函数单独开辟内存，该内存被称为局部名称空间</p>
-<p><img src="/images/Python%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%883%EF%BC%89-%E5%87%BD%E6%95%B0%EF%BC%881.1%EF%BC%89.png" alt="image-20220929133108221"></p>
-<p><img src="/images/Python%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%883%EF%BC%89-%E5%87%BD%E6%95%B0%EF%BC%881.2%EF%BC%89.png" alt="image-20220929133501169"></p>
-]]></content>
-      <categories>
-        <category>语言学习</category>
-      </categories>
-      <tags>
-        <tag>PYTHON</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>JavaScript</title>
     <url>/2022/10/12/JavaScript/</url>
     <content><![CDATA[<p>acwing web应用课学习笔记</p>
@@ -1360,705 +772,304 @@ requestAnimationFrame(step);
         <category>语言学习</category>
       </categories>
       <tags>
-        <tag>others</tag>
         <tag>JAVASCRIPT</tag>
+        <tag>others</tag>
       </tags>
   </entry>
   <entry>
-    <title>Python学习笔记（1）入门</title>
-    <url>/2022/09/15/Python%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%881%EF%BC%89/</url>
-    <content><![CDATA[<p>最近在学py，简单记录一下笔记</p>
+    <title>KMP算法详解</title>
+    <url>/2022/08/27/KMP%E7%AE%97%E6%B3%95%E8%AF%A6%E8%A7%A3/</url>
+    <content><![CDATA[<p>几个月前学过一次kmp，因为太愚笨，没有搞明白暂时放弃了，这几天又开始看，终于搞明白了，再次记录一下我的理解😎</p>
 <span id="more"></span>
-<p>IDLE 常用的快捷键</p>
+<h3 id="BF算法-O-n-m"><a class="header-anchor" href="#BF算法-O-n-m">¶</a>BF算法 O(n*m)</h3>
+<p><strong>模式匹配</strong>：子串的定位运算成为串的模式匹配或串匹配</p>
+<blockquote>
+<p>假设有两个串 S、T，设S为主串，也称正文串：T为子串，也称模式。在主串 S中查找<br>
+与模式 T相匹配的子串，如果查找成功，返回匹配的子串第一个字符在主串中的位置。<br>
+最笨的办法就是穷举所有 S的所有子串，判断是否与T匹配，该算法称为 BF ( Brute<br>
+Force）算法。</p>
+</blockquote>
+<p>BF算法的思想就是将目标串S的第一个字符与模式串T的第一个字符进行匹配，若相等，则继续比较S的第二个字符和T的第二个字符；若不相等，则比较S的第二个字符和T的第一个字符，依次比较下去，直到得出最后的匹配结果。</p>
+<p>算法实现（C语言版本）</p>
+<pre><code class="language-c">#include &lt;stdio.h&gt;
+#include&lt;string.h&gt;
+//strA是主串，strB是子串
+int mate(char *strA, char *strB) &#123;
+    int i, j;
+    i = j = 0;
+    while (i &lt; strlen(strA) &amp;&amp; j &lt; strlen(strB)) &#123;
+        if(strA[i]==strB[j])&#123;
+            i++;
+            j++;
+        &#125; else&#123;
+            i=i-j+1;
+            j=0;
+        &#125;
+    &#125;
+    //判断字串情况如果到最后则遍历完毕找到匹配位置
+    if(j== strlen(strB))&#123;
+        return i-j+1;
+    &#125;
+    return 0;
+&#125;
+</code></pre>
+<p>可以看出 bf算法本身是没有什么技巧在的 就是简单的暴力枚举 故当数据范围比较大时 bf算法就不再适用</p>
+<h3 id="改进的KMP算法"><a class="header-anchor" href="#改进的KMP算法">¶</a>改进的KMP算法</h3>
+<p>实际上，完全没必要从S的每一个字符开始穷举每一种情况，某K，M，P名字开头的三位大佬对上述算法进行改进，并提出了KMP算法。</p>
+<p>需要了解一些基本概念：</p>
+<ol>
+<li>
+<p>s[ ]是模式串，即比较长的字符串。</p>
+</li>
+<li>
+<p>p[ ]是模板串，即比较短的字符串。</p>
+</li>
+<li>
+<p>前缀：从前往后取若干个字符。</p>
+</li>
+<li>
+<p>后缀：从后往前取若干个字符。</p>
+</li>
+<li>
+<p>部分匹配值：前缀和后缀的最长共有元素的长度。</p>
+</li>
+<li>
+<p>next[ ]是“部分匹配值表”，即next数组，它存储的是每一个下标对应的“部分匹配值”，是<strong>KMP算法的核心</strong>。（后面作详细讲解）。</p>
+</li>
+</ol>
+<p>核心思想：在每次失配时，不是把p串往后移一位，而是把p串往后移动至下一次可以和前面部分匹配的位置，这样就可以跳过大多数的失配步骤。而每次p串移动的步数就是通过查找next[ ]数组确定的。</p>
+<h4 id="next数组的含义："><a class="header-anchor" href="#next数组的含义：">¶</a>next数组的含义：</h4>
+<p>对next[ j ] ，是p[ 1, j ]串中前缀和后缀相同的最大长度（部分匹配值），即 p[ 1, next[ j ] ] = p[ j - next[ j ] + 1, j ]。</p>
+<p>如：</p>
+<p>手动模拟求next数组：</p>
+<p>对 p = “abcab”</p>
 <table>
 <thead>
 <tr>
-<th>含义</th>
-<th>快捷键</th>
+<th>p</th>
+<th>a</th>
+<th>b</th>
+<th>c</th>
+<th>a</th>
+<th>b</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>增加代码块缩进</td>
-<td>Ctrl+]</td>
+<td>下标</td>
+<td>1</td>
+<td>2</td>
+<td>3</td>
+<td>4</td>
+<td>5</td>
 </tr>
 <tr>
-<td>减少代码块缩进</td>
-<td>Ctrl+[</td>
-</tr>
-<tr>
-<td>注释代码块</td>
-<td>Alt+3</td>
-</tr>
-<tr>
-<td>取消代码块注释</td>
-<td>Alt+4</td>
-</tr>
-<tr>
-<td>浏览上一条输入的命令</td>
-<td>Alt+p</td>
-</tr>
-<tr>
-<td>浏览下一条输入的命令</td>
-<td>Alt+n</td>
-</tr>
-<tr>
-<td>补全单词，列出全部可选单词供选择</td>
-<td>Tab</td>
+<td>next[ ]</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>2</td>
 </tr>
 </tbody>
 </table>
-<ul>
-<li>Python中对空格的应用很严格 运算时 运算符要与其他数据加上空格隔开</li>
-</ul>
-<h3 id="注释"><a class="header-anchor" href="#注释">¶</a>注释</h3>
-<p>单行注释	<code>#</code></p>
-<p>多行注释	<code>'''</code>3 个单引号	<code>&quot;&quot;&quot;</code>3 个双引号</p>
-<h3 id="变量以及变量命名规范"><a class="header-anchor" href="#变量以及变量命名规范">¶</a>变量以及变量命名规范</h3>
-<p>标识符是在程序中用来标识诸如变量、函数、类、对象等名字的符号。在 Python 中，<br>
-用标识符来标识变量，变量在使用前都必须被赋值，变量被赋值后变量才会被创建。在 Python<br>
-中，变量是用一个变量名表示，也就是一个标识符来表示，变量名的命名规则：</p>
-<p>（1）变量名只能是字母、数字或下划线的任意组合。<br>
-（2）变量名的第一个字符不能是数字。<br>
-（3） Python 关键字不能声明为变量名：</p>
-<p>推荐使用驼峰体或者下划线命名</p>
-<blockquote>
-<p>驼峰体: 除首字母外的其他每个单词首字母大写</p>
-<p>下划线: 每个单词之间用下划线分开</p>
-</blockquote>
-<p><strong>类型属于对象，变量是没有类型的，变量只是对象的引用，所谓变量的类型指的是变量所引用的对象的类型。变量的类型随着所赋值的类型的变化而改变。</strong></p>
-<p>变量的数据类型:</p>
-<p>int, 整数, 加减乘除, 余数, 整除</p>
-<p>str, 字符串, ‘, &quot;, ‘’’, “”&quot;都是字符串, 操作: +, *</p>
-<p>bool，布尔值. True, False</p>
-<p>​</p>
-<h3 id="常量"><a class="header-anchor" href="#常量">¶</a>常量</h3>
-<p>Python中不存在绝对的常量，只要字母大写就是常量</p>
-<h3 id="用户交互"><a class="header-anchor" href="#用户交互">¶</a>用户交互</h3>
-<p><code>input()</code></p>
-<p><strong>input获取到数据都是字符串类型, 如果想要进行数学运算或者比较. 必须转化成int()</strong></p>
-<h3 id="条件分支"><a class="header-anchor" href="#条件分支">¶</a>条件分支</h3>
-<pre><code class="language-python">if 条件:    # 引号是将条件与结果分开。
-	结果 	  # 四个空格，或者一个tab键，这个是告诉程序满足这个条件的   
+<p>对next[ 1 ] ：前缀 = 空集—————后缀 = 空集—————next[ 1 ] = 0;</p>
+<p>对next[ 2 ] ：前缀 = { a }—————后缀 = { b }—————next[ 2 ] = 0;</p>
+<p>对next[ 3 ] ：前缀 = { a , ab }—————后缀 = { c , bc}—————next[ 3 ] = 0;</p>
+<p>对next[ 4 ] ：前缀 = { a , ab , abc }—————后缀 = { a . ca , bca }—————next[ 4 ] = 1;</p>
+<p>对next[ 5 ] ：前缀 = { a , ab , abc , abca }————后缀 = { b , ab , cab , bcab}————next[ 5 ] = 2;</p>
+<h4 id="KMP主要分两步：求next数组、匹配字符串。"><a class="header-anchor" href="#KMP主要分两步：求next数组、匹配字符串。">¶</a>KMP主要分两步：求next数组、匹配字符串。</h4>
+<p>先说一下如何求 next数组</p>
+<p>next数组其实就是求模板串的相同前后缀的长度</p>
+<p>算法实现：</p>
+<pre><code class="language-c">for(int i = 2, j = 0; i &lt;= m; i++)
+&#123;
+    while(j &amp;&amp; p[i] != p[j+1]) j = next[j];
 
-elif 条件2:   
-	结果2
-... 
-else:   
-	结果n 
+    if(p[i] == p[j+1]) j++;
+    
+    next[i] = j;
+
+&#125;
 </code></pre>
-<p>当条件成立. 执行相应的结果.</p>
-<p>​</p>
-<h3 id="循环分支"><a class="header-anchor" href="#循环分支">¶</a>循环分支</h3>
-<pre><code class="language-python">while 条件:   
-	循环体 
+<p>可以写出通用公式</p>
+<p>​					{ 0 ,  j=1</p>
+<p>next[j]=	  { lmax+1 , T的相等前缀后缀的最大程度为lmax</p>
+<p>​					{ 1 , 没有相等前缀后缀</p>
+<p>求匹配字符串</p>
+<p>算法实现（c语言版本）</p>
+<pre><code class="language-c">for(int i = 1, j = 0; i &lt;= n; i++)
+&#123;
+    while(j &amp;&amp; s[i] != p[j+1]) j = ne[j];
+    //如果j有对应p串的元素， 且s[i] != p[j+1], 则失配， 移动p串
+    //用while是由于移动后可能仍然失配，所以要继续移动直到匹配或整个p串移到后面（j = 0)
+
+    if(s[i] == p[j+1]) j++;
+    //当前元素匹配，j移向p串下一位
+    if(j == m)
+    &#123;
+        //匹配成功，进行相关操作
+        j = next[j];  //继续匹配下一个子串
+    &#125;
+&#125;
 </code></pre>
-<p>只要条件成立. 就一直执行循环体. 每次执行完循环体. 重新判断条件</p>
-<h3 id="流程控制-break和continue"><a class="header-anchor" href="#流程控制-break和continue">¶</a>流程控制-break和continue</h3>
-<p><code>break</code>: 立刻跳出循环. 打断的意思.</p>
-<p><code>continue</code>: 结束当前这一次循环，跳过后面可能存在的信息，即继续执行下一次循环</p>
+<p>将上述两个代码合并就是KMP算法的代码实现啦</p>
+<pre><code class="language-c">for (int i = 2,j=0; i &lt;= n; i ++ )&#123;
+        while(j&amp;&amp;p[i]!=p[j+1]) j=ne[j];   
+   if(p[i]==p[j+1]) j++;
+    
+    ne[i]=j;
+&#125;
+
+for (int i = 1,j=0; i &lt;= m; i ++ )&#123;
+    while( j &amp;&amp; s[i]!= p[j+1]) j=ne[j];
+    
+    if(s[i]==p[j+1]) j++;
+    
+    if(j==n)&#123;
+        j=ne[j];
+        
+        printf(&quot;%d &quot;,i-n);
+    &#125;
+&#125;
+</code></pre>
+<h4 id="算法复杂度分析"><a class="header-anchor" href="#算法复杂度分析">¶</a>算法复杂度分析</h4>
+<p>设S,T串的长度分别为n、m。KMP 算法的特点是：i不回退，当S[j]≠T[j]时，j回退<br>
+到next[j]，重新开始比较。最坏情况下扫描整个S串，其时间复杂度为 O（n)。计算next数<br>
+组需要扫描整个 工串，其时间复杂度为 0（m），因此总的时间复杂度为 O(n×m)。<br>
+需要注意的是，尽管 BF 算法最坏情况下时间复杂度为 O（n×m)，KMP 算法的时间复杂<br>
+度为 O(n×m)。但是在实际运用中，BF 算法的时间复杂度一般为 Q(n×m)，因此仍然有很多<br>
+地方用 BF 算法进行模式匹配。只有在主串和子串有很多部分匹配的情况下，KMP 才显得更<br>
+优越</p>
 ]]></content>
       <categories>
-        <category>语言学习</category>
+        <category>算法</category>
       </categories>
       <tags>
-        <tag>PYTHON</tag>
+        <tag>KMP</tag>
+        <tag>ALGO</tag>
       </tags>
   </entry>
   <entry>
-    <title>Python学习笔记（2）基础数据类型</title>
-    <url>/2022/09/15/Python%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%882%EF%BC%89/</url>
-    <content><![CDATA[<p>最近在学py，简单记录一下笔记</p>
+    <title>C++ STL简介</title>
+    <url>/2022/09/05/C++%20STL%E7%AE%80%E4%BB%8B/</url>
+    <content><![CDATA[<p>C/C++常用stl及api用法</p>
 <span id="more"></span>
-<h2 id="格式化输出"><a class="header-anchor" href="#格式化输出">¶</a>格式化输出</h2>
-<p>放置占位符，再把字符串里的占位符与外部的变量做好映射关系</p>
-<pre><code class="language-python">name = input(&quot;Name:&quot;) 
-age = input(&quot;Age:&quot;) 
-job = input(&quot;Job:&quot;) 
-hobby = input(&quot;Hobbie:&quot;) 
-
-info = ''' ------------ info of %s ----------- #这里的每个%s就是一个占位符，本行的代表 后面拓号里的 name 
-Name : %s #代表 name 
-Age  : %s #代表 age  job  : %s #代表 job 
-Hobbie: %s #代表 hobbie 
-------------- end -----------------
- ''' % (name,name,age,job,hobbie) # 这行的 % 号就是 把前面的字符串 与拓号 后面的 变量 关联起来 
-
-print(info)         
-</code></pre>
-<p><u>注意空格</u></p>
-<p>%s就是代表字符串占位符，除此之外，还有%d, 是数字占位符， 如果把上面的age后面的换成%d，就代表你必须只能输入数字啦, 这时对应的数据必须是int类型. 否则程序会报错使用时,需要进行类型转换.</p>
-<pre><code class="language-python">int(str)   # 字符串转换成int 
-str(int)   # int转换成字符串      
-</code></pre>
+<p>每个容器都有的api</p>
+<p><code>size() </code> 返回元素个数 O(1)</p>
+<p><code> empty()</code>  返回是否为空	O(1)</p>
+<p><code>clear()</code> 清空	队列无	O(n)</p>
+<h3 id="vector"><a class="header-anchor" href="#vector">¶</a>vector</h3>
+<p>vector, 变长数组，倍增的思想<br>
+<code>clear()</code>  清空<br>
+<code>front()/back()</code>取队头或者对位<br>
+<code>push_back()/pop_back()</code>  插入最后一个数\删除最后一个数<br>
+``begin()/end()`  迭代器</p>
+<p>​    支持比较运算，按字典序</p>
 <blockquote>
-<p>在字符串中如果使用了%s这样的占位符. 那么所有的%都将变成占位符需要使用%%来表示字符串中的%</p>
+<p>定义一个长度为n,ing且里面的每一个数字都初始化为m的vector数组</p>
+<p><code>vector&lt;int&gt; a(n,m)</code></p>
+<p>系统为某一程序分配空间时所需时间，与空间大小无关，与申请所需要的次数有关</p>
+<p>vector具有空间不足，自动扩容（倍增）的机制，并且完成自我复制</p>
 </blockquote>
-<p>python3.5以后可以使用f来格式化字符串.</p>
-<p>语法 : <code>f&quot;&#123;变量&#125;&quot;</code></p>
-<pre><code class="language-python">name = &quot;sylar&quot; 
-print(f&quot;&#123;name&#125;真是一个...&quot;)         
-</code></pre>
-<p>​</p>
-<h2 id="基本运算符"><a class="header-anchor" href="#基本运算符">¶</a>基本运算符</h2>
-<h4 id="算术运算"><a class="header-anchor" href="#算术运算">¶</a>算术运算</h4>
-<p><img src="/images/%E7%AE%97%E6%9C%AF%E8%BF%90%E7%AE%97.png" alt="image-20220915164625454"></p>
-<h4 id="比较运算"><a class="header-anchor" href="#比较运算">¶</a>比较运算</h4>
-<p><img src="/images/%E6%AF%94%E8%BE%83%E8%BF%90%E7%AE%97.png" alt="image-20220915164937061"></p>
-<h4 id="赋值运算"><a class="header-anchor" href="#赋值运算">¶</a>赋值运算</h4>
-<p><img src="/images/%E8%B5%8B%E5%80%BC%E8%BF%90%E7%AE%97.png" alt="image-20220915165015281"></p>
-<h4 id="逻辑运算"><a class="header-anchor" href="#逻辑运算">¶</a>逻辑运算</h4>
-<p><img src="/images/%E9%80%BB%E8%BE%91%E8%BF%90%E7%AE%97.png" alt="image-20220915165046443"></p>
-<p>and 并且 and左右两端同时为真，结果才为真</p>
-<p>or 或者 两端有一个为真结果为真</p>
-<p>not 非 非真即假，非假即真</p>
-<p><strong>逻辑运算的运算顺序: () &gt; not &gt; and &gt; or</strong></p>
-<h4 id="成员运算"><a class="header-anchor" href="#成员运算">¶</a>成员运算</h4>
-<p><code>xx in xxx</code> 	表示xx是否不在xxx中出现</p>
-<p><code>xx not...in xxx</code>   表示xx是否不在xxx中出现</p>
-<h2 id="编码初识以及bytes"><a class="header-anchor" href="#编码初识以及bytes">¶</a>编码初识以及bytes</h2>
-<ol>
-<li>ascii : 8bit, 主要存放的是英文, 数字,  特殊符号</li>
-<li>gbk: 16bit, 主要存放中文和亚洲字符. 兼容ascii</li>
-<li>unicode: 16bit和32bit两个版本. 平时我们用的是16bit这个版本. 全世界所有国家的文字信息. 缺点: 浪费空间(传输和存储)</li>
-<li>utf-8 : 可变长度unicode, 英文: 8bit, 欧洲文字: 16bit, 中文24bit. 一般数据传输和存储的时候使用.</li>
-<li>以上所有编码必须兼容ascii .</li>
-</ol>
-<p>内存中使用的是unicode ，一个/x就是一个字节，一个汉字三个字节</p>
-<p>gbk中，一个汉字两个字节</p>
-<p><u>编码用encode()  解码用decode()</u></p>
-<p>不同的编码之间是不能进行转换的，若想转换，可以先解码再编码</p>
-<p>一个字节8个0和1</p>
-<h2 id="基础数据类型bool"><a class="header-anchor" href="#基础数据类型bool">¶</a>基础数据类型bool</h2>
-<p>所有表示空的东西都是False</p>
-<p>基本数据类型之间的转化, 想变成谁, 就用谁把数据括起来</p>
-<h2 id="基础数据类型str"><a class="header-anchor" href="#基础数据类型str">¶</a>基础数据类型str</h2>
-<p>把字符连成串. 在python中用’, &quot;, ‘’', “”&quot;引起来的内容被称为字符串.</p>
-<p>字符串: 把多个字符连成串</p>
-<h4 id="字符串索引和切片"><a class="header-anchor" href="#字符串索引和切片">¶</a>字符串索引和切片</h4>
-<p>索引从0开始</p>
-<p>切片:</p>
-<p>s[start: end: step]</p>
-<p>start: 起始位置</p>
-<p>end: 结束位置, 取不到</p>
-<p>step: 步长（步长如果是负数，从右往左取数字）.</p>
-<h4 id="常用API"><a class="header-anchor" href="#常用API">¶</a>常用API</h4>
-<ol>
-<li>
-<p>upper(), 把字符串中所有的字母都变成大写. 主要使用在忽略大小写的时候用</p>
-</li>
-<li>
-<p>strip(), 默认去掉左右两端的空白, 包括\n, \t, 空格.</p>
-</li>
-<li>
-<p>replace(), 字符串替换</p>
-</li>
-<li>
-<p>split(),  字符串切割. 得到字符串列表</p>
-</li>
-<li>
-<p>join(),  把列表重新组合成字符串</p>
-<pre><code class="language-python">lst = ['周杰伦', '王力宏', '麻花藤'] 
-s = &quot;_&quot;.join(lst) 
-print(s)  # 周杰伦_王力宏_麻花藤           
-</code></pre>
-</li>
-<li>
-<p>startswith(),  判断是否以xxxx开头</p>
-</li>
-<li>
-<p>endwith(),判断是否以xx结尾</p>
-</li>
-<li>
-<p>find(), 查找xxxx</p>
-</li>
-<li>
-<p>index()，求索引位置，如果找不到系统会报错</p>
-</li>
-<li>
-<p>count(), 数数, 查看xxx出现的次数</p>
-</li>
-<li>
-<p>isdigit(), 判断该字符串是否是由数字组成</p>
-</li>
-<li>
-<p>len(), 字符串长度, 它是一个内置函数, 直接len(数据)即可</p>
-</li>
-<li>
-<p>capitalize(),首字母变成大写</p>
-</li>
-<li>
-<p>dir(),能查看这个数据类型能执行哪些操作</p>
-</li>
-</ol>
-<pre><code class="language-python">for 变量 in 可迭代对象（不能放数字在这里）:
-
-循环体
-</code></pre>
-<h4 id="关于in"><a class="header-anchor" href="#关于in">¶</a>关于in</h4>
-<pre><code class="language-python">   in有两种用法:     
-	1. 在for中. 是把每一个元素获取到赋值给前面的变量.
-    2. 不在for中. 判断xxx是否出现在str中. 
- 
-print('VUE' in s19)      
-</code></pre>
-<h4 id="字符串的格式化输出"><a class="header-anchor" href="#字符串的格式化输出">¶</a>字符串的格式化输出</h4>
-<pre><code class="language-python">name = 'Jay'
-age = 8
-
-s1 = &quot;我叫%s,我今年%d岁了&quot; % (name,age)
-print(s1)
-
-s2 = f&quot;我叫&#123;name&#125;,我今年&#123;age&#125;岁了&quot;
-print(s2)
-
-#按照位置格式化
-s3 = &quot;我叫&#123;&#125;,我今年&#123;&#125;岁了&quot;.format(name,age)
-print(s3)
-
-#按照函数中参数顺序分别填入对应相应的参数，从0开始，不得越界
-s4 = &quot;我叫&#123;1&#125;,我今年&#123;0&#125;岁了&quot; .format(name,age)
-print(s4)
-
-s5 = &quot;我叫&#123;aname&#125;,我今年&#123;aage&#125;岁了&quot; .format(aname=name,aage=age)
-print(s5)
-</code></pre>
-<p><u>字符串是不可变的对象, 所以任何操作对原字符串是不会有任何影响的</u></p>
-<h2 id="基础数据类型list"><a class="header-anchor" href="#基础数据类型list">¶</a>基础数据类型list</h2>
-<p>列表是python的基础数据类型之一 ,其他编程语言也有类似的数据类型. 比如JS中的数组, java中的数组等等. 它是以[ ]括起来, 每个元素用’ , '隔开而且可以存放各种数据类型.</p>
-<p>列表相比于字符串. 不仅可以存放不同的数据类型. 而且可以存放大量的数据. 32位python可以存放: 536870912个元素, 64位可以存放: 1152921504606846975个元素.而且列表是有序的(按照你保存的顺序),有索引, 可以切片方便取值.</p>
-<h4 id="索引和切片"><a class="header-anchor" href="#索引和切片">¶</a>索引和切片</h4>
-<p>和字符串中索引和切片操作基本相同，不同的是列表中的数据类型是list</p>
-<p><u>列表是一个可变的数据类型</u></p>
-<h4 id="列表查常用操作"><a class="header-anchor" href="#列表查常用操作">¶</a>列表查常用操作</h4>
-<h5 id="增加"><a class="header-anchor" href="#增加">¶</a>增加</h5>
-<p>注意, list和str是不一样的. list可以发生改变. 所以直接就在原来的对象上进行了操作</p>
-<p>append的效率高于insert</p>
-<pre><code class="language-python">lst = [&quot;麻花藤&quot;, &quot;林俊杰&quot;, &quot;周润发&quot;, &quot;周芷若&quot;] 
-print(lst) 
-lst.append(&quot;wusir&quot;) 
-print(lst) 
-lst = [] 
-while True:   
-    content = input(&quot;请输入你要录入的员工信息, 输入Q退出:&quot;)   
-    if content.upper() == 'Q':     
-        break   
-    lst.append(content) 
-print(lst) 
-
-lst = [&quot;麻花藤&quot;, &quot;张德忠&quot;, &quot;孔德福&quot;] 
-lst.insert(1, &quot;刘德华&quot;)  # 在1的位置插入刘德华. 原来的元素向后移动一位 
-print(lst) 
-
-# 迭代添加 
-lst = [&quot;王志文&quot;, &quot;张一山&quot;, &quot;苦海无涯&quot;] 
-lst.extend([&quot;麻花藤&quot;, &quot;麻花不疼&quot;]) 
-print(lst)          
-</code></pre>
-<h5 id="删除"><a class="header-anchor" href="#删除">¶</a>删除</h5>
-<p>pop, remove, clear, del</p>
-<pre><code class="language-python">lst = [&quot;麻花藤&quot;, &quot;王剑林&quot;, &quot;李嘉诚&quot;, &quot;王富贵&quot;] 
-print(lst) 
-deleted = lst.pop()     # 默认删除最后一个 
-print(&quot;被删除的&quot;, deleted) 
-print(lst) 
-
-el = lst.pop(2)   # 删除2号元素 
-print(el) 
-print(lst) 
-
-lst.remove(&quot;麻花藤&quot;)  # 删除指定元素 
-print(lst) # lst.remove(&quot;哈哈&quot;)  # 删除不存在的元素会报错 # print(lst) 
-
-lst.clear()   # 清空list 
-print(lst) 
-
-# 切片删除 
-del lst[1:3] 
-print(lst)   
-</code></pre>
-<h5 id="修改"><a class="header-anchor" href="#修改">¶</a>修改</h5>
-<p>索引切片修改</p>
-<pre><code class="language-python"># 修改
-lst = [&quot;得儿得儿&quot;, &quot;太牛&quot;, &quot;胡辣汤&quot;, &quot;王者荣耀&quot;, &quot;科科&quot;] 
-lst[1] = &quot;太污&quot;  # 把1号元素修改成太污 
-print(lst) 
-
-lst[1:4:3] = [&quot;麻花藤&quot;, &quot;哇靠&quot;]   # 切片修改也OK. 如果步长不是1, 要注意. 元素的个数 
-print(lst) 
-
-lst[1:4] = [&quot;压了个嘿嘿&quot;] # 如果切片没有步长或者步长是1. 则不用关心个数 
-print(lst)    
-</code></pre>
-<h5 id="查询"><a class="header-anchor" href="#查询">¶</a>查询</h5>
-<p>列表是一个可迭代对象, 所以可以进行for循环</p>
-<pre><code class="language-python">for el in lst:   
-    print(el)     
-</code></pre>
-<h5 id="其他"><a class="header-anchor" href="#其他">¶</a>其他</h5>
-<pre><code class="language-python">lst = [&quot;小白&quot;, &quot;小黑&quot;, &quot;腾哥&quot;, &quot;马总&quot;, &quot;日天&quot;, &quot;小白&quot;] 
-c = lst.count(&quot;小白&quot;)   # 查询太白出现的次数 
-print(c) 
-
-lst = [1, 11, 22, 2] 
-lst.sort()     # 排序. 默认升序 
-print(lst) 
-
-lst.sort(reverse=True) # 降序 
-print(lst) 
-
-lst = [&quot;小白&quot;, &quot;小黑&quot;, &quot;腾哥&quot;, &quot;马总&quot;, &quot;日天&quot;, &quot;白天&quot;] 
-print(lst) 
-
-lst.reverse() #翻转
-print(lst) 
-
-l = len(lst)  # 列表的长度 
-print(l) 
-
-#rang（让for循环去数数,顾头不顾尾）
-for num in range(10):
-    print(num)	#输出0,1,...10
-
-for num in range(10, 1, -2):    # 反着来, 和切片一样
-    print(num)
-    
-#range最大的作用是可以循环出列表中每一个元素的索引
-lst = [&quot;周杰伦&quot;, &quot;马虎疼&quot;, &quot;疼不疼&quot;]
-for i in range(len(lst)):
-    print(i, lst[i])
-</code></pre>
-<h4 id="列表的嵌套"><a class="header-anchor" href="#列表的嵌套">¶</a>列表的嵌套</h4>
-<pre><code class="language-python">lst = [1, &quot;小白&quot;, &quot;小黑黑&quot;, [&quot;马虎疼&quot;, [&quot;可口可乐&quot;], &quot;王剑林&quot;], 'kounijiwa'] 
-
-# 找到小白和小黑黑 
-print(lst[1:3]) 
-
-# 找到小白的白字 
-print(lst[1][1]) 
-
-# 将kounijiwa拿到. 然后首字母大写. 再扔回去 
-s = lst[4] s = s.capitalize() 
-lst[4] = s print(lst) # 简写 lst[4] = lst[4].capitalize() 
-print(lst) 
-
-# 把马虎疼换成马化疼 
-lst[3][0] = lst[3][0].replace(&quot;虎&quot;, &quot;化&quot;) 
-#lst[3][0].replace(&quot;虎&quot;, &quot;化&quot;) 产生一个新的字符串，要将字符串替换到原来的位置
-print(lst[3][0]) 
-
-lst[3][1].append(&quot;雪碧&quot;) 
-print(lst)     
-</code></pre>
-<h2 id="基础数据类型tuple"><a class="header-anchor" href="#基础数据类型tuple">¶</a>基础数据类型tuple</h2>
-<p>只读列表，元组也是python的基本数据类型之一, 用小括号括起来, 里面可以放任何数据类型的数据,  查询可以. 循环也可以. 切片也可以. 但就是不能改.</p>
-<pre><code class="language-python">tu = (1, &quot;太白&quot;, &quot;李白&quot;, &quot;太黑&quot;, &quot;怎么黑&quot;) 
-print(tu)
-
-print(tu[2:5]) # 切片之后还是元组 
-
-# for循环遍历元组 
-for el in tu:   
-	print(el) 
-	
-# 尝试修改元组 
-# tu[1] = &quot;马虎疼&quot;  # 报错 'tuple' object does not support item assignment 
-
-tu = (1, &quot;哈哈&quot;, [], &quot;呵呵&quot;) 
-# tu[2] = [&quot;fdsaf&quot;]   这么改不行 
-
-tu[2].append(&quot;麻花藤&quot;)   # 可以改了. 没报错 
-print(tu)     
-</code></pre>
-<p><strong><u>这里元组的不可变的意思是子元素不可变，元组内存的指向不可变. 而子元素内部的子元素是可以变, 这取决于子元素是否是可变对象.</u></strong></p>
-<p><u>元组中如果只有一个元素. 一定要添加一个逗号, 否则就不是元组</u></p>
-<pre><code class="language-python">tu = (1,) 
-print(type(tu))     
-</code></pre>
-<p>​</p>
-<h2 id="基础数据类型dict"><a class="header-anchor" href="#基础数据类型dict">¶</a>基础数据类型dict</h2>
-<p>字典(<code>dict</code>)是python中唯一的一个映射类型.他是以{ }括起来的键值对组成. 在<code>dict</code>中key是唯一的. 在保存的时候, 根据key来计算出一个内存地址. 然后将<code>key:value</code>保存在这个地址中. 这种算法被称为hash算法, 所以, 切记, 在<code>dict</code>中存储的<code>key:value</code>中的key’必须是可hash的, 如果你搞不懂什么是可哈希, 暂时可以这样记, 可以改变的都是不可哈希的, 那么可哈希就意味着不可变. 这个是为了能准确的计算内存地址而规定的.</p>
-<p>已知的可哈希(不可变)的数据类型: int, str, tuple, bool</p>
-<p>不可哈希(可变)的数据类型: list, dict, set</p>
-<p>语法 :</p>
-<p>{key1: value1, key2: value2…}</p>
+<h3 id="pair-int-int"><a class="header-anchor" href="#pair-int-int">¶</a>pair&lt;int, int&gt;</h3>
+<p>相当于二元结构体，并内置比较函数</p>
+<p>​    <code>first</code>, 第一个元素<br>
+​    <code>second</code>, 第二个元素<br>
+​    支持比较运算，以<code>first</code>为第一关键字，以<code>second</code>为第二关键字（字典序）</p>
+<h3 id="string，字符串"><a class="header-anchor" href="#string，字符串">¶</a>string，字符串</h3>
+<p>​    <code>length()</code>  返回字符串长度<br>
+​    <code>substr(起始下标，(子串长度))</code>  返回子串<br>
+<code>c_str()</code> 返回字符串所在字符数组的起始地址</p>
+<h3 id="queue-队列"><a class="header-anchor" href="#queue-队列">¶</a>queue, 队列</h3>
+<p><code>push()</code>  向队尾插入一个元素<br>
+<code>front()</code>  返回队头元素<br>
+<code>back()</code>  返回队尾元素<br>
+<code>pop()</code>  弹出队头元素</p>
+<h3 id="priority-queue"><a class="header-anchor" href="#priority-queue">¶</a>priority_queue</h3>
+<p>priority_queue, 优先队列，默认是大根堆</p>
+<p>​    <code>push()</code>  插入一个元素<br>
+<code>top()</code>  返回堆顶元素<br>
+​    <code>pop()</code>  弹出堆顶元素<br>
+​    定义成小根堆的方式：<code>priority_queue&lt;int, vector&lt;int&gt;, greater&lt;int&gt;&gt; q</code>;</p>
 <blockquote>
-<p>注意:</p>
-<p>key必须是不可变(可哈希)的. value没有要求.可以保存任意类型的数据</p>
-<p>dict保存的数据不是按照我们添加进去的顺序保存的. 是按照hash表的顺序保存的. 而hash表不是连续的. 所以不能进行切片工作. 它只能通过key来获取dict中的数据</p>
+<p>greater表示内置类型从大到小排序，less表示内置类型从小到大排序。</p>
 </blockquote>
-<h4 id="字典增删改查和其他操作"><a class="header-anchor" href="#字典增删改查和其他操作">¶</a>字典增删改查和其他操作</h4>
-<p>增加</p>
-<pre><code class="language-python">dic = &#123;&#125;
-dic['name'] = '周润发'     # 如果dict中没有出现这个key, 就会新增一个key-value的组合进dict
-print(dic)
-
-# 如果dict中没有出现过这个key-value,key必须是不存在的. 可以通过setdefault设置默认值
-dic.setdefault('李嘉诚')   # 也可以往里面设置值.
-dic.setdefault(&quot;李嘉诚&quot;, &quot;房地产&quot;)    # 如果dict中已经存在了. 那么setdefault将不会起作用
-
-print(dic)
-</code></pre>
-<p>删除(参考列表，没有remove)</p>
-<pre><code class="language-python">ret = dic.pop(&quot;jay&quot;)	#pop中加上key
-print(ret)
-
-del dic[&quot;jay&quot;]
-print(dic)
-
-# 清空字典中的所有内容
-dic.clear()
-</code></pre>
-<p>修改</p>
-<pre><code class="language-python">dic = &#123;&quot;id&quot;: 123, &quot;name&quot;: 'sylar', &quot;age&quot;: 18&#125;
-dic1 = &#123;&quot;id&quot;: 456, &quot;name&quot;: &quot;麻花藤&quot;, &quot;ok&quot;: &quot;wtf&quot;&#125;
-dic.update(dic1)    # 把dic1中的内容更新到dic中. 如果key重名. 则修改替换. 如果不存在key, 则新增.
-print(dic)
-</code></pre>
-<p>查询（根据是否确定该key存在选择使用）</p>
-<pre><code class="language-python">print(dic['name'])	 # 不存在 报错
-print(dic.get(&quot;sylar&quot;))      # 不存在 返回None
-print(dic.get(&quot;sylar&quot;, &quot;牛B&quot;))   # 牛B
-#setdefault 在执行完新增流程后，会根据key查询value
-print(dic.setdefault(&quot;sylar&quot;))   
-</code></pre>
-<p>循环</p>
-<pre><code class="language-python">dic = &#123;&quot;id&quot;: 123, &quot;name&quot;: 'sylar', &quot;age&quot;: 18, &quot;ok&quot;: &quot;科比&quot;&#125;
-
-#第一种
-for k in dic:
-    print(k)
-    
-# dict.keys(['id', 'name', 'age', 'ok']) 不用管它是什么.当成list来用就行
-for key in dic.keys():
-    print(key)
-
-# dict.values([123, 'sylar', 18, '科比']) 当list来用
-for value in dic.values():
-    print(value)
-
-# dict_items([('id', 123), ('name', 'sylar'), ('age', 18), ('ok', '科比')]) 这个东西也是list. 只不过list中装的是tuple
-for key, value in dic.items(): #解构
-    print(key, value)
-
-# 解构
-a = 1, 2
-print(a) #类型是元组（1,2）
-
-(c, d) = 3, 4
-print(c, d)	#分别输出3,4 类型都是int
-
-# 解构的时候注意数量必须匹配 错误写法 最多两个元素
-e, f = [1, 2, 3]    
-print(e, f)
-</code></pre>
-<h4 id="字典的嵌套"><a class="header-anchor" href="#字典的嵌套">¶</a>字典的嵌套</h4>
-<pre><code class="language-python">dic1 = &#123;
-    &quot;name&quot;: &quot;汪峰&quot;,
-    &quot;age&quot;: 18,
-    &quot;wife&quot;: &#123;
-        &quot;name&quot;: '章子怡',
-        &quot;age&quot;: 28
-    &#125;,
-    &quot;children&quot;: ['第一个毛孩子', '第二个毛孩子'],
-    &quot;desc&quot;: '峰哥不会告我吧. 没关系. 我想上头条的'
-&#125;
-
-print(dic1.get(&quot;wife&quot;).get(&quot;name&quot;))
-print(dic1.get(&quot;children&quot;)[1])
-</code></pre>
-<h2 id="基本数据类型Set"><a class="header-anchor" href="#基本数据类型Set">¶</a>基本数据类型Set</h2>
-<p>set集合是python的一个基本数据类型. 一般不是很常用. set中的元素是不重复的.无序的.里面的元素必须是可hash的(int, str, tuple,bool), 我们可以这样来记. set就是<code>dict</code>类型的数据但是不保存value, 只保存key. set也用{}表示</p>
-<p><code>add</code> 增加</p>
-<p><code>remove</code>修改 先把要修改的内容删除，然后新增一个新的</p>
-<p>最主要的操作: 去重复, 交,并,差</p>
-<pre><code class="language-python">s1 = &#123;&quot;刘能&quot;, &quot;赵四&quot;, &quot;皮长山&quot;&#125;
-s2 = &#123;&quot;刘科长&quot;, &quot;冯乡长&quot;, &quot;皮长山&quot;&#125;
-
-# 交集
-# 两个集合中的共有元素
-print(s1 &amp; s2)  # &#123;'皮长山'&#125;
-print(s1.intersection(s2))  # &#123;'皮长山'&#125;
-
-# 并集
-print(s1 | s2)  # &#123;'刘科长', '冯乡长', '赵四', '皮长山', '刘能'&#125;
-print(s1.union(s2))     # &#123;'刘科长', '冯乡长', '赵四', '皮长山', '刘能'&#125;
-
-# 差集
-print(s1 - s2)  # &#123;'赵四', '刘能'&#125; 得到第一个中单独存在的
-print(s1.difference(s2))     # &#123;'赵四', '刘能'&#125;
-</code></pre>
-<h2 id="深浅copy"><a class="header-anchor" href="#深浅copy">¶</a>深浅copy</h2>
-<pre><code class="language-python">lst1 = [&quot;金毛狮王&quot;, &quot;紫衫龙王&quot;, &quot;白眉鹰王&quot;, &quot;青翼蝠王&quot;]
-#并没有产生新的对象 而是把原来的内存地址 赋给list2
-lst2 = lst1
-print(lst1)
-print(lst2)
-
-lst1.append(&quot;杨逍&quot;)
-print(lst1)
-print(lst2)
-
-结果:
-['金毛狮王', '紫衫龙王', '白眉鹰王', '青翼蝠王', '杨逍']
-['金毛狮王', '紫衫龙王', '白眉鹰王', '青翼蝠王', '杨逍']
-
-#可以通过 id(list1) 来查看list1的地址
-
-dic1 = &#123;&quot;id&quot;: 123, &quot;name&quot;: &quot;谢逊&quot;&#125;
-dic2 = dic1
-print(dic1)  # &#123;'id': 123, 'name': '谢逊'&#125;
-print(dic2)  # &#123;'id': 123, 'name': '谢逊'&#125;
-
-dic1['name'] = &quot;范瑶&quot;
-print(dic1)  # &#123;'id': 123, 'name': '范瑶'&#125;
-print(dic2)  # &#123;'id': 123, 'name': '范瑶'&#125;
-</code></pre>
-<h4 id="浅拷贝"><a class="header-anchor" href="#浅拷贝">¶</a>浅拷贝</h4>
-<pre><code class="language-python">lst1 = [&quot;何炅&quot;, &quot;杜海涛&quot;,&quot;周渝民&quot;]
-lst2 = lst1.copy()
-lst1.append(&quot;李嘉诚&quot;)
-print(lst1)
-print(lst2)
-print(id(lst1), id(lst2))
-
-结果: 
-两个lst完全不一样. 内存地址和内容也不一样. 发现实现了内存的拷贝
-
-lst1 = [&quot;何炅&quot;, &quot;杜海涛&quot;,&quot;周渝民&quot;, [&quot;麻花藤&quot;, &quot;马芸&quot;, &quot;周笔畅&quot;]]
-lst2 = lst1.copy()
-lst1[3].append(&quot;无敌是多磨寂寞&quot;)
-print(lst1)
-print(lst2)
-print(id(lst1[3]), id(lst2[3]))
-
-结果: 
-['何炅', '杜海涛', '周渝民', ['麻花藤', '马芸', '周笔畅', '无敌是多磨寂寞']]
-['何炅', '杜海涛', '周渝民', ['麻花藤', '马芸', '周笔畅', '无敌是多磨寂寞']]
-4417248328 4417248328
-</code></pre>
-<p>只会拷贝第一层. 第二层的内容不会拷贝，还是指向原地址. 所以被称为浅拷贝</p>
-<h4 id="深拷贝"><a class="header-anchor" href="#深拷贝">¶</a>深拷贝</h4>
-<p>必须使用copy模块</p>
-<pre><code class="language-python">import copy
-
-lst1 = [&quot;何炅&quot;, &quot;杜海涛&quot;,&quot;周渝民&quot;, [&quot;麻花藤&quot;, &quot;马芸&quot;, &quot;周笔畅&quot;]]
-lst2 = copy.deepcopy(lst1)
-lst1[3].append(&quot;无敌是多磨寂寞&quot;)
-print(lst1)
-print(lst2)
-print(id(lst1[3]), id(lst2[3]))
-
-结果:
-['何炅', '杜海涛', '周渝民', ['麻花藤', '马芸', '周笔畅', '无敌是多磨寂寞']]
-['何炅', '杜海涛', '周渝民', ['麻花藤', '马芸', '周笔畅']]
-4447221448 4447233800
-</code></pre>
-<p>深度拷贝. 把元素内部的元素完全进行拷贝复制. 不会产生一个改变另一个跟着改变的问题</p>
-<h2 id="知识点补充"><a class="header-anchor" href="#知识点补充">¶</a>知识点补充</h2>
-<h4 id="列表和字典循环的时候不能删除"><a class="header-anchor" href="#列表和字典循环的时候不能删除">¶</a>列表和字典循环的时候不能删除</h4>
-<p>python中的列表和字典在循环的时候. 不能删除自身中的元素. 列表虽然不报错，但是删不干净.  对于字典, 直接报错. 不让删. 解决方案都一样, 把要删除的内容保存在一个新列表中, 循环新列表, 删除老列表.</p>
-<p>每次remove后，后面的元素都会向前挪，但是指针位置还是不变的，导致前挪动的元素，如果符合条件，就不会被删除</p>
-<pre><code class="language-python">lst = [&quot;张无忌&quot;, &quot;张翠山&quot;, &quot;灭绝师太&quot;, &quot;胡辣汤&quot;]
-new_lst = []
-for name in lst:
-    if name.startswith(&quot;张&quot;):
-        new_lst.append(name)
-#法一        
-for name in new_lst:
-    lst.remove(name)
-#法二 新产生的字符串与原字符串指向同一地址
-for name in lst[:]:
-    if name.startswith('张'):
-        lst.remove(name)
-        
-print(lst) # [&quot;灭绝师太&quot;, &quot;胡辣汤&quot;] 
-</code></pre>
-<p>字典操作与列表类似，可以选择存储keys</p>
-<h4 id="is和-的区别"><a class="header-anchor" href="#is和-的区别">¶</a>is和==的区别</h4>
-<p>== 判断的是内容. ==&gt;  两个人长的是不是一样?</p>
-<p>is   判断的是内存地址.  ==&gt;  两个人是不是同一个人</p>
-<p><u>此结论不适合字符串.</u></p>
-<h4 id="while…else"><a class="header-anchor" href="#while…else">¶</a>while…else</h4>
-<pre><code class="language-python">while 条件:
-    循环体
-else: 循环在正常情况跳出之后会执行这里
-</code></pre>
-<p>如果循环是通过break退出的. 那么while后面的else将不会被执行, 只有在while条件判断是假的时候才会执行这个else</p>
-<p><code>pass</code>: <u>不表示任何内容. 为了代码的完整性.  占位而已</u></p>
-<h2 id="文件操作"><a class="header-anchor" href="#文件操作">¶</a>文件操作</h2>
-<p><code>               f = open(文件, mode=&quot;模式&quot; encoding=&quot;编码&quot;)             </code></p>
-<p>f被称为文件句柄，负责操纵你打开的这个文件</p>
-<h4 id="模式"><a class="header-anchor" href="#模式">¶</a>模式:</h4>
-<p>r: 只读</p>
-<p>w: 只写  如果没有文件. 则会创建文件, 如果文件存在. 则将原件中原来的内容删除, 再写入新内容</p>
-<pre><code class="language-python">f.write(&quot;\n&quot;) 换行
-</code></pre>
-<p>a: 追加写    追加写，不会重新创建文件，但是如果文件不存在，可以创建文件</p>
-<p>+: 扩展      不是很好用</p>
-<p>b: 字节(非文本文件，可理解为二进制文件，不能指定encoding)</p>
-<pre><code class="language-python">#s实现文件复制
-f1=open(&quot;a/tu.jpg&quot;,mode=&quot;rb&quot;)
-f2=open(&quot;c/yu.jpg&quot;,mode=&quot;wb&quot;)
-for line in f1:
-	f2.write(line)
-</code></pre>
-<h4 id="读取文件的方法"><a class="header-anchor" href="#读取文件的方法">¶</a>读取文件的方法</h4>
+<h3 id="stack-栈"><a class="header-anchor" href="#stack-栈">¶</a>stack, 栈</h3>
+<p><code>push()</code>  向栈顶插入一个元素</p>
+<p><code> top()</code>  返回栈顶元素</p>
+<p><code> pop()</code>  弹出栈顶元素</p>
+<h3 id="deque-双端队列"><a class="header-anchor" href="#deque-双端队列">¶</a>deque, 双端队列</h3>
+<p>效率很低撒~</p>
+<p>​    <code>front()/back()</code><br>
+​    <code>push_back()/pop_back()</code><br>
+​    <code>push_front()/pop_front()</code><br>
+​    <code>begin()/end()</code><br>
+​</p>
+<h3 id="set-map-multiset-multimap"><a class="header-anchor" href="#set-map-multiset-multimap">¶</a>set, map, multiset, multimap</h3>
+<p>基于平衡二叉树（红黑树），动态维护有序序列</p>
+<p>​    <code>size()</code><br>
+​    <code>empty()</code><br>
+​    <code>clear()</code><br>
+​    <code>begin()/end()</code><br>
+​    <code>++, --</code> 返回前驱和后继，时间复杂度 O(logn)</p>
+<h4 id="set-multiset"><a class="header-anchor" href="#set-multiset">¶</a>set/multiset</h4>
+<p><code>insert()</code>  插入一个数</p>
+<p><code>find()</code>  查找一个数</p>
+<p><code>count()</code>  返回某一个数的个数</p>
+<p><code> erase()</code></p>
 <ol>
-<li>read()  将文件中的内容全部读取出来. 弊端: 占内存. 如果文件过大.容易导致内存崩溃</li>
-<li>read(n) 读取n个字符. 需要注意的是. 如果再次读取. 那么会在当前位置继续去读而不是从头读, 如果使用的是rb模式. 则读取出来的是n个字节</li>
-<li>readline() 一次读取一行数据, 注意: readline()结尾, 注意每次读取出来的数据都会有一个\n 所以呢. 需要我们使用strip()方法来去掉\n或者空格</li>
-<li>readlines()将每一行形成一个元素, 放到一个列表中. 将所有的内容都读取出来. 所以也是. 容易出现内存崩溃的问题.不推荐使用</li>
-<li>循环读取 读取文件最好的方案</li>
+<li>
+<p>输入一个数x，删除所有x	O(k+logn) k是个数</p>
+</li>
+<li>
+<p>输入一个迭代器，删除这个迭代器</p>
+</li>
+<li>
+<p>​        输入是一个数x，删除所有x   O(k + logn)</p>
+</li>
+<li>
+<p>​        输入一个迭代器，删除这个迭代器</p>
+</li>
 </ol>
-<pre><code class="language-python">#另一种写法，可以不用`close` 使用with()自动加入 '\'可以用来表示一行的连接	
-    with open() as f1,\
-    	 open() as f2:        
-		for line in f1:
-            f2.write(line)
-            print(line.strip())	#去掉换行
-			xxxxx
-</code></pre>
-<p><strong>读取完的文件句柄一定要关闭 <code> f.close()</code>，</strong></p>
-<p>​</p>
-<h4 id="修改文件"><a class="header-anchor" href="#修改文件">¶</a>修改文件:</h4>
-<ol>
-<li>创建一个文件副本.</li>
-<li>把源文件中的内容读取到内存.</li>
-<li>然后在内存中进行修改.</li>
-<li>修改之后保存在文件副本中.</li>
-<li>把源文件删除</li>
-<li>把文件副本更改名称为源文件的名称</li>
-</ol>
-<pre><code class="language-python"># 文件修改
-import os
-
-with open(&quot;小娃娃&quot;, mode=&quot;r&quot;, encoding=&quot;utf-8&quot;) as f1,\
-     open(&quot;小娃娃_new&quot;, mode=&quot;w&quot;, encoding=&quot;UTF-8&quot;) as f2:
-    content = f1.read()
-    new_content = content.replace(&quot;冰糖葫芦&quot;, &quot;大白梨&quot;)
-    f2.write(new_content)
-os.remove(&quot;小娃娃&quot;)    # 删除源文件
-os.rename(&quot;小娃娃_new&quot;, &quot;小娃娃&quot;)     # 重命名新文件
-</code></pre>
-<p>弊端: 一次将所有内容进行读取. 内存溢出. 解决方案: 一行一行的读取和操作</p>
-<pre><code class="language-python">import os
-
-with open(&quot;小娃娃&quot;, mode=&quot;r&quot;, encoding=&quot;utf-8&quot;) as f1,\
-     open(&quot;小娃娃_new&quot;, mode=&quot;w&quot;, encoding=&quot;UTF-8&quot;) as f2:
-    for line in f1:
-        new_line = line.replace(&quot;大白梨&quot;, &quot;冰糖葫芦&quot;)
-        f2.write(new_line)
-os.remove(&quot;小娃娃&quot;)    # 删除源文件
-os.rename(&quot;小娃娃_new&quot;, &quot;小娃娃&quot;)     # 重命名新文件
-</code></pre>
-<p>​</p>
+<p><code> lower_bound()/upper_bound()</code><br>
+<code>lower_bound(x)</code>  返回大于等于x的最小的数的迭代器<br>
+<code> upper_bound(x)</code>  返回大于x的最小的数的迭代器</p>
+<h4 id="map-multimap"><a class="header-anchor" href="#map-multimap">¶</a>map/multimap</h4>
+<p>​    <code>insert()</code>  插入的数是一个pair（表现为映射）<br>
+<code> erase()</code>  输入的参数是pair或者迭代器<br>
+​    <code>find()</code><br>
+​     注意multimap不支持此操作。 时间复杂度是 O(logn)<br>
+​    <code>lower_bound()/upper_bound()</code></p>
+<h4 id="unordered-set-unordered-map-unordered-multiset-unordered-multimap-哈希表"><a class="header-anchor" href="#unordered-set-unordered-map-unordered-multiset-unordered-multimap-哈希表">¶</a>unordered_set, unordered_map, unordered_multiset, unordered_multimap, 哈希表</h4>
+<p>​	内部无序</p>
+<p>​    和上面类似，增删改查的时间复杂度是 O(1)<br>
+​    不支持 <code>lower_bound()/upper_bound()</code>， 迭代器的++，–</p>
+<h3 id="bitset-圧位"><a class="header-anchor" href="#bitset-圧位">¶</a>bitset, 圧位</h3>
+<p>省八位空间</p>
+<blockquote>
+<p>bitset是一个多位二进制数，每八位占用一个字节，因为支持基本的位运算，所以可用于状态压缩，n位bitset执行一次位运算的时间复杂度可视为n/32.</p>
+<p><code>bitset&lt;10000&gt; s;</code></p>
+</blockquote>
+<p>支持的符号操作</p>
+<p><code> ~, &amp;, |, ^</code><br>
+<code> &gt;&gt;, &lt;&lt;</code><br>
+<code>==, !=</code></p>
+<p><code>count()</code>  返回有多少个1</p>
+<p><code>any()</code>  判断是否至少有一个1<br>
+<code>none()</code>  判断是否全为0</p>
+<p><code>set() </code> 把所有位置成1<br>
+<code>set(k, v)</code>  将第k位变成v<br>
+<code>reset()</code>  把所有位变成0<br>
+<code>flip()</code>  等价于~<br>
+<code>flip(k)</code> 把第k位取反</p>
 ]]></content>
       <categories>
         <category>语言学习</category>
       </categories>
       <tags>
-        <tag>PYTHON</tag>
+        <tag>others</tag>
+        <tag>C/C++</tag>
       </tags>
   </entry>
   <entry>
@@ -2775,6 +1786,1056 @@ print(f(10))
       </tags>
   </entry>
   <entry>
+    <title>Python学习笔记（2）基础数据类型</title>
+    <url>/2022/09/15/Python%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%882%EF%BC%89/</url>
+    <content><![CDATA[<p>最近在学py，简单记录一下笔记</p>
+<span id="more"></span>
+<h2 id="格式化输出"><a class="header-anchor" href="#格式化输出">¶</a>格式化输出</h2>
+<p>放置占位符，再把字符串里的占位符与外部的变量做好映射关系</p>
+<pre><code class="language-python">name = input(&quot;Name:&quot;) 
+age = input(&quot;Age:&quot;) 
+job = input(&quot;Job:&quot;) 
+hobby = input(&quot;Hobbie:&quot;) 
+
+info = ''' ------------ info of %s ----------- #这里的每个%s就是一个占位符，本行的代表 后面拓号里的 name 
+Name : %s #代表 name 
+Age  : %s #代表 age  job  : %s #代表 job 
+Hobbie: %s #代表 hobbie 
+------------- end -----------------
+ ''' % (name,name,age,job,hobbie) # 这行的 % 号就是 把前面的字符串 与拓号 后面的 变量 关联起来 
+
+print(info)         
+</code></pre>
+<p><u>注意空格</u></p>
+<p>%s就是代表字符串占位符，除此之外，还有%d, 是数字占位符， 如果把上面的age后面的换成%d，就代表你必须只能输入数字啦, 这时对应的数据必须是int类型. 否则程序会报错使用时,需要进行类型转换.</p>
+<pre><code class="language-python">int(str)   # 字符串转换成int 
+str(int)   # int转换成字符串      
+</code></pre>
+<blockquote>
+<p>在字符串中如果使用了%s这样的占位符. 那么所有的%都将变成占位符需要使用%%来表示字符串中的%</p>
+</blockquote>
+<p>python3.5以后可以使用f来格式化字符串.</p>
+<p>语法 : <code>f&quot;&#123;变量&#125;&quot;</code></p>
+<pre><code class="language-python">name = &quot;sylar&quot; 
+print(f&quot;&#123;name&#125;真是一个...&quot;)         
+</code></pre>
+<p>​</p>
+<h2 id="基本运算符"><a class="header-anchor" href="#基本运算符">¶</a>基本运算符</h2>
+<h4 id="算术运算"><a class="header-anchor" href="#算术运算">¶</a>算术运算</h4>
+<p><img src="/images/%E7%AE%97%E6%9C%AF%E8%BF%90%E7%AE%97.png" alt="image-20220915164625454"></p>
+<h4 id="比较运算"><a class="header-anchor" href="#比较运算">¶</a>比较运算</h4>
+<p><img src="/images/%E6%AF%94%E8%BE%83%E8%BF%90%E7%AE%97.png" alt="image-20220915164937061"></p>
+<h4 id="赋值运算"><a class="header-anchor" href="#赋值运算">¶</a>赋值运算</h4>
+<p><img src="/images/%E8%B5%8B%E5%80%BC%E8%BF%90%E7%AE%97.png" alt="image-20220915165015281"></p>
+<h4 id="逻辑运算"><a class="header-anchor" href="#逻辑运算">¶</a>逻辑运算</h4>
+<p><img src="/images/%E9%80%BB%E8%BE%91%E8%BF%90%E7%AE%97.png" alt="image-20220915165046443"></p>
+<p>and 并且 and左右两端同时为真，结果才为真</p>
+<p>or 或者 两端有一个为真结果为真</p>
+<p>not 非 非真即假，非假即真</p>
+<p><strong>逻辑运算的运算顺序: () &gt; not &gt; and &gt; or</strong></p>
+<h4 id="成员运算"><a class="header-anchor" href="#成员运算">¶</a>成员运算</h4>
+<p><code>xx in xxx</code> 	表示xx是否不在xxx中出现</p>
+<p><code>xx not...in xxx</code>   表示xx是否不在xxx中出现</p>
+<h2 id="编码初识以及bytes"><a class="header-anchor" href="#编码初识以及bytes">¶</a>编码初识以及bytes</h2>
+<ol>
+<li>ascii : 8bit, 主要存放的是英文, 数字,  特殊符号</li>
+<li>gbk: 16bit, 主要存放中文和亚洲字符. 兼容ascii</li>
+<li>unicode: 16bit和32bit两个版本. 平时我们用的是16bit这个版本. 全世界所有国家的文字信息. 缺点: 浪费空间(传输和存储)</li>
+<li>utf-8 : 可变长度unicode, 英文: 8bit, 欧洲文字: 16bit, 中文24bit. 一般数据传输和存储的时候使用.</li>
+<li>以上所有编码必须兼容ascii .</li>
+</ol>
+<p>内存中使用的是unicode ，一个/x就是一个字节，一个汉字三个字节</p>
+<p>gbk中，一个汉字两个字节</p>
+<p><u>编码用encode()  解码用decode()</u></p>
+<p>不同的编码之间是不能进行转换的，若想转换，可以先解码再编码</p>
+<p>一个字节8个0和1</p>
+<h2 id="基础数据类型bool"><a class="header-anchor" href="#基础数据类型bool">¶</a>基础数据类型bool</h2>
+<p>所有表示空的东西都是False</p>
+<p>基本数据类型之间的转化, 想变成谁, 就用谁把数据括起来</p>
+<h2 id="基础数据类型str"><a class="header-anchor" href="#基础数据类型str">¶</a>基础数据类型str</h2>
+<p>把字符连成串. 在python中用’, &quot;, ‘’', “”&quot;引起来的内容被称为字符串.</p>
+<p>字符串: 把多个字符连成串</p>
+<h4 id="字符串索引和切片"><a class="header-anchor" href="#字符串索引和切片">¶</a>字符串索引和切片</h4>
+<p>索引从0开始</p>
+<p>切片:</p>
+<p>s[start: end: step]</p>
+<p>start: 起始位置</p>
+<p>end: 结束位置, 取不到</p>
+<p>step: 步长（步长如果是负数，从右往左取数字）.</p>
+<h4 id="常用API"><a class="header-anchor" href="#常用API">¶</a>常用API</h4>
+<ol>
+<li>
+<p>upper(), 把字符串中所有的字母都变成大写. 主要使用在忽略大小写的时候用</p>
+</li>
+<li>
+<p>strip(), 默认去掉左右两端的空白, 包括\n, \t, 空格.</p>
+</li>
+<li>
+<p>replace(), 字符串替换</p>
+</li>
+<li>
+<p>split(),  字符串切割. 得到字符串列表</p>
+</li>
+<li>
+<p>join(),  把列表重新组合成字符串</p>
+<pre><code class="language-python">lst = ['周杰伦', '王力宏', '麻花藤'] 
+s = &quot;_&quot;.join(lst) 
+print(s)  # 周杰伦_王力宏_麻花藤           
+</code></pre>
+</li>
+<li>
+<p>startswith(),  判断是否以xxxx开头</p>
+</li>
+<li>
+<p>endwith(),判断是否以xx结尾</p>
+</li>
+<li>
+<p>find(), 查找xxxx</p>
+</li>
+<li>
+<p>index()，求索引位置，如果找不到系统会报错</p>
+</li>
+<li>
+<p>count(), 数数, 查看xxx出现的次数</p>
+</li>
+<li>
+<p>isdigit(), 判断该字符串是否是由数字组成</p>
+</li>
+<li>
+<p>len(), 字符串长度, 它是一个内置函数, 直接len(数据)即可</p>
+</li>
+<li>
+<p>capitalize(),首字母变成大写</p>
+</li>
+<li>
+<p>dir(),能查看这个数据类型能执行哪些操作</p>
+</li>
+</ol>
+<pre><code class="language-python">for 变量 in 可迭代对象（不能放数字在这里）:
+
+循环体
+</code></pre>
+<h4 id="关于in"><a class="header-anchor" href="#关于in">¶</a>关于in</h4>
+<pre><code class="language-python">   in有两种用法:     
+	1. 在for中. 是把每一个元素获取到赋值给前面的变量.
+    2. 不在for中. 判断xxx是否出现在str中. 
+ 
+print('VUE' in s19)      
+</code></pre>
+<h4 id="字符串的格式化输出"><a class="header-anchor" href="#字符串的格式化输出">¶</a>字符串的格式化输出</h4>
+<pre><code class="language-python">name = 'Jay'
+age = 8
+
+s1 = &quot;我叫%s,我今年%d岁了&quot; % (name,age)
+print(s1)
+
+s2 = f&quot;我叫&#123;name&#125;,我今年&#123;age&#125;岁了&quot;
+print(s2)
+
+#按照位置格式化
+s3 = &quot;我叫&#123;&#125;,我今年&#123;&#125;岁了&quot;.format(name,age)
+print(s3)
+
+#按照函数中参数顺序分别填入对应相应的参数，从0开始，不得越界
+s4 = &quot;我叫&#123;1&#125;,我今年&#123;0&#125;岁了&quot; .format(name,age)
+print(s4)
+
+s5 = &quot;我叫&#123;aname&#125;,我今年&#123;aage&#125;岁了&quot; .format(aname=name,aage=age)
+print(s5)
+</code></pre>
+<p><u>字符串是不可变的对象, 所以任何操作对原字符串是不会有任何影响的</u></p>
+<h2 id="基础数据类型list"><a class="header-anchor" href="#基础数据类型list">¶</a>基础数据类型list</h2>
+<p>列表是python的基础数据类型之一 ,其他编程语言也有类似的数据类型. 比如JS中的数组, java中的数组等等. 它是以[ ]括起来, 每个元素用’ , '隔开而且可以存放各种数据类型.</p>
+<p>列表相比于字符串. 不仅可以存放不同的数据类型. 而且可以存放大量的数据. 32位python可以存放: 536870912个元素, 64位可以存放: 1152921504606846975个元素.而且列表是有序的(按照你保存的顺序),有索引, 可以切片方便取值.</p>
+<h4 id="索引和切片"><a class="header-anchor" href="#索引和切片">¶</a>索引和切片</h4>
+<p>和字符串中索引和切片操作基本相同，不同的是列表中的数据类型是list</p>
+<p><u>列表是一个可变的数据类型</u></p>
+<h4 id="列表查常用操作"><a class="header-anchor" href="#列表查常用操作">¶</a>列表查常用操作</h4>
+<h5 id="增加"><a class="header-anchor" href="#增加">¶</a>增加</h5>
+<p>注意, list和str是不一样的. list可以发生改变. 所以直接就在原来的对象上进行了操作</p>
+<p>append的效率高于insert</p>
+<pre><code class="language-python">lst = [&quot;麻花藤&quot;, &quot;林俊杰&quot;, &quot;周润发&quot;, &quot;周芷若&quot;] 
+print(lst) 
+lst.append(&quot;wusir&quot;) 
+print(lst) 
+lst = [] 
+while True:   
+    content = input(&quot;请输入你要录入的员工信息, 输入Q退出:&quot;)   
+    if content.upper() == 'Q':     
+        break   
+    lst.append(content) 
+print(lst) 
+
+lst = [&quot;麻花藤&quot;, &quot;张德忠&quot;, &quot;孔德福&quot;] 
+lst.insert(1, &quot;刘德华&quot;)  # 在1的位置插入刘德华. 原来的元素向后移动一位 
+print(lst) 
+
+# 迭代添加 
+lst = [&quot;王志文&quot;, &quot;张一山&quot;, &quot;苦海无涯&quot;] 
+lst.extend([&quot;麻花藤&quot;, &quot;麻花不疼&quot;]) 
+print(lst)          
+</code></pre>
+<h5 id="删除"><a class="header-anchor" href="#删除">¶</a>删除</h5>
+<p>pop, remove, clear, del</p>
+<pre><code class="language-python">lst = [&quot;麻花藤&quot;, &quot;王剑林&quot;, &quot;李嘉诚&quot;, &quot;王富贵&quot;] 
+print(lst) 
+deleted = lst.pop()     # 默认删除最后一个 
+print(&quot;被删除的&quot;, deleted) 
+print(lst) 
+
+el = lst.pop(2)   # 删除2号元素 
+print(el) 
+print(lst) 
+
+lst.remove(&quot;麻花藤&quot;)  # 删除指定元素 
+print(lst) # lst.remove(&quot;哈哈&quot;)  # 删除不存在的元素会报错 # print(lst) 
+
+lst.clear()   # 清空list 
+print(lst) 
+
+# 切片删除 
+del lst[1:3] 
+print(lst)   
+</code></pre>
+<h5 id="修改"><a class="header-anchor" href="#修改">¶</a>修改</h5>
+<p>索引切片修改</p>
+<pre><code class="language-python"># 修改
+lst = [&quot;得儿得儿&quot;, &quot;太牛&quot;, &quot;胡辣汤&quot;, &quot;王者荣耀&quot;, &quot;科科&quot;] 
+lst[1] = &quot;太污&quot;  # 把1号元素修改成太污 
+print(lst) 
+
+lst[1:4:3] = [&quot;麻花藤&quot;, &quot;哇靠&quot;]   # 切片修改也OK. 如果步长不是1, 要注意. 元素的个数 
+print(lst) 
+
+lst[1:4] = [&quot;压了个嘿嘿&quot;] # 如果切片没有步长或者步长是1. 则不用关心个数 
+print(lst)    
+</code></pre>
+<h5 id="查询"><a class="header-anchor" href="#查询">¶</a>查询</h5>
+<p>列表是一个可迭代对象, 所以可以进行for循环</p>
+<pre><code class="language-python">for el in lst:   
+    print(el)     
+</code></pre>
+<h5 id="其他"><a class="header-anchor" href="#其他">¶</a>其他</h5>
+<pre><code class="language-python">lst = [&quot;小白&quot;, &quot;小黑&quot;, &quot;腾哥&quot;, &quot;马总&quot;, &quot;日天&quot;, &quot;小白&quot;] 
+c = lst.count(&quot;小白&quot;)   # 查询太白出现的次数 
+print(c) 
+
+lst = [1, 11, 22, 2] 
+lst.sort()     # 排序. 默认升序 
+print(lst) 
+
+lst.sort(reverse=True) # 降序 
+print(lst) 
+
+lst = [&quot;小白&quot;, &quot;小黑&quot;, &quot;腾哥&quot;, &quot;马总&quot;, &quot;日天&quot;, &quot;白天&quot;] 
+print(lst) 
+
+lst.reverse() #翻转
+print(lst) 
+
+l = len(lst)  # 列表的长度 
+print(l) 
+
+#rang（让for循环去数数,顾头不顾尾）
+for num in range(10):
+    print(num)	#输出0,1,...10
+
+for num in range(10, 1, -2):    # 反着来, 和切片一样
+    print(num)
+    
+#range最大的作用是可以循环出列表中每一个元素的索引
+lst = [&quot;周杰伦&quot;, &quot;马虎疼&quot;, &quot;疼不疼&quot;]
+for i in range(len(lst)):
+    print(i, lst[i])
+</code></pre>
+<h4 id="列表的嵌套"><a class="header-anchor" href="#列表的嵌套">¶</a>列表的嵌套</h4>
+<pre><code class="language-python">lst = [1, &quot;小白&quot;, &quot;小黑黑&quot;, [&quot;马虎疼&quot;, [&quot;可口可乐&quot;], &quot;王剑林&quot;], 'kounijiwa'] 
+
+# 找到小白和小黑黑 
+print(lst[1:3]) 
+
+# 找到小白的白字 
+print(lst[1][1]) 
+
+# 将kounijiwa拿到. 然后首字母大写. 再扔回去 
+s = lst[4] s = s.capitalize() 
+lst[4] = s print(lst) # 简写 lst[4] = lst[4].capitalize() 
+print(lst) 
+
+# 把马虎疼换成马化疼 
+lst[3][0] = lst[3][0].replace(&quot;虎&quot;, &quot;化&quot;) 
+#lst[3][0].replace(&quot;虎&quot;, &quot;化&quot;) 产生一个新的字符串，要将字符串替换到原来的位置
+print(lst[3][0]) 
+
+lst[3][1].append(&quot;雪碧&quot;) 
+print(lst)     
+</code></pre>
+<h2 id="基础数据类型tuple"><a class="header-anchor" href="#基础数据类型tuple">¶</a>基础数据类型tuple</h2>
+<p>只读列表，元组也是python的基本数据类型之一, 用小括号括起来, 里面可以放任何数据类型的数据,  查询可以. 循环也可以. 切片也可以. 但就是不能改.</p>
+<pre><code class="language-python">tu = (1, &quot;太白&quot;, &quot;李白&quot;, &quot;太黑&quot;, &quot;怎么黑&quot;) 
+print(tu)
+
+print(tu[2:5]) # 切片之后还是元组 
+
+# for循环遍历元组 
+for el in tu:   
+	print(el) 
+	
+# 尝试修改元组 
+# tu[1] = &quot;马虎疼&quot;  # 报错 'tuple' object does not support item assignment 
+
+tu = (1, &quot;哈哈&quot;, [], &quot;呵呵&quot;) 
+# tu[2] = [&quot;fdsaf&quot;]   这么改不行 
+
+tu[2].append(&quot;麻花藤&quot;)   # 可以改了. 没报错 
+print(tu)     
+</code></pre>
+<p><strong><u>这里元组的不可变的意思是子元素不可变，元组内存的指向不可变. 而子元素内部的子元素是可以变, 这取决于子元素是否是可变对象.</u></strong></p>
+<p><u>元组中如果只有一个元素. 一定要添加一个逗号, 否则就不是元组</u></p>
+<pre><code class="language-python">tu = (1,) 
+print(type(tu))     
+</code></pre>
+<p>​</p>
+<h2 id="基础数据类型dict"><a class="header-anchor" href="#基础数据类型dict">¶</a>基础数据类型dict</h2>
+<p>字典(<code>dict</code>)是python中唯一的一个映射类型.他是以{ }括起来的键值对组成. 在<code>dict</code>中key是唯一的. 在保存的时候, 根据key来计算出一个内存地址. 然后将<code>key:value</code>保存在这个地址中. 这种算法被称为hash算法, 所以, 切记, 在<code>dict</code>中存储的<code>key:value</code>中的key’必须是可hash的, 如果你搞不懂什么是可哈希, 暂时可以这样记, 可以改变的都是不可哈希的, 那么可哈希就意味着不可变. 这个是为了能准确的计算内存地址而规定的.</p>
+<p>已知的可哈希(不可变)的数据类型: int, str, tuple, bool</p>
+<p>不可哈希(可变)的数据类型: list, dict, set</p>
+<p>语法 :</p>
+<p>{key1: value1, key2: value2…}</p>
+<blockquote>
+<p>注意:</p>
+<p>key必须是不可变(可哈希)的. value没有要求.可以保存任意类型的数据</p>
+<p>dict保存的数据不是按照我们添加进去的顺序保存的. 是按照hash表的顺序保存的. 而hash表不是连续的. 所以不能进行切片工作. 它只能通过key来获取dict中的数据</p>
+</blockquote>
+<h4 id="字典增删改查和其他操作"><a class="header-anchor" href="#字典增删改查和其他操作">¶</a>字典增删改查和其他操作</h4>
+<p>增加</p>
+<pre><code class="language-python">dic = &#123;&#125;
+dic['name'] = '周润发'     # 如果dict中没有出现这个key, 就会新增一个key-value的组合进dict
+print(dic)
+
+# 如果dict中没有出现过这个key-value,key必须是不存在的. 可以通过setdefault设置默认值
+dic.setdefault('李嘉诚')   # 也可以往里面设置值.
+dic.setdefault(&quot;李嘉诚&quot;, &quot;房地产&quot;)    # 如果dict中已经存在了. 那么setdefault将不会起作用
+
+print(dic)
+</code></pre>
+<p>删除(参考列表，没有remove)</p>
+<pre><code class="language-python">ret = dic.pop(&quot;jay&quot;)	#pop中加上key
+print(ret)
+
+del dic[&quot;jay&quot;]
+print(dic)
+
+# 清空字典中的所有内容
+dic.clear()
+</code></pre>
+<p>修改</p>
+<pre><code class="language-python">dic = &#123;&quot;id&quot;: 123, &quot;name&quot;: 'sylar', &quot;age&quot;: 18&#125;
+dic1 = &#123;&quot;id&quot;: 456, &quot;name&quot;: &quot;麻花藤&quot;, &quot;ok&quot;: &quot;wtf&quot;&#125;
+dic.update(dic1)    # 把dic1中的内容更新到dic中. 如果key重名. 则修改替换. 如果不存在key, 则新增.
+print(dic)
+</code></pre>
+<p>查询（根据是否确定该key存在选择使用）</p>
+<pre><code class="language-python">print(dic['name'])	 # 不存在 报错
+print(dic.get(&quot;sylar&quot;))      # 不存在 返回None
+print(dic.get(&quot;sylar&quot;, &quot;牛B&quot;))   # 牛B
+#setdefault 在执行完新增流程后，会根据key查询value
+print(dic.setdefault(&quot;sylar&quot;))   
+</code></pre>
+<p>循环</p>
+<pre><code class="language-python">dic = &#123;&quot;id&quot;: 123, &quot;name&quot;: 'sylar', &quot;age&quot;: 18, &quot;ok&quot;: &quot;科比&quot;&#125;
+
+#第一种
+for k in dic:
+    print(k)
+    
+# dict.keys(['id', 'name', 'age', 'ok']) 不用管它是什么.当成list来用就行
+for key in dic.keys():
+    print(key)
+
+# dict.values([123, 'sylar', 18, '科比']) 当list来用
+for value in dic.values():
+    print(value)
+
+# dict_items([('id', 123), ('name', 'sylar'), ('age', 18), ('ok', '科比')]) 这个东西也是list. 只不过list中装的是tuple
+for key, value in dic.items(): #解构
+    print(key, value)
+
+# 解构
+a = 1, 2
+print(a) #类型是元组（1,2）
+
+(c, d) = 3, 4
+print(c, d)	#分别输出3,4 类型都是int
+
+# 解构的时候注意数量必须匹配 错误写法 最多两个元素
+e, f = [1, 2, 3]    
+print(e, f)
+</code></pre>
+<h4 id="字典的嵌套"><a class="header-anchor" href="#字典的嵌套">¶</a>字典的嵌套</h4>
+<pre><code class="language-python">dic1 = &#123;
+    &quot;name&quot;: &quot;汪峰&quot;,
+    &quot;age&quot;: 18,
+    &quot;wife&quot;: &#123;
+        &quot;name&quot;: '章子怡',
+        &quot;age&quot;: 28
+    &#125;,
+    &quot;children&quot;: ['第一个毛孩子', '第二个毛孩子'],
+    &quot;desc&quot;: '峰哥不会告我吧. 没关系. 我想上头条的'
+&#125;
+
+print(dic1.get(&quot;wife&quot;).get(&quot;name&quot;))
+print(dic1.get(&quot;children&quot;)[1])
+</code></pre>
+<h2 id="基本数据类型Set"><a class="header-anchor" href="#基本数据类型Set">¶</a>基本数据类型Set</h2>
+<p>set集合是python的一个基本数据类型. 一般不是很常用. set中的元素是不重复的.无序的.里面的元素必须是可hash的(int, str, tuple,bool), 我们可以这样来记. set就是<code>dict</code>类型的数据但是不保存value, 只保存key. set也用{}表示</p>
+<p><code>add</code> 增加</p>
+<p><code>remove</code>修改 先把要修改的内容删除，然后新增一个新的</p>
+<p>最主要的操作: 去重复, 交,并,差</p>
+<pre><code class="language-python">s1 = &#123;&quot;刘能&quot;, &quot;赵四&quot;, &quot;皮长山&quot;&#125;
+s2 = &#123;&quot;刘科长&quot;, &quot;冯乡长&quot;, &quot;皮长山&quot;&#125;
+
+# 交集
+# 两个集合中的共有元素
+print(s1 &amp; s2)  # &#123;'皮长山'&#125;
+print(s1.intersection(s2))  # &#123;'皮长山'&#125;
+
+# 并集
+print(s1 | s2)  # &#123;'刘科长', '冯乡长', '赵四', '皮长山', '刘能'&#125;
+print(s1.union(s2))     # &#123;'刘科长', '冯乡长', '赵四', '皮长山', '刘能'&#125;
+
+# 差集
+print(s1 - s2)  # &#123;'赵四', '刘能'&#125; 得到第一个中单独存在的
+print(s1.difference(s2))     # &#123;'赵四', '刘能'&#125;
+</code></pre>
+<h2 id="深浅copy"><a class="header-anchor" href="#深浅copy">¶</a>深浅copy</h2>
+<pre><code class="language-python">lst1 = [&quot;金毛狮王&quot;, &quot;紫衫龙王&quot;, &quot;白眉鹰王&quot;, &quot;青翼蝠王&quot;]
+#并没有产生新的对象 而是把原来的内存地址 赋给list2
+lst2 = lst1
+print(lst1)
+print(lst2)
+
+lst1.append(&quot;杨逍&quot;)
+print(lst1)
+print(lst2)
+
+结果:
+['金毛狮王', '紫衫龙王', '白眉鹰王', '青翼蝠王', '杨逍']
+['金毛狮王', '紫衫龙王', '白眉鹰王', '青翼蝠王', '杨逍']
+
+#可以通过 id(list1) 来查看list1的地址
+
+dic1 = &#123;&quot;id&quot;: 123, &quot;name&quot;: &quot;谢逊&quot;&#125;
+dic2 = dic1
+print(dic1)  # &#123;'id': 123, 'name': '谢逊'&#125;
+print(dic2)  # &#123;'id': 123, 'name': '谢逊'&#125;
+
+dic1['name'] = &quot;范瑶&quot;
+print(dic1)  # &#123;'id': 123, 'name': '范瑶'&#125;
+print(dic2)  # &#123;'id': 123, 'name': '范瑶'&#125;
+</code></pre>
+<h4 id="浅拷贝"><a class="header-anchor" href="#浅拷贝">¶</a>浅拷贝</h4>
+<pre><code class="language-python">lst1 = [&quot;何炅&quot;, &quot;杜海涛&quot;,&quot;周渝民&quot;]
+lst2 = lst1.copy()
+lst1.append(&quot;李嘉诚&quot;)
+print(lst1)
+print(lst2)
+print(id(lst1), id(lst2))
+
+结果: 
+两个lst完全不一样. 内存地址和内容也不一样. 发现实现了内存的拷贝
+
+lst1 = [&quot;何炅&quot;, &quot;杜海涛&quot;,&quot;周渝民&quot;, [&quot;麻花藤&quot;, &quot;马芸&quot;, &quot;周笔畅&quot;]]
+lst2 = lst1.copy()
+lst1[3].append(&quot;无敌是多磨寂寞&quot;)
+print(lst1)
+print(lst2)
+print(id(lst1[3]), id(lst2[3]))
+
+结果: 
+['何炅', '杜海涛', '周渝民', ['麻花藤', '马芸', '周笔畅', '无敌是多磨寂寞']]
+['何炅', '杜海涛', '周渝民', ['麻花藤', '马芸', '周笔畅', '无敌是多磨寂寞']]
+4417248328 4417248328
+</code></pre>
+<p>只会拷贝第一层. 第二层的内容不会拷贝，还是指向原地址. 所以被称为浅拷贝</p>
+<h4 id="深拷贝"><a class="header-anchor" href="#深拷贝">¶</a>深拷贝</h4>
+<p>必须使用copy模块</p>
+<pre><code class="language-python">import copy
+
+lst1 = [&quot;何炅&quot;, &quot;杜海涛&quot;,&quot;周渝民&quot;, [&quot;麻花藤&quot;, &quot;马芸&quot;, &quot;周笔畅&quot;]]
+lst2 = copy.deepcopy(lst1)
+lst1[3].append(&quot;无敌是多磨寂寞&quot;)
+print(lst1)
+print(lst2)
+print(id(lst1[3]), id(lst2[3]))
+
+结果:
+['何炅', '杜海涛', '周渝民', ['麻花藤', '马芸', '周笔畅', '无敌是多磨寂寞']]
+['何炅', '杜海涛', '周渝民', ['麻花藤', '马芸', '周笔畅']]
+4447221448 4447233800
+</code></pre>
+<p>深度拷贝. 把元素内部的元素完全进行拷贝复制. 不会产生一个改变另一个跟着改变的问题</p>
+<h2 id="知识点补充"><a class="header-anchor" href="#知识点补充">¶</a>知识点补充</h2>
+<h4 id="列表和字典循环的时候不能删除"><a class="header-anchor" href="#列表和字典循环的时候不能删除">¶</a>列表和字典循环的时候不能删除</h4>
+<p>python中的列表和字典在循环的时候. 不能删除自身中的元素. 列表虽然不报错，但是删不干净.  对于字典, 直接报错. 不让删. 解决方案都一样, 把要删除的内容保存在一个新列表中, 循环新列表, 删除老列表.</p>
+<p>每次remove后，后面的元素都会向前挪，但是指针位置还是不变的，导致前挪动的元素，如果符合条件，就不会被删除</p>
+<pre><code class="language-python">lst = [&quot;张无忌&quot;, &quot;张翠山&quot;, &quot;灭绝师太&quot;, &quot;胡辣汤&quot;]
+new_lst = []
+for name in lst:
+    if name.startswith(&quot;张&quot;):
+        new_lst.append(name)
+#法一        
+for name in new_lst:
+    lst.remove(name)
+#法二 新产生的字符串与原字符串指向同一地址
+for name in lst[:]:
+    if name.startswith('张'):
+        lst.remove(name)
+        
+print(lst) # [&quot;灭绝师太&quot;, &quot;胡辣汤&quot;] 
+</code></pre>
+<p>字典操作与列表类似，可以选择存储keys</p>
+<h4 id="is和-的区别"><a class="header-anchor" href="#is和-的区别">¶</a>is和==的区别</h4>
+<p>== 判断的是内容. ==&gt;  两个人长的是不是一样?</p>
+<p>is   判断的是内存地址.  ==&gt;  两个人是不是同一个人</p>
+<p><u>此结论不适合字符串.</u></p>
+<h4 id="while…else"><a class="header-anchor" href="#while…else">¶</a>while…else</h4>
+<pre><code class="language-python">while 条件:
+    循环体
+else: 循环在正常情况跳出之后会执行这里
+</code></pre>
+<p>如果循环是通过break退出的. 那么while后面的else将不会被执行, 只有在while条件判断是假的时候才会执行这个else</p>
+<p><code>pass</code>: <u>不表示任何内容. 为了代码的完整性.  占位而已</u></p>
+<h2 id="文件操作"><a class="header-anchor" href="#文件操作">¶</a>文件操作</h2>
+<p><code>               f = open(文件, mode=&quot;模式&quot; encoding=&quot;编码&quot;)             </code></p>
+<p>f被称为文件句柄，负责操纵你打开的这个文件</p>
+<h4 id="模式"><a class="header-anchor" href="#模式">¶</a>模式:</h4>
+<p>r: 只读</p>
+<p>w: 只写  如果没有文件. 则会创建文件, 如果文件存在. 则将原件中原来的内容删除, 再写入新内容</p>
+<pre><code class="language-python">f.write(&quot;\n&quot;) 换行
+</code></pre>
+<p>a: 追加写    追加写，不会重新创建文件，但是如果文件不存在，可以创建文件</p>
+<p>+: 扩展      不是很好用</p>
+<p>b: 字节(非文本文件，可理解为二进制文件，不能指定encoding)</p>
+<pre><code class="language-python">#s实现文件复制
+f1=open(&quot;a/tu.jpg&quot;,mode=&quot;rb&quot;)
+f2=open(&quot;c/yu.jpg&quot;,mode=&quot;wb&quot;)
+for line in f1:
+	f2.write(line)
+</code></pre>
+<h4 id="读取文件的方法"><a class="header-anchor" href="#读取文件的方法">¶</a>读取文件的方法</h4>
+<ol>
+<li>read()  将文件中的内容全部读取出来. 弊端: 占内存. 如果文件过大.容易导致内存崩溃</li>
+<li>read(n) 读取n个字符. 需要注意的是. 如果再次读取. 那么会在当前位置继续去读而不是从头读, 如果使用的是rb模式. 则读取出来的是n个字节</li>
+<li>readline() 一次读取一行数据, 注意: readline()结尾, 注意每次读取出来的数据都会有一个\n 所以呢. 需要我们使用strip()方法来去掉\n或者空格</li>
+<li>readlines()将每一行形成一个元素, 放到一个列表中. 将所有的内容都读取出来. 所以也是. 容易出现内存崩溃的问题.不推荐使用</li>
+<li>循环读取 读取文件最好的方案</li>
+</ol>
+<pre><code class="language-python">#另一种写法，可以不用`close` 使用with()自动加入 '\'可以用来表示一行的连接	
+    with open() as f1,\
+    	 open() as f2:        
+		for line in f1:
+            f2.write(line)
+            print(line.strip())	#去掉换行
+			xxxxx
+</code></pre>
+<p><strong>读取完的文件句柄一定要关闭 <code> f.close()</code>，</strong></p>
+<p>​</p>
+<h4 id="修改文件"><a class="header-anchor" href="#修改文件">¶</a>修改文件:</h4>
+<ol>
+<li>创建一个文件副本.</li>
+<li>把源文件中的内容读取到内存.</li>
+<li>然后在内存中进行修改.</li>
+<li>修改之后保存在文件副本中.</li>
+<li>把源文件删除</li>
+<li>把文件副本更改名称为源文件的名称</li>
+</ol>
+<pre><code class="language-python"># 文件修改
+import os
+
+with open(&quot;小娃娃&quot;, mode=&quot;r&quot;, encoding=&quot;utf-8&quot;) as f1,\
+     open(&quot;小娃娃_new&quot;, mode=&quot;w&quot;, encoding=&quot;UTF-8&quot;) as f2:
+    content = f1.read()
+    new_content = content.replace(&quot;冰糖葫芦&quot;, &quot;大白梨&quot;)
+    f2.write(new_content)
+os.remove(&quot;小娃娃&quot;)    # 删除源文件
+os.rename(&quot;小娃娃_new&quot;, &quot;小娃娃&quot;)     # 重命名新文件
+</code></pre>
+<p>弊端: 一次将所有内容进行读取. 内存溢出. 解决方案: 一行一行的读取和操作</p>
+<pre><code class="language-python">import os
+
+with open(&quot;小娃娃&quot;, mode=&quot;r&quot;, encoding=&quot;utf-8&quot;) as f1,\
+     open(&quot;小娃娃_new&quot;, mode=&quot;w&quot;, encoding=&quot;UTF-8&quot;) as f2:
+    for line in f1:
+        new_line = line.replace(&quot;大白梨&quot;, &quot;冰糖葫芦&quot;)
+        f2.write(new_line)
+os.remove(&quot;小娃娃&quot;)    # 删除源文件
+os.rename(&quot;小娃娃_new&quot;, &quot;小娃娃&quot;)     # 重命名新文件
+</code></pre>
+<p>​</p>
+]]></content>
+      <categories>
+        <category>语言学习</category>
+      </categories>
+      <tags>
+        <tag>PYTHON</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Python学习笔记（1）入门</title>
+    <url>/2022/09/15/Python%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%881%EF%BC%89/</url>
+    <content><![CDATA[<p>最近在学py，简单记录一下笔记</p>
+<span id="more"></span>
+<p>IDLE 常用的快捷键</p>
+<table>
+<thead>
+<tr>
+<th>含义</th>
+<th>快捷键</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>增加代码块缩进</td>
+<td>Ctrl+]</td>
+</tr>
+<tr>
+<td>减少代码块缩进</td>
+<td>Ctrl+[</td>
+</tr>
+<tr>
+<td>注释代码块</td>
+<td>Alt+3</td>
+</tr>
+<tr>
+<td>取消代码块注释</td>
+<td>Alt+4</td>
+</tr>
+<tr>
+<td>浏览上一条输入的命令</td>
+<td>Alt+p</td>
+</tr>
+<tr>
+<td>浏览下一条输入的命令</td>
+<td>Alt+n</td>
+</tr>
+<tr>
+<td>补全单词，列出全部可选单词供选择</td>
+<td>Tab</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>Python中对空格的应用很严格 运算时 运算符要与其他数据加上空格隔开</li>
+</ul>
+<h3 id="注释"><a class="header-anchor" href="#注释">¶</a>注释</h3>
+<p>单行注释	<code>#</code></p>
+<p>多行注释	<code>'''</code>3 个单引号	<code>&quot;&quot;&quot;</code>3 个双引号</p>
+<h3 id="变量以及变量命名规范"><a class="header-anchor" href="#变量以及变量命名规范">¶</a>变量以及变量命名规范</h3>
+<p>标识符是在程序中用来标识诸如变量、函数、类、对象等名字的符号。在 Python 中，<br>
+用标识符来标识变量，变量在使用前都必须被赋值，变量被赋值后变量才会被创建。在 Python<br>
+中，变量是用一个变量名表示，也就是一个标识符来表示，变量名的命名规则：</p>
+<p>（1）变量名只能是字母、数字或下划线的任意组合。<br>
+（2）变量名的第一个字符不能是数字。<br>
+（3） Python 关键字不能声明为变量名：</p>
+<p>推荐使用驼峰体或者下划线命名</p>
+<blockquote>
+<p>驼峰体: 除首字母外的其他每个单词首字母大写</p>
+<p>下划线: 每个单词之间用下划线分开</p>
+</blockquote>
+<p><strong>类型属于对象，变量是没有类型的，变量只是对象的引用，所谓变量的类型指的是变量所引用的对象的类型。变量的类型随着所赋值的类型的变化而改变。</strong></p>
+<p>变量的数据类型:</p>
+<p>int, 整数, 加减乘除, 余数, 整除</p>
+<p>str, 字符串, ‘, &quot;, ‘’’, “”&quot;都是字符串, 操作: +, *</p>
+<p>bool，布尔值. True, False</p>
+<p>​</p>
+<h3 id="常量"><a class="header-anchor" href="#常量">¶</a>常量</h3>
+<p>Python中不存在绝对的常量，只要字母大写就是常量</p>
+<h3 id="用户交互"><a class="header-anchor" href="#用户交互">¶</a>用户交互</h3>
+<p><code>input()</code></p>
+<p><strong>input获取到数据都是字符串类型, 如果想要进行数学运算或者比较. 必须转化成int()</strong></p>
+<h3 id="条件分支"><a class="header-anchor" href="#条件分支">¶</a>条件分支</h3>
+<pre><code class="language-python">if 条件:    # 引号是将条件与结果分开。
+	结果 	  # 四个空格，或者一个tab键，这个是告诉程序满足这个条件的   
+
+elif 条件2:   
+	结果2
+... 
+else:   
+	结果n 
+</code></pre>
+<p>当条件成立. 执行相应的结果.</p>
+<p>​</p>
+<h3 id="循环分支"><a class="header-anchor" href="#循环分支">¶</a>循环分支</h3>
+<pre><code class="language-python">while 条件:   
+	循环体 
+</code></pre>
+<p>只要条件成立. 就一直执行循环体. 每次执行完循环体. 重新判断条件</p>
+<h3 id="流程控制-break和continue"><a class="header-anchor" href="#流程控制-break和continue">¶</a>流程控制-break和continue</h3>
+<p><code>break</code>: 立刻跳出循环. 打断的意思.</p>
+<p><code>continue</code>: 结束当前这一次循环，跳过后面可能存在的信息，即继续执行下一次循环</p>
+]]></content>
+      <categories>
+        <category>语言学习</category>
+      </categories>
+      <tags>
+        <tag>PYTHON</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Python学习笔记（3）-函数（1）</title>
+    <url>/2022/09/30/Python%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%883%EF%BC%89-%E5%87%BD%E6%95%B0%EF%BC%881%EF%BC%89/</url>
+    <content><![CDATA[<p>最近在学py，简单记录一下笔记</p>
+<span id="more"></span>
+<h3 id="初识函数"><a class="header-anchor" href="#初识函数">¶</a>初识函数</h3>
+<p>函数: 对代码块和功能的封装和定义</p>
+<p>在<code>py</code>中定义函数的方法：</p>
+<pre><code class="language-python">def 函数名():
+    函数体
+</code></pre>
+<p>函数名的命名规则和使用和变量基本一样</p>
+<p>函数体: 就是函数被执行之后要执行的代码</p>
+<p>函数的调用: 使用函数名可以调用函数, 写法: 函数名(), 这个时候函数的函数体会被执行</p>
+<h3 id="函数的返回值"><a class="header-anchor" href="#函数的返回值">¶</a>函数的返回值</h3>
+<p>执行完函数之后. 我们可以使用return来返回结果.</p>
+<p>函数中return的使用:</p>
+<ol>
+<li>
+<p>函数中遇到return, 此函数结束, 不再继续执行.</p>
+</li>
+<li>
+<p>给函数的调用者一个访问结果</p>
+</li>
+<li>
+<p>函数的返回值可以有多个结果,调用者可以接收一个tuple, 调用者可以直接解构成多个变量</p>
+</li>
+<li>
+<p>如果return什么都不写 或者 干脆不写return .那么返回的就是None</p>
+</li>
+</ol>
+<h3 id="函数的参数"><a class="header-anchor" href="#函数的参数">¶</a>函数的参数</h3>
+<p>参数, 函数在调用的时候指定具体的一个变量的值. 就是参数.  语法:</p>
+<pre><code class="language-python">def 函数名(参数列表):
+    函数体
+</code></pre>
+<p>关于参数:</p>
+<ol>
+<li>形参</li>
+</ol>
+<p>写在函数声明的位置的变量叫形参.  形式上的一个完整. 表示这个函数需要xxx</p>
+<ol start="2">
+<li>实参</li>
+</ol>
+<p>在函数调用的时候给函数传递的值. 叫实参, 实际执行的时候给函数传递的信息. 表示给函数xxx</p>
+<ol start="3">
+<li>传参</li>
+</ol>
+<p>给函数传递信息的时候将实际参数交给形式参数的过程被称为传参.</p>
+<h4 id="实参"><a class="header-anchor" href="#实参">¶</a>实参</h4>
+<h5 id="位置参数"><a class="header-anchor" href="#位置参数">¶</a>位置参数</h5>
+<pre><code class="language-python">def yue(chat, address, age):    # 形参
+    print(&quot;拿出手机&quot;)
+    print(&quot;打开&quot;+chat)
+    print(&quot;找到&quot;+address+&quot;附近的&quot;+str(age)+&quot;好友&quot;)
+
+yue(&quot;微信&quot;, &quot;北京&quot;, 18)    # 实参
+
+结果:
+拿出手机
+打开微信
+找到北京附近的18岁好友
+</code></pre>
+<p>按照位置的顺序分别把&quot;微信&quot;, “北京”, 18 赋值给 chat, address, age. 在传参过程中. 系统会默认按照位置把实参赋值到形参.</p>
+<h5 id="关键字参数"><a class="header-anchor" href="#关键字参数">¶</a>关键字参数</h5>
+<p>如果是少量的参数还算OK, 没有问题. 但是如果函数在定义的时候参数非常多怎么办? 程序员必须记住, 我有哪些参数, 而且还有记住每个参数的位置, 否则函数就不能正常调用了. 那则么办呢? python提出了一种叫做关键字参数. 我们不需要记住每个参数的位置. 只要记住每个参数的名字就可以了</p>
+<pre><code class="language-python">def yue(chat, address, age):    # 形参
+    print(&quot;拿出手机&quot;)
+    print(&quot;打开&quot;+chat)
+    print(&quot;找到&quot;+address+&quot;附近的&quot;+str(age)+&quot;好友&quot;)
+
+yue(chat=&quot;微信&quot;, age=18, address=&quot;北京)    # 实参
+
+结果:
+拿出手机
+打开微信
+找到北京附近的18岁好友
+</code></pre>
+<h5 id="混合参数"><a class="header-anchor" href="#混合参数">¶</a>混合参数</h5>
+<p>可以把上面两种参数混合着使用. 也就是说在调用函数的时候即可以给出位置参数, 也可以指定关键字参数.</p>
+<pre><code class="language-python">yue(&quot;微信&quot;, age=18, address=&quot;上海&quot;)    # 正确.第一个位置赋值给chat, 后面的参数开始指定关键字.
+yue(age=&quot;18&quot;, &quot;微信&quot;, address=&quot;广州&quot;)    # 错误, 最开始使用了关键字参数, 那么后面的微信的位置就串了, 容易出现混乱
+</code></pre>
+<p><u>在使用混合参数的时候, 关键字参数必须在位置参数后面</u></p>
+<h4 id="形参"><a class="header-anchor" href="#形参">¶</a>形参</h4>
+<p>在函数声明的位置编写的变量</p>
+<h5 id="位置参数-v2"><a class="header-anchor" href="#位置参数-v2">¶</a>位置参数</h5>
+<p>按照位置来赋值</p>
+<h5 id="默认值参数"><a class="header-anchor" href="#默认值参数">¶</a>默认值参数</h5>
+<p>在函数声明的时候, 就可以给出函数参数的默认值. 在调用的时候可以给出具体的值, 也可以不给值, 使用默认值.</p>
+<pre><code class="language-python">def stu_info(name, age, sex='男'):
+    print(&quot;录入学生信息&quot;)
+    print(name, age, sex)
+    print(&quot;录入完毕&quot;)
+
+stu_info(&quot;张强强&quot;, 18)
+</code></pre>
+<p><u>必须先声明位置参数, 才能声明默认值参数.</u></p>
+<p>如果默认值参数是一个可变的数据类型，会出现一点小问题</p>
+<pre><code class="language-python">def func(val,lst[]):
+	list.append(val)
+	print(lst)
+	
+func(1)	#第一次输出没有问题 [1]
+func(2)	#两次访问的是同一个列表 [1,2]
+func(3,[])	#[3] 
+</code></pre>
+<p>可变的数据类型,在每次使用的时候都被共享</p>
+<h5 id="动态传参"><a class="header-anchor" href="#动态传参">¶</a>动态传参</h5>
+<p><code>*</code>动态接收位置参数, 在参数位置编写表示接收任意内容，会被打包成元组</p>
+<pre><code class="language-python">def chi(*food):
+    print(&quot;我要吃&quot;, food)
+
+chi(&quot;大米饭&quot;, &quot;小米饭&quot;)
+
+结果:
+我要吃 ('大米饭', '小米饭')    # 多个参数传递进去. 收到的内容是元组tuple
+</code></pre>
+<p>动态接收参数的时候要注意: 动态参数必须在位置参数后面</p>
+<pre><code class="language-python">def chi(*food, a, b):
+    print(&quot;我要吃&quot;, food, a, b)
+
+chi(&quot;大米饭&quot;, &quot;小米饭&quot;, &quot;黄瓜&quot;, &quot;茄子&quot;)
+</code></pre>
+<p><strong>这时程序运行会报错. 因为前面传递进去的所有位置参数都被*food接收了. a和b永远接收不到参数</strong></p>
+<p>可以这样改写</p>
+<pre><code class="language-python">def chi(*food, a, b):
+    print(&quot;我要吃&quot;, food, a, b)
+
+chi(&quot;大米饭&quot;, &quot;小米饭&quot;, a=&quot;黄瓜&quot;, b=&quot;茄子&quot;)   # 必须用关键字参数来指定
+</code></pre>
+<p>或者先写位置参数，再用动态参数</p>
+<p><code>**</code>动态接收关键字参数</p>
+<p>在python中可以动态的位置参数, 但是*这种情况只能接收位置参数无法接收关键字参数. 在python中使用**来接收动态关键字参数</p>
+<pre><code class="language-python">def func(**kwargs):
+    print(kwargs)
+
+func(a=1, b=2, c=3)
+func(a=1, b=2)
+
+结果:
+&#123;'a': 1, 'b': 2, 'c': 3&#125;
+&#123;'a': 1, 'b': 2&#125;
+</code></pre>
+<p><strong>顺序的问题</strong>  在函数调用的时候, 如果先给出关键字参数, 则整个参数列表会报错.</p>
+<p>所以关键字参数必须在位置参数后面. 由于实参是这个顺序. 所以形参接收的时候也是这个顺序. 也就是说位置参数必须在关键字参数前面. 动态接收关键字参数也要在后面</p>
+<p>*<em>最终顺序(<em>重点):</em></em></p>
+<p>​     位置参数 &gt; <code> *args</code> &gt; 默认值参数 &gt; <code>**kwargs</code></p>
+<p>​     <strong>这四种参数可以任意的进行使用. 如果想接收所有的参数:</strong></p>
+<pre><code class="language-python">def func(*args, **kwargs):
+    print(args, kwargs)
+
+func(&quot;麻花藤&quot;,&quot;马晕&quot;,wtf=&quot;胡辣汤&quot;)
+</code></pre>
+<p>动态参数的另一种传参方式:</p>
+<pre><code class="language-python">def fun(*args):
+    print(args)
+
+
+lst = [1, 4, 7]
+fun(lst[0], lst[1], lst[2])
+
+fun(*lst)   # 可以使用*把一个列表按顺序打散
+s = &quot;臣妾做不到&quot;
+fun(*s)     # 字符串也可以打散, (可迭代对象)
+</code></pre>
+<p>在实参位置上给一个序列,列表,可迭代对象前面加个*表示把这个序列按顺序打散.</p>
+<p>在形参的位置上的* 表示把接收到的参数组合成一个元组</p>
+<p>如果是一个字典, 那么也可以打散. 不过需要用两个*</p>
+<pre><code class="language-python">def fun(**kwargs):
+    print(kwargs)
+
+dic = &#123;'a':1, 'b':2&#125;
+fun(**dic)
+</code></pre>
+<h4 id="函数的注释"><a class="header-anchor" href="#函数的注释">¶</a>函数的注释</h4>
+<pre><code class="language-python">def chi(food, drink):
+    &quot;&quot;&quot;
+    这里是函数的注释, 先写一下当前这个函数是干什么的, 比如我这个函数就是一个吃
+    :param food: 参数food是什么意思
+    :param drink: 参数drink是什么意思
+    :return: 返回的是什么东东
+    &quot;&quot;&quot;
+    print(food, drink)
+    return &quot;very good&quot;
+</code></pre>
+<h3 id="函数的嵌套和作用域"><a class="header-anchor" href="#函数的嵌套和作用域">¶</a>函数的嵌套和作用域</h3>
+<p>作用域: 一个变量能使用的作用范围</p>
+<p>仔细分析以下代码.</p>
+<pre><code class="language-python">a = 10  # 函数外面有个a
+def func():
+    a = 20  # 函数里面也有个a
+    print(a)  #  此时打印的结果?
+
+func()   #  此时打印的结果?
+</code></pre>
+<p>注意, 在python中. 你可以认为变量的使用是遵循就近原则的.</p>
+<p>在函数外面的变量被称为全局变量. 它的作用域是整个py文件.  在函数内部的变量被称为局部变量.作用范围仅限于函数内部.</p>
+<p>我们可以通过<code>globals()</code>和<code>locals()</code>查看全局和局部作用域中的内容</p>
+<pre><code class="language-python">a = 10
+def func():
+    a = 40
+    b = 20
+    def abc():
+        print(&quot;哈哈&quot;)
+    print(a, b)     # 这里使用的是局部作用域
+    print(globals())    # 打印全局作用域中的内容
+    print(locals())     # 打印局部作用域中的内容
+
+func()
+</code></pre>
+<p><code>globals()</code>查看全局作用域</p>
+<p><code>locals()</code>查看当前作用域</p>
+<p>函数与函数之间可以互相的调用. 也可以互相的嵌套</p>
+<pre><code class="language-python">def fun1():
+    print(111)
+   
+def fun2():
+    print(222)
+    fun1()
+   
+fun2()
+print(111)
+
+# 函数的嵌套
+def fun2():
+    print(222)
+    def fun3():
+        print(666)
+    print(444)
+    fun3()
+    print(888)
+    
+print(33)
+fun2()
+print(555)
+</code></pre>
+<h3 id="global和nonlocal关键字"><a class="header-anchor" href="#global和nonlocal关键字">¶</a>global和nonlocal关键字</h3>
+<pre><code class="language-python">a = 100
+def func():
+    a += 1  # 报错.  
+    print(a)
+
+func()
+print(a)
+</code></pre>
+<p>注意报错那句话</p>
+<p>这句话相当于a = a + 1 先计算右边. 右边会把全局变量a引入进来使用. 然后重新赋值给a. 但是，python中不允许函数内部改变外面变量的值. 这样做很不安全. python规定. 在函数内部想要修改全局变量. 必须使用global关键字把外面的变量引入才可以进行修改(赋值).</p>
+<pre><code class="language-python">a = 100
+def func():
+    global a
+    a += 1   
+    print(a)
+
+func()
+print(a) # 101
+</code></pre>
+<p>相同的. nonlocal也是一样的操作. 它负责在内层函数中引入外层函数的局部变量</p>
+<pre><code class="language-python">a = 10
+def func1():
+    a = 20
+    def func2():
+        nonlocal a #  有它没它两个结果
+        a = 30
+        print(a)
+    func2()
+    print(a)
+
+
+func1()
+
+结果:
+加了nonlocal
+30
+30
+不加nonlocal
+30
+20
+</code></pre>
+<p>python程序在加载的时候，会给解释器内置需要的一些变量加载，加载的位置叫内置名称空间</p>
+<p>接下来就开始执行自己的py文件，自己创建的这些变量统一放在全局名称空间中</p>
+<p>当程序执行到函数的时候，函数内部会有自己的变量，Python会为每一个正在执行的函数单独开辟内存，该内存被称为局部名称空间</p>
+<p><img src="/images/Python%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%883%EF%BC%89-%E5%87%BD%E6%95%B0%EF%BC%881.1%EF%BC%89.png" alt="image-20220929133108221"></p>
+<p><img src="/images/Python%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%883%EF%BC%89-%E5%87%BD%E6%95%B0%EF%BC%881.2%EF%BC%89.png" alt="image-20220929133501169"></p>
+]]></content>
+      <categories>
+        <category>语言学习</category>
+      </categories>
+      <tags>
+        <tag>PYTHON</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>c语言中的&amp;的用法</title>
+    <url>/2022/08/28/c%E8%AF%AD%E8%A8%80%E4%B8%AD%E7%9A%84&amp;%E7%9A%84%E7%94%A8%E6%B3%95/</url>
+    <content><![CDATA[<p>在做题时，经常会看到在数字或者字符串前面加上&amp;，之前一直没太注意这个单目&amp;，下面总结一下&amp;的用法。😗</p>
+<span id="more"></span>
+<h3 id="取地址（指针赋值）"><a class="header-anchor" href="#取地址（指针赋值）">¶</a>取地址（指针赋值）</h3>
+<p>个人认为c语言中，比较不容易理解的就是指针了。</p>
+<p>举一个该情况下使用&amp;的例子</p>
+<pre><code class="language-c">#include&lt;stdio.h&gt;
+int main()
+&#123;
+    int a = 2;
+    
+    int*b;//定义一个整形指针
+    
+    b = &amp;a;//给指针赋值，使指针指向a的地址
+    
+    printf(&quot;%d&quot;, b);//输出的是a的地址
+
+    printf(&quot;%d&quot;, *b);//*的作用是解引用，取出指针指向地址的内容,本例里输出的是2
+    return 0;
+&#125;
+</code></pre>
+<p>由于使用&amp;（引用）的时候，跟原数指向的是一个地址，故也不会造成每次使用都新开辟一个内存，相当于JAVA中的静态变量</p>
+<p>比如接下来在Tire中的一个<code>insert</code>操作（将相应的数字存储在Tire上，以便于接下来的操作）</p>
+<pre><code class="language-c">void insert(int x)&#123;
+    int p=0;
+    for (int i = 30; ~i ; i -- )&#123;
+        int &amp;s=son[p][x&gt;&gt;i&amp;1];
+        if(!s) s=++idx;
+        p=s;
+    &#125;
+&#125;
+</code></pre>
+<p>这里在定义s时，如果不加第一个引用（第二个&amp;是与操作，接下来会讲），只能代表son[p][x&gt;&gt;i&amp;1]中存储的数值，而在这里使用了引用 就相当于以下操作</p>
+<pre><code class="language-c">void insert(int x)&#123;
+    int p=0;
+    for (int i = 30; ~i ; i -- )&#123;
+        int &amp;s=son[p][x&gt;&gt;i&amp;1];
+        if(!son[p][x&gt;&gt;i&amp;1]) son[p][x&gt;&gt;i&amp;1]=++idx;
+        p=son[p][x&gt;&gt;i&amp;1];
+    &#125;
+&#125;
+</code></pre>
+<p>是不是很省代码！</p>
+<h3 id="位操作中的与操作运算符"><a class="header-anchor" href="#位操作中的与操作运算符">¶</a><a href="https://so.csdn.net/so/search?q=%E4%BD%8D%E6%93%8D%E4%BD%9C&amp;spm=1001.2101.3001.7020">位操作</a>中的与操作运算符</h3>
+<p>&amp;是单目运算符，按位与运算通常用来对某些位清0或保留某些位</p>
+<p>计算的时候按位计算，&amp;两边操作数对应位上全为1时，结果的该位值为1。否则该位值为0</p>
+<h3 id="逻辑与运算"><a class="header-anchor" href="#逻辑与运算">¶</a>逻辑与运算</h3>
+<p>&amp;&amp;就是常说的and操作，双目运算符</p>
+<p>逻辑运算结果只有0和1两种结果。 一般在&amp;&amp;两边是两个逻辑表达式。当两个表达式值均为1时，<br>
+&amp;&amp;运算结果为1，否则为0。</p>
+]]></content>
+      <categories>
+        <category>其他</category>
+      </categories>
+      <tags>
+        <tag>others</tag>
+        <tag>C/C++</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>vue3</title>
     <url>/2022/08/25/Vue3/</url>
     <content><![CDATA[<p>记录一下学习vue框架时的知识点以及需要注意的小tips~ 🥰</p>
@@ -3008,67 +3069,6 @@ print(f(10))
       </tags>
   </entry>
   <entry>
-    <title>c语言中的&amp;的用法</title>
-    <url>/2022/08/28/c%E8%AF%AD%E8%A8%80%E4%B8%AD%E7%9A%84&amp;%E7%9A%84%E7%94%A8%E6%B3%95/</url>
-    <content><![CDATA[<p>在做题时，经常会看到在数字或者字符串前面加上&amp;，之前一直没太注意这个单目&amp;，下面总结一下&amp;的用法。😗</p>
-<span id="more"></span>
-<h3 id="取地址（指针赋值）"><a class="header-anchor" href="#取地址（指针赋值）">¶</a>取地址（指针赋值）</h3>
-<p>个人认为c语言中，比较不容易理解的就是指针了。</p>
-<p>举一个该情况下使用&amp;的例子</p>
-<pre><code class="language-c">#include&lt;stdio.h&gt;
-int main()
-&#123;
-    int a = 2;
-    
-    int*b;//定义一个整形指针
-    
-    b = &amp;a;//给指针赋值，使指针指向a的地址
-    
-    printf(&quot;%d&quot;, b);//输出的是a的地址
-
-    printf(&quot;%d&quot;, *b);//*的作用是解引用，取出指针指向地址的内容,本例里输出的是2
-    return 0;
-&#125;
-</code></pre>
-<p>由于使用&amp;（引用）的时候，跟原数指向的是一个地址，故也不会造成每次使用都新开辟一个内存，相当于JAVA中的静态变量</p>
-<p>比如接下来在Tire中的一个<code>insert</code>操作（将相应的数字存储在Tire上，以便于接下来的操作）</p>
-<pre><code class="language-c">void insert(int x)&#123;
-    int p=0;
-    for (int i = 30; ~i ; i -- )&#123;
-        int &amp;s=son[p][x&gt;&gt;i&amp;1];
-        if(!s) s=++idx;
-        p=s;
-    &#125;
-&#125;
-</code></pre>
-<p>这里在定义s时，如果不加第一个引用（第二个&amp;是与操作，接下来会讲），只能代表son[p][x&gt;&gt;i&amp;1]中存储的数值，而在这里使用了引用 就相当于以下操作</p>
-<pre><code class="language-c">void insert(int x)&#123;
-    int p=0;
-    for (int i = 30; ~i ; i -- )&#123;
-        int &amp;s=son[p][x&gt;&gt;i&amp;1];
-        if(!son[p][x&gt;&gt;i&amp;1]) son[p][x&gt;&gt;i&amp;1]=++idx;
-        p=son[p][x&gt;&gt;i&amp;1];
-    &#125;
-&#125;
-</code></pre>
-<p>是不是很省代码！</p>
-<h3 id="位操作中的与操作运算符"><a class="header-anchor" href="#位操作中的与操作运算符">¶</a><a href="https://so.csdn.net/so/search?q=%E4%BD%8D%E6%93%8D%E4%BD%9C&amp;spm=1001.2101.3001.7020">位操作</a>中的与操作运算符</h3>
-<p>&amp;是单目运算符，按位与运算通常用来对某些位清0或保留某些位</p>
-<p>计算的时候按位计算，&amp;两边操作数对应位上全为1时，结果的该位值为1。否则该位值为0</p>
-<h3 id="逻辑与运算"><a class="header-anchor" href="#逻辑与运算">¶</a>逻辑与运算</h3>
-<p>&amp;&amp;就是常说的and操作，双目运算符</p>
-<p>逻辑运算结果只有0和1两种结果。 一般在&amp;&amp;两边是两个逻辑表达式。当两个表达式值均为1时，<br>
-&amp;&amp;运算结果为1，否则为0。</p>
-]]></content>
-      <categories>
-        <category>其他</category>
-      </categories>
-      <tags>
-        <tag>C/C++</tag>
-        <tag>others</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Hello World</title>
     <url>/2022/08/24/hello-world/</url>
     <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
@@ -3097,6 +3097,83 @@ int main()
       <tags>
         <tag>others</tag>
         <tag>hexo</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>堆排序（数组模拟）</title>
+    <url>/2022/09/04/%E5%A0%86%E6%8E%92%E5%BA%8F%EF%BC%88%E6%95%B0%E7%BB%84%E6%A8%A1%E6%8B%9F%EF%BC%89/</url>
+    <content><![CDATA[<p>堆是特殊的队列，特殊的点就在于它可以依照元素的优先级取出，而不是元素入队的先后顺序。</p>
+<span id="more"></span>
+<p>堆常表现为完全二叉树的形式，因为高度为h的完全二叉树有结点 2<sup>(k-1)到2</sup>k-1个，且结点排布极共规律，因此，通常不必用指针，而是用数组来实现堆的存储。</p>
+<p><img src="/images/%E5%A0%86%E6%8E%92%E5%BA%8F.png" alt="image-20220904145447744"></p>
+<p>堆排序核心操作，建堆</p>
+<pre><code class="language-c++">void down(int u)&#123;
+int t=u;
+
+//构建平衡二叉搜索树
+if( 2*u&lt;=cnt &amp;&amp; h[2*u]&lt;h[t] ) t=2*u;
+if( 2*u+1 &lt;= cnt &amp;&amp; h[2*u+1]&lt;h[t]) t=2*u+1;
+//代表树的位置已经发生变化,递归直到u==t时结束
+if(u!=t)&#123;
+    swap(h[u],h[t]);
+    down(t);
+&#125;
+&#125;
+</code></pre>
+<p>只要理解平衡二叉树的原理就好</p>
+<p>完整代码</p>
+<pre><code class="language-c++">#include &lt;iostream&gt;
+#include &lt;cstring&gt;
+#include &lt;algorithm&gt;
+
+using namespace std;
+
+const int N = 1e5+10;
+
+int n,m;
+//cnt记录结点数，h数组模拟树
+int cnt,h[N];
+
+void down(int u)&#123;
+int t=u;
+
+if( 2*u&lt;=cnt &amp;&amp; h[2*u]&lt;h[t] ) t=2*u;
+if( 2*u+1 &lt;= cnt &amp;&amp; h[2*u+1]&lt;h[t]) t=2*u+1;
+if(u!=t)&#123;
+    swap(h[u],h[t]);
+    down(t);
+&#125;
+&#125;
+
+int main()
+&#123;
+    scanf(&quot;%d%d&quot;, &amp;n ,&amp;m );
+    for (int i = 1; i &lt;= n; i ++ ) 
+	scanf(&quot;%d&quot;, &amp;h[i]);
+
+	//更新cnt
+	cnt=n;
+
+	//从树顶开始向下递归
+	for (int i = n/2; i ; i -- )
+	down(i);
+
+while (m -- )&#123;
+    printf(&quot;%d &quot;,h[1]);
+    //保证每次输出的顶都是最小的
+    h[1]=h[cnt--];
+    down(1);
+&#125;
+&#125;
+</code></pre>
+]]></content>
+      <categories>
+        <category>算法</category>
+      </categories>
+      <tags>
+        <tag>others</tag>
+        <tag>ALGO</tag>
+        <tag>C/C++</tag>
       </tags>
   </entry>
   <entry>
@@ -3159,8 +3236,83 @@ process.stdin.on(&quot;end&quot;,function()&#123;
         <category>语言学习</category>
       </categories>
       <tags>
-        <tag>others</tag>
         <tag>JAVASCRIPT</tag>
+        <tag>others</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>配置git环境与项目搭建</title>
+    <url>/2022/10/17/%E9%85%8D%E7%BD%AEgit%E7%8E%AF%E5%A2%83%E4%B8%8E%E9%A1%B9%E7%9B%AE%E6%90%AD%E5%BB%BA(vue+SpringBoot)/</url>
+    <content><![CDATA[<p>配置git环境与项目搭建(vue+SpringBoot)</p>
+<span id="more"></span>
+<h3 id="仓库项目配置"><a class="header-anchor" href="#仓库项目配置">¶</a>仓库项目配置</h3>
+<h4 id="git仓库初始化"><a class="header-anchor" href="#git仓库初始化">¶</a>git仓库初始化</h4>
+<p>鼠标右键<code>git bash</code></p>
+<p>输入<code>git init</code>(可以通过<code>ls -a</code>查看是否初始化成功)</p>
+<p>（<code>git status</code>：查看当前分支的情况,这里的情况大致分为三种对应git的三个区域(应该是三种情况)<br>
+这里我们发现,<code>readme.md</code>没有<code> add commit</code>,然后它提示<code>git add to track</code>）可选可不选</p>
+<p><code>git add .</code>(将文件放入暂存区,第二个区域)，可用来添加也可以用来删除</p>
+<p><code>git status</code>：查看此时文件的状态</p>
+<p><code>git commit -m &quot;创建项目&quot;</code>(将暂存区提交到本地仓库)</p>
+<h4 id="关于readme文件"><a class="header-anchor" href="#关于readme文件">¶</a>关于readme文件</h4>
+<p>创建md文件：<code>touch readme.md</code></p>
+<p>写入文件内容<code>vim readme.md</code><br>
+书写（插入）内容：按下 <code>i</code></p>
+<p>书写完后：<code>esc</code>之后按<code>:</code>,输入<code>wq</code>实现保存和退出</p>
+<p>之后再github\gitee\acgit 上创建云端仓库</p>
+<h3 id="IDEA"><a class="header-anchor" href="#IDEA">¶</a>IDEA</h3>
+<h4 id="创建项目"><a class="header-anchor" href="#创建项目">¶</a>创建项目</h4>
+<p>挂了梯子连接外网还挺快的</p>
+<p>提供两种连接方式：</p>
+<p><code>https://start.spring.io/</code></p>
+<p><code>https://start.aliyun.com</code></p>
+<p>其他该勾选的勾选一下 改改名字</p>
+<p><img src="/images/idea%E9%85%8D%E7%BD%AE1.png" alt="image-20221017211607398"></p>
+<p>添加相关依赖</p>
+<p><img src="/images/idea%E9%85%8D%E7%BD%AE2.png" alt="image-20221017211209643"></p>
+<h4 id="启动项目"><a class="header-anchor" href="#启动项目">¶</a>启动项目</h4>
+<p>启动项目,输入<code>127.0.0.1:8080</code>进行访问,如图即成功</p>
+<p><img src="/images/idea%E9%85%8D%E7%BD%AE3.png" alt="image-20221017221244655"></p>
+<h3 id="VUE"><a class="header-anchor" href="#VUE">¶</a>VUE</h3>
+<p>在终端输入<code>vue ui</code>打开vue的界面选择创建一个新的vue项目</p>
+<p>依赖添加：<code>jquery</code>，<code>bootstrap</code></p>
+<p>插件添加：<code>vue-rooter</code>，<code>vue x</code></p>
+<h3 id="APP"><a class="header-anchor" href="#APP">¶</a>APP</h3>
+<p>在终端输入<code>vue ui</code>打开vue的界面选择创建一个新的vue项目</p>
+<p>插件添加：<code>vue x</code></p>
+]]></content>
+      <categories>
+        <category>开发</category>
+      </categories>
+      <tags>
+        <tag>JAVASCRIPT</tag>
+        <tag>vue3</tag>
+        <tag>other</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>算法学习的一些零碎知识点</title>
+    <url>/2022/08/28/%E9%9B%B6%E9%9B%B6%E7%A2%8E%E7%A2%8E%E7%9A%84%E7%9F%A5%E8%AF%86%E7%82%B9/</url>
+    <content><![CDATA[<p>随笔记录一下日常学习遇到的points</p>
+<span id="more"></span>
+<h3 id="无穷大"><a class="header-anchor" href="#无穷大">¶</a>无穷大</h3>
+<p>在算法竞赛中，我们常常需要用到设置一个常量用来代表“无穷大”。</p>
+<p>比如对于int类型的数，有的人会采用INT_MAX，即0x7fffffff作为无穷大。但是以INT_MAX为无穷大常常面临一个问题，即加一个其他的数会溢出。</p>
+<p>而这种情况在动态规划，或者其他一些递推的算法中常常出现，很有可能导致算法出问题。</p>
+<p>所以在算法竞赛中，我们常采用0x3f3f3f3f来作为无穷大。0x3f3f3f3f主要有如下好处：</p>
+<p>0x3f3f3f3f的十进制为1061109567，和INT_MAX一个数量级，即10<sup>9数量级，而一般场合下的数据都是小于10</sup>9的。<br>
+0x3f3f3f3f * 2 = 2122219134，无穷大相加依然不会溢出。<br>
+可以使用memset(array, 0x3f, sizeof(array))来为数组设初值为0x3f3f3f3f，因为这个数的每个字节都是0x3f。</p>
+<h3 id="memset"><a class="header-anchor" href="#memset">¶</a>memset</h3>
+<p>memset函数是按照字节直接来对数组进行赋值，比如h为一个int类型数组，有四个字节<br>
+<code>memset( h , 0x3f ,sizeof h )</code></p>
+]]></content>
+      <categories>
+        <category>算法</category>
+      </categories>
+      <tags>
+        <tag>others</tag>
+        <tag>ALGO</tag>
       </tags>
   </entry>
   <entry>
@@ -3409,133 +3561,6 @@ bool topsort()
       </tags>
   </entry>
   <entry>
-    <title>配置git环境与项目搭建</title>
-    <url>/2022/10/17/%E9%85%8D%E7%BD%AEgit%E7%8E%AF%E5%A2%83%E4%B8%8E%E9%A1%B9%E7%9B%AE%E6%90%AD%E5%BB%BA(vue+SpringBoot)/</url>
-    <content><![CDATA[<p>配置git环境与项目搭建(vue+SpringBoot)</p>
-<span id="more"></span>
-<h3 id="仓库项目配置"><a class="header-anchor" href="#仓库项目配置">¶</a>仓库项目配置</h3>
-<h4 id="git仓库初始化"><a class="header-anchor" href="#git仓库初始化">¶</a>git仓库初始化</h4>
-<p>鼠标右键<code>git bash</code></p>
-<p>输入<code>git init</code>(可以通过<code>ls -a</code>查看是否初始化成功)</p>
-<p>（<code>git status</code>：查看当前分支的情况,这里的情况大致分为三种对应git的三个区域(应该是三种情况)<br>
-这里我们发现,<code>readme.md</code>没有<code> add commit</code>,然后它提示<code>git add to track</code>）可选可不选</p>
-<p><code>git add .</code>(将文件放入暂存区,第二个区域)，可用来添加也可以用来删除</p>
-<p><code>git status</code>：查看此时文件的状态</p>
-<p><code>git commit -m &quot;创建项目&quot;</code>(将暂存区提交到本地仓库)</p>
-<h4 id="关于readme文件"><a class="header-anchor" href="#关于readme文件">¶</a>关于readme文件</h4>
-<p>创建md文件：<code>touch readme.md</code></p>
-<p>写入文件内容<code>vim readme.md</code><br>
-书写（插入）内容：按下 <code>i</code></p>
-<p>书写完后：<code>esc</code>之后按<code>:</code>,输入<code>wq</code>实现保存和退出</p>
-<p>之后再github\gitee\acgit 上创建云端仓库</p>
-<h3 id="IDEA"><a class="header-anchor" href="#IDEA">¶</a>IDEA</h3>
-<h4 id="创建项目"><a class="header-anchor" href="#创建项目">¶</a>创建项目</h4>
-<p>挂了梯子连接外网还挺快的</p>
-<p>提供两种连接方式：</p>
-<p><code>https://start.spring.io/</code></p>
-<p><code>https://start.aliyun.com</code></p>
-<p>其他该勾选的勾选一下 改改名字</p>
-<p><img src="/images/idea%E9%85%8D%E7%BD%AE1.png" alt="image-20221017211607398"></p>
-<p>添加相关依赖</p>
-<p><img src="/images/idea%E9%85%8D%E7%BD%AE2.png" alt="image-20221017211209643"></p>
-<h4 id="启动项目"><a class="header-anchor" href="#启动项目">¶</a>启动项目</h4>
-<p>启动项目,输入<code>127.0.0.1:8080</code>进行访问,如图即成功</p>
-<p><img src="/images/idea%E9%85%8D%E7%BD%AE3.png" alt="image-20221017221244655"></p>
-<h3 id="VUE"><a class="header-anchor" href="#VUE">¶</a>VUE</h3>
-<p>在终端输入<code>vue ui</code>打开vue的界面选择创建一个新的vue项目</p>
-<p>依赖添加：<code>jquery</code>，<code>bootstrap</code></p>
-<p>插件添加：<code>vue-rooter</code>，<code>vue x</code></p>
-<h3 id="APP"><a class="header-anchor" href="#APP">¶</a>APP</h3>
-<p>在终端输入<code>vue ui</code>打开vue的界面选择创建一个新的vue项目</p>
-<p>插件添加：<code>vue x</code></p>
-]]></content>
-      <categories>
-        <category>开发</category>
-      </categories>
-      <tags>
-        <tag>JAVASCRIPT</tag>
-        <tag>vue3</tag>
-        <tag>other</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>堆排序（数组模拟）</title>
-    <url>/2022/09/04/%E5%A0%86%E6%8E%92%E5%BA%8F%EF%BC%88%E6%95%B0%E7%BB%84%E6%A8%A1%E6%8B%9F%EF%BC%89/</url>
-    <content><![CDATA[<p>堆是特殊的队列，特殊的点就在于它可以依照元素的优先级取出，而不是元素入队的先后顺序。</p>
-<span id="more"></span>
-<p>堆常表现为完全二叉树的形式，因为高度为h的完全二叉树有结点 2<sup>(k-1)到2</sup>k-1个，且结点排布极共规律，因此，通常不必用指针，而是用数组来实现堆的存储。</p>
-<p><img src="/images/%E5%A0%86%E6%8E%92%E5%BA%8F.png" alt="image-20220904145447744"></p>
-<p>堆排序核心操作，建堆</p>
-<pre><code class="language-c++">void down(int u)&#123;
-int t=u;
-
-//构建平衡二叉搜索树
-if( 2*u&lt;=cnt &amp;&amp; h[2*u]&lt;h[t] ) t=2*u;
-if( 2*u+1 &lt;= cnt &amp;&amp; h[2*u+1]&lt;h[t]) t=2*u+1;
-//代表树的位置已经发生变化,递归直到u==t时结束
-if(u!=t)&#123;
-    swap(h[u],h[t]);
-    down(t);
-&#125;
-&#125;
-</code></pre>
-<p>只要理解平衡二叉树的原理就好</p>
-<p>完整代码</p>
-<pre><code class="language-c++">#include &lt;iostream&gt;
-#include &lt;cstring&gt;
-#include &lt;algorithm&gt;
-
-using namespace std;
-
-const int N = 1e5+10;
-
-int n,m;
-//cnt记录结点数，h数组模拟树
-int cnt,h[N];
-
-void down(int u)&#123;
-int t=u;
-
-if( 2*u&lt;=cnt &amp;&amp; h[2*u]&lt;h[t] ) t=2*u;
-if( 2*u+1 &lt;= cnt &amp;&amp; h[2*u+1]&lt;h[t]) t=2*u+1;
-if(u!=t)&#123;
-    swap(h[u],h[t]);
-    down(t);
-&#125;
-&#125;
-
-int main()
-&#123;
-    scanf(&quot;%d%d&quot;, &amp;n ,&amp;m );
-    for (int i = 1; i &lt;= n; i ++ ) 
-	scanf(&quot;%d&quot;, &amp;h[i]);
-
-	//更新cnt
-	cnt=n;
-
-	//从树顶开始向下递归
-	for (int i = n/2; i ; i -- )
-	down(i);
-
-while (m -- )&#123;
-    printf(&quot;%d &quot;,h[1]);
-    //保证每次输出的顶都是最小的
-    h[1]=h[cnt--];
-    down(1);
-&#125;
-&#125;
-</code></pre>
-]]></content>
-      <categories>
-        <category>算法</category>
-      </categories>
-      <tags>
-        <tag>C/C++</tag>
-        <tag>others</tag>
-        <tag>ALGO</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>简易拳皇项目</title>
     <url>/2022/10/15/%E7%AE%80%E6%98%93%E6%8B%B3%E7%9A%87%E9%A1%B9%E7%9B%AE%E7%AC%94%E8%AE%B0/</url>
     <content><![CDATA[<p>简易拳皇项目笔记</p>
@@ -3551,31 +3576,6 @@ while (m -- )&#123;
         <tag>JAVASCRIPT</tag>
         <tag>other</tag>
         <tag>游戏</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>算法学习的一些零碎知识点</title>
-    <url>/2022/08/28/%E9%9B%B6%E9%9B%B6%E7%A2%8E%E7%A2%8E%E7%9A%84%E7%9F%A5%E8%AF%86%E7%82%B9/</url>
-    <content><![CDATA[<p>随笔记录一下日常学习遇到的points</p>
-<span id="more"></span>
-<h3 id="无穷大"><a class="header-anchor" href="#无穷大">¶</a>无穷大</h3>
-<p>在算法竞赛中，我们常常需要用到设置一个常量用来代表“无穷大”。</p>
-<p>比如对于int类型的数，有的人会采用INT_MAX，即0x7fffffff作为无穷大。但是以INT_MAX为无穷大常常面临一个问题，即加一个其他的数会溢出。</p>
-<p>而这种情况在动态规划，或者其他一些递推的算法中常常出现，很有可能导致算法出问题。</p>
-<p>所以在算法竞赛中，我们常采用0x3f3f3f3f来作为无穷大。0x3f3f3f3f主要有如下好处：</p>
-<p>0x3f3f3f3f的十进制为1061109567，和INT_MAX一个数量级，即10<sup>9数量级，而一般场合下的数据都是小于10</sup>9的。<br>
-0x3f3f3f3f * 2 = 2122219134，无穷大相加依然不会溢出。<br>
-可以使用memset(array, 0x3f, sizeof(array))来为数组设初值为0x3f3f3f3f，因为这个数的每个字节都是0x3f。</p>
-<h3 id="memset"><a class="header-anchor" href="#memset">¶</a>memset</h3>
-<p>memset函数是按照字节直接来对数组进行赋值，比如h为一个int类型数组，有四个字节<br>
-<code>memset( h , 0x3f ,sizeof h )</code></p>
-]]></content>
-      <categories>
-        <category>算法</category>
-      </categories>
-      <tags>
-        <tag>others</tag>
-        <tag>ALGO</tag>
       </tags>
   </entry>
 </search>
