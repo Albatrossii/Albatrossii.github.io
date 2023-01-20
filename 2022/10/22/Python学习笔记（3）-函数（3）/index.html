@@ -1,0 +1,446 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0">
+        <title>Python学习笔记（3）-函数（3） | Albatross&amp;blog</title>
+        <meta name="author" content="Albatross">
+        <meta name="description" content="">
+        <meta name="keywords" content="吃喝玩睡ing">
+        <link rel="icon" href="/images/c.jpg">
+        <script src="https://cdn.staticfile.org/instant.page/5.1.0/instantpage.min.js" type="module"></script>
+        <script src="https://cdn.staticfile.org/font-awesome/6.1.1/js/all.min.js"></script>
+        
+        </script>
+        
+        <link rel="stylesheet" href="/css/fonts.min.css">
+        <link rel="stylesheet" href="/css/particlex.css">
+        
+        <script src="https://cdn.staticfile.org/vue/3.2.33/vue.global.prod.min.js"></script>
+       
+    <meta name="generator" content="Hexo 6.2.0"><link rel="alternate" href="/atom.xml" title="Albatross&blog" type="application/atom+xml">
+</head>
+    <body>
+
+        <div id="loading" style="height:100vh;width:100vw;position:fixed;display:flex;z-index:200;justify-content:space-between;background:#fff;transition:opacity 0.3s ease-out"><div style="position:fixed;height:100vh;width:100vw;display:flex;justify-content:center;align-items:center"><div id="loadcontent" style="width:50vmin;height:50vmin;padding:50px;border-radius:50%;display:flex;justify-content:center;align-items:center;border:solid 10px #a3ddfb;text-align:center"><div><h2>LOADING...</h2><p style="word-break:keep-all">加载过慢请开启缓存(浏览器默认开启)</p><div><img alt="loading" src="/loading.gif"></div></div></div></div></div>
+        <div id="layout">
+            <i data-fa-symbol="calendar-solid" class="fa-solid fa-calendar fa-fw"></i>
+            <i data-fa-symbol="bookmark-solid" class="fa-solid fa-bookmark fa-fw"></i>
+            <i data-fa-symbol="tags-solid" class="fa-solid fa-tags fa-fw"></i>
+            <transition name="into">
+                <div v-show="show_page" style="display: -not-none">
+                    <div id="menu_show">
+                         
+<nav id="menu">
+    <div class="desktop-menu">
+        <a href="/">
+            <span class="title">Albatross&blog</span>
+        </a>
+        
+        <a href="/">
+            <i class="fa-solid fa-house fa-fw"></i>
+            <span>&ensp;home</span>
+        </a>
+        
+        <a href="/about">
+            <i class="fa-solid fa-id-card fa-fw"></i>
+            <span>&ensp;about</span>
+        </a>
+        
+        <a href="/archives">
+            <i class="fa-solid fa-box-archive fa-fw"></i>
+            <span>&ensp;archives</span>
+        </a>
+        
+        <a href="/categories">
+            <i class="fa-solid fa-bookmark fa-fw"></i>
+            <span>&ensp;categories</span>
+        </a>
+        
+        <a href="/tags">
+            <i class="fa-solid fa-tags fa-fw"></i>
+            <span>&ensp;tags</span>
+        </a>
+        
+    </div>
+    <div :class="'phone-menu ' + menu_show" id="phone-menu">
+        <div class="curtain" @click="menu_show = !menu_show" v-show="menu_show"></div>
+        <div :class="'title'" @click="menu_show = !menu_show">
+            <i class="fa-solid fa-bars fa-fw"></i>
+            <span>&emsp;Albatross&blog</span>
+        </div>
+        <transition name="slide">
+        <div class="items" v-show="menu_show">
+            
+            <a href="">
+                <div class="item">
+                    <div style="min-width: 20px; max-width: 50px; width: 10%">
+                        <i class="fa-solid fa-house fa-fw"></i>
+                    </div>
+                    <div style="min-width: 100px; max-width: 150%; width: 20%">home</div>
+                </div>
+            </a>
+            
+            <a href="about">
+                <div class="item">
+                    <div style="min-width: 20px; max-width: 50px; width: 10%">
+                        <i class="fa-solid fa-id-card fa-fw"></i>
+                    </div>
+                    <div style="min-width: 100px; max-width: 150%; width: 20%">about</div>
+                </div>
+            </a>
+            
+            <a href="archives">
+                <div class="item">
+                    <div style="min-width: 20px; max-width: 50px; width: 10%">
+                        <i class="fa-solid fa-box-archive fa-fw"></i>
+                    </div>
+                    <div style="min-width: 100px; max-width: 150%; width: 20%">archives</div>
+                </div>
+            </a>
+            
+            <a href="categories">
+                <div class="item">
+                    <div style="min-width: 20px; max-width: 50px; width: 10%">
+                        <i class="fa-solid fa-bookmark fa-fw"></i>
+                    </div>
+                    <div style="min-width: 100px; max-width: 150%; width: 20%">categories</div>
+                </div>
+            </a>
+            
+            <a href="tags">
+                <div class="item">
+                    <div style="min-width: 20px; max-width: 50px; width: 10%">
+                        <i class="fa-solid fa-tags fa-fw"></i>
+                    </div>
+                    <div style="min-width: 100px; max-width: 150%; width: 20%">tags</div>
+                </div>
+            </a>
+            
+        </div>
+        </transition>
+    </div>
+    <canvas
+    id="background"
+    style="position:fixed;top:0;left:0;width:100vw;height:100vh;pointer-events:none;z-index:-1"
+></canvas>
+<script src="/js/background.js"></script>
+</nav>
+
+
+                    </div>
+                    <div id="main">
+                        
+<div class="article">
+    <div>
+        <h1>Python学习笔记（3）-函数（3） </h1>
+    </div>
+    <div class="info">
+        <span class="date">
+            <span class="icon">
+                <svg class="fa-icon"><use xlink:href="#calendar-solid"></use></svg>
+            </span>
+            2022/10/22
+        </span>
+        
+        <span class="category">
+            <a href="/categories/语言学习/">
+                <span class="icon">
+                    <svg class="fa-icon"><use xlink:href="#bookmark-solid"></use></svg>
+                </span>
+                语言学习
+            </a>
+        </span>
+        
+        
+        <span class="tags">
+            <span class="icon">
+                <svg class="fa-icon"><use xlink:href="#tags-solid"></use></svg>
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/PYTHON/" style="color: #ff7d73">
+                    PYTHON
+                </a>
+            </span>
+            
+        </span>
+        
+    </div>
+    <div class="content" v-pre>
+        <p>最近在学py，简单记录一下笔记</p>
+<span id="more"></span>
+<h3 id="内置函数-部分常用"><a class="header-anchor" href="#内置函数-部分常用">¶</a>内置函数(部分常用)</h3>
+<h4 id="生成器和迭代相关"><a class="header-anchor" href="#生成器和迭代相关">¶</a>生成器和迭代相关</h4>
+<h5 id="next和iter"><a class="header-anchor" href="#next和iter">¶</a>next和iter</h5>
+<p>在之前学过迭代器，其实<code>next</code>和<code>iter</code>用法可以等价为</p>
+<pre><code class="language-python">lst = [11,22,33]
+it  = lst._iter_()
+it = iter(lst)
+
+print(it._next_())
+print(next(it))
+</code></pre>
+<h4 id="帮助函数"><a class="header-anchor" href="#帮助函数">¶</a>帮助函数</h4>
+<h5 id="callable"><a class="header-anchor" href="#callable">¶</a>callable</h5>
+<p>用于判断函数时候能被调用</p>
+<pre><code class="language-python">def func():
+	pass
+print(callable(func))	#True
+print(callable(123))	#False
+</code></pre>
+<p>可以用于判断出创建的函数能否被调用</p>
+<h5 id="id"><a class="header-anchor" href="#id">¶</a>id</h5>
+<p>查看不可变数据类型的哈希值</p>
+<h4 id="编译"><a class="header-anchor" href="#编译">¶</a>编译</h4>
+<h5 id="eval和exec"><a class="header-anchor" href="#eval和exec">¶</a>eval和exec</h5>
+<p>都可以将字符串的代码给动态执行</p>
+<p>区别：<code>eval</code>有返回值<code>exec</code>无返回值</p>
+<pre><code class="language-python">s = &quot;1+1&quot;
+print(eval(s)) #2
+
+s = &quot;a = 100&quot;
+exec(s)
+print(a) #如果使用pycharm会报错 但是实际上是可以运行的 输出的结果是100 
+</code></pre>
+<p><code>eval</code>还可以把字符串当成代码执行</p>
+<pre><code class="language-python">s = &quot;[1,2,3]&quot;
+lst = eval(s)
+print(lst,type(lst)) 
+#[1, 2, 3] &lt;class 'list'&gt;
+</code></pre>
+<p>会存在安全隐患，因为输入的数据不可判断，可能会造成程序异常等其他隐患</p>
+<pre><code class="language-python">s = input(&quot;请输入你要执行的代码:&quot;)
+exec(s)
+print(&quot;hello world&quot;)
+</code></pre>
+<h5 id="compile"><a class="header-anchor" href="#compile">¶</a>compile</h5>
+<p><code>compile()</code> 把一段代码串加载，后面可以通过<code>eval</code>和<code>exec</code>去执行</p>
+<p>第一个参数为你想要执行的代码</p>
+<p>第二个参数为代码类型 如果为实际的代码就不需要在空字串里面添加东西了，如果是文件，这需要加上文件，但是第一个参数要为空</p>
+<p>第三个参数为执行的模式，可以写eval(只是运行代码)，exec(运行代码并且有返回值)或者single（如果代码中有交互的，如<code>input</code>）</p>
+<pre><code>c1 = compile(&quot;for i in range(10):print(i)&quot;,&quot;&quot;,&quot;exec&quot;)
+
+c2 = complie(&quot;n = int(input('输入数字:'))&quot;,&quot;&quot;,&quot;single&quot;)
+print(n)
+</code></pre>
+<h4 id="进制转换"><a class="header-anchor" href="#进制转换">¶</a>进制转换</h4>
+<p><code>bin</code> 2进制</p>
+<pre><code class="language-python">print(bin(5))		#0b101
+</code></pre>
+<p><code>oct</code> 8进制</p>
+<p><code>hex</code>16进制</p>
+<h4 id="数学"><a class="header-anchor" href="#数学">¶</a>数学</h4>
+<p><code>abs</code> 绝对值</p>
+<p><code>divmod</code> 除法</p>
+<p><code>round</code> 四舍五入</p>
+<p><code>pow</code>次幂</p>
+<p><code>sum</code>求和，对象必须是可迭代对象</p>
+<p><code>max，min</code>  最大值最小值</p>
+<h4 id="数据结构"><a class="header-anchor" href="#数据结构">¶</a>数据结构</h4>
+<p><code>frozenset</code> 不能进行增删改的集合</p>
+<p><code>enumerate</code> 用来迭代对象时，既能得到该对象的下标，又能得到对象的值</p>
+<pre><code class="language-python">lst = [&quot;好想&quot;,&quot;解封&quot;]
+for i,item in enumerate(lst):
+	print(item)
+#0 好想
+#1 解封
+</code></pre>
+<p><code>or</code>相当于或</p>
+<p><code>and</code>相当于且</p>
+<p>两个函数里面都需要用可迭代对象来对其进行判断</p>
+<pre><code class="language-python">lst = [0 ,&quot;所有&quot;, True]
+
+print(any(lst))	#True
+print(all(lst))	#False
+</code></pre>
+<p><code>zip</code> 拉链函数 将对象中对应的元素打包成一个个元组，然后返回由这些元组组成的列表</p>
+<pre><code class="language-python">a = [1,2,3]
+b = [4,5,6]
+c = [4,5,6,7,8]
+zipped = zip(a,b)     # 返回一个对象
+print(zipped)		#&lt;zip object at 0x103abc288&gt;
+
+print(list(zipped))  # list() 转换为列表
+#[(1, 4), (2, 5), (3, 6)]
+print(list(zip(a,c)))    # 元素个数与最短的列表一致
+#[(1, 4), (2, 5), (3, 6)]
+
+a1, a2 = zip(*zip(a,b))          # 与 zip 相反，zip(*) 可理解为解压，返回二维矩阵式
+print(list(a1))
+#[1, 2, 3]
+print(list(a2))
+#[4, 5, 6]
+</code></pre>
+<p>一个很好用的方法 构建字典</p>
+<pre><code class="language-python">d = dict(zip(lst1,lst2))
+</code></pre>
+<p><code>slice</code>切片函数</p>
+<pre><code class="language-python">s = &quot;今天天气不错&quot;
+ss = slice(1,6,2)	#步长为2
+s1 = s[ss]
+print(s1)	#天气错
+</code></pre>
+<p><code>ord</code> 将字符转换为对应的数字</p>
+<p><code>chr</code>  将数字变成字符</p>
+<pre><code class="language-python">print(ord(&quot;福&quot;)) #31119
+print(chr(31119))
+</code></pre>
+<p><code>chr</code>还能用于生成验证码</p>
+<pre><code class="language-python">n = random.randint(65,97)	#给出范围
+print(chr(n))
+</code></pre>
+<p><code>ascii</code>在ASCII范围内的符号还是原字符，若不再这打印<code>utf-8</code>编码符</p>
+<p><code>repr</code>一个字符串最应该表现的效果，有些转义字符比如<code>\t</code>，正常输出不会输出，但是使用<code>repr</code>可以将其输出</p>
+<p>r字符串  当字符串中出现转义字符，但是有不想使用转义字符的效果，可以这样写</p>
+<pre><code class="language-python">print(r&quot;今天天\t气\n很\好&quot;)
+#今天天\t气\n很\好
+</code></pre>
+<h5 id="format"><a class="header-anchor" href="#format">¶</a>format</h5>
+<p>基本语法是通过 <strong>{}</strong> 和 <strong>:</strong> 来代替以前的 <strong>%</strong> 。</p>
+<p>format 函数可以接受不限个参数，位置可以不按顺序</p>
+<pre><code class="language-python">print(&quot;&#123;&#125; &#123;&#125;&quot;.format(&quot;hello&quot;, &quot;world&quot;))  # 不设置指定位置，按默认顺序
+
+print(&quot;&#123;0&#125; &#123;1&#125;&quot;.format(&quot;hello&quot;, &quot;world&quot;))  # 设置指定位置
+
+print( &quot;&#123;1&#125; &#123;0&#125; &#123;1&#125;&quot;.format(&quot;hello&quot;, &quot;world&quot;) ) # 设置指定位置
+
+</code></pre>
+<p>也可以用来指定位数</p>
+<pre><code class="language-python">a = 48
+print(format(a,&quot;08d&quot;))	#00000048
+#d代表整数，8代表指定位数，凑不够用0补齐
+
+b = 1.23
+print(format(b,&quot;.3f&quot;)) #1.230
+#也可应用于浮点数
+</code></pre>
+<h5 id="sorted"><a class="header-anchor" href="#sorted">¶</a>sorted</h5>
+<p><strong>排序函数.</strong></p>
+<p>语法: <code>sorted(Iterable, key=None, reverse=False)</code></p>
+<p>​     <code>Iterable</code>: 可迭代对象</p>
+<p>​     <code>key</code>: 排序规则(排序函数), 在sorted内部会将可迭代对象中的每一个元素传递给这个函数的参数. 根据函数运算的结果进行排序</p>
+<p>​     <code>reverse</code>: 是否是倒叙. True: 倒叙, False: 正序</p>
+<pre><code class="language-python">lst = [1,5,3,4,6]
+lst2 = sorted(lst)
+print(lst)  # 原列表不会改变
+print(lst2) # 返回的新列表是经过排序的
+</code></pre>
+<p>和函数组合使用</p>
+<pre><code class="language-python"># 根据字符串长度进行排序
+lst = [&quot;麻花藤&quot;, &quot;冈本次郎&quot;, &quot;中央情报局&quot;, &quot;狐仙&quot;]
+
+# 计算字符串长度
+def func(s):
+    return len(s)
+
+print(sorted(lst, key=func))
+</code></pre>
+<p>和lambda组合使用</p>
+<pre><code class="language-python"># 根据字符串长度进行排序
+lst = [&quot;麻花藤&quot;, &quot;冈本次郎&quot;, &quot;中央情报局&quot;, &quot;狐仙&quot;]
+
+# 计算字符串长度
+def func(s):
+    return len(s)
+
+print(sorted(lst, key=lambda s: len(s)))
+
+lst = [&#123;&quot;id&quot;:1, &quot;name&quot;:'盖伦', &quot;age&quot;:18&#125;,
+       &#123;&quot;id&quot;:2, &quot;name&quot;:'杰斯', &quot;age&quot;:16&#125;,
+       &#123;&quot;id&quot;:3, &quot;name&quot;:'压缩', &quot;age&quot;:17&#125;]
+# 按照年龄对学生信息进行排序
+print(sorted(lst, key=lambda e: e['age']))
+</code></pre>
+<h5 id="map-v2"><a class="header-anchor" href="#map-v2">¶</a>map</h5>
+<p>映射函数</p>
+<p>语法: <code>map(function, iterable)</code> 可以对可迭代对象中的每一个元素进行映射. 分别取执行function</p>
+<p>计算列表中每个元素的平方 ,返回新列表，如果直接输出，返回的是迭代对象的地址</p>
+<pre><code class="language-python">def func(e):
+    return e*e
+
+mp = map(func, [1, 2, 3, 4, 5])
+print(mp)
+print(list(mp))
+    改写成lambda
+print(list(map(lambda x: x * x, [1, 2, 3, 4, 5])))
+    计算两个列表中相同位置的数据的和
+# 计算两个列表相同位置的数据的和
+lst1 = [1, 2, 3, 4, 5]
+lst2 = [2, 4, 6, 8, 10]
+print(list(map(lambda x, y: x+y, lst1, lst2)))
+</code></pre>
+<h5 id="filter"><a class="header-anchor" href="#filter">¶</a>filter</h5>
+<p>筛选函数</p>
+<p>语法: <code>filter(function. Iterable)</code></p>
+<p>​     <code>function</code>: 用来筛选的函数. 在filter中会自动的把<code>iterable</code>中的元素传递给<code>function</code>. 然后根据<code>function</code>返回的True或者False来判断是否保留此项数据</p>
+<p>​     <code>Iterable</code>: 可迭代对象</p>
+<h4 id="三元表达式"><a class="header-anchor" href="#三元表达式">¶</a>三元表达式</h4>
+<p>各大语言都有三元表达式. 目的是把简单的if判断写成一行.</p>
+<p>语法:</p>
+<p>结果1 if 条件 else 结果2</p>
+<p>过程:</p>
+<p>判断条件是否为真, 如果真, 返回结果1, 否则返回结果2</p>
+<pre><code class="language-python">a = input(&quot;&gt;&gt;&gt;&quot;)
+b = input(&quot;&gt;&gt;&gt;&quot;)
+c = a if a &gt; b else b
+print(c)
+</code></pre>
+
+    </div>
+    
+</div>
+                         
+
+
+<footer id="footer">
+    
+
+    <div class="footer-wrap">
+        <div>
+            © 2022 - 2023 Albatross&amp;blog
+            <span class="footer-icon">
+                <i class="fa-solid fa-font-awesome fa-fw"></i>
+            </span>
+            @Albatross
+        </div>
+
+        <div></div>
+        <div>Based on the <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo Engine</a> & <a
+                target="_blank" rel="noopener" href="https://github.com/argvchs/hexo-theme-particlex">ParticleX Theme</a></div>
+        
+    </div>
+    <!--这一段是不蒜子的访问量统计代码-->
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+    </script>
+ 
+    <span id="busuanzi_value_page_pv"><i class="fa fa-spinner"></i></span> Hits   
+</footer>
+
+
+                        
+                    </div>
+                </div>
+            </transition>
+            <div id="img_show">
+                <img id="img_content" alt="img_show">
+            </div>
+        </div>
+        <script src="https://cdn.staticfile.org/highlight.js/11.5.1/highlight.min.js"></script>
+        <script src="/js/particlex.js"></script>
+        <script src="/js/showimg.js"></script>
+        
+        
+
+    <script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/wanko.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"log":false});</script></body>
+    <canvas
+        id="background"
+        style="position:fixed;top:0;left:0;width:100vw;height:100vh;pointer-events:none;z-index:-1"
+    ></canvas>
+    <script src="/js/background.js"></script>
+    <div id="cursor"></div>
+<script src="/css/cursor.css"></script>
+<script src="/js/cursor.js"></script>
+</html>

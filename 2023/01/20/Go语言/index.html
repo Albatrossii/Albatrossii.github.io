@@ -1,0 +1,650 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0">
+        <title>Go语言基础 | Albatross&amp;blog</title>
+        <meta name="author" content="Albatross">
+        <meta name="description" content="">
+        <meta name="keywords" content="吃喝玩睡ing">
+        <link rel="icon" href="/images/c.jpg">
+        <script src="https://cdn.staticfile.org/instant.page/5.1.0/instantpage.min.js" type="module"></script>
+        <script src="https://cdn.staticfile.org/font-awesome/6.1.1/js/all.min.js"></script>
+        
+        </script>
+        
+        <link rel="stylesheet" href="/css/fonts.min.css">
+        <link rel="stylesheet" href="/css/particlex.css">
+        
+        <script src="https://cdn.staticfile.org/vue/3.2.33/vue.global.prod.min.js"></script>
+       
+    <meta name="generator" content="Hexo 6.2.0"><link rel="alternate" href="/atom.xml" title="Albatross&blog" type="application/atom+xml">
+</head>
+    <body>
+
+        <div id="loading" style="height:100vh;width:100vw;position:fixed;display:flex;z-index:200;justify-content:space-between;background:#fff;transition:opacity 0.3s ease-out"><div style="position:fixed;height:100vh;width:100vw;display:flex;justify-content:center;align-items:center"><div id="loadcontent" style="width:50vmin;height:50vmin;padding:50px;border-radius:50%;display:flex;justify-content:center;align-items:center;border:solid 10px #a3ddfb;text-align:center"><div><h2>LOADING...</h2><p style="word-break:keep-all">加载过慢请开启缓存(浏览器默认开启)</p><div><img alt="loading" src="/loading.gif"></div></div></div></div></div>
+        <div id="layout">
+            <i data-fa-symbol="calendar-solid" class="fa-solid fa-calendar fa-fw"></i>
+            <i data-fa-symbol="bookmark-solid" class="fa-solid fa-bookmark fa-fw"></i>
+            <i data-fa-symbol="tags-solid" class="fa-solid fa-tags fa-fw"></i>
+            <transition name="into">
+                <div v-show="show_page" style="display: -not-none">
+                    <div id="menu_show">
+                         
+<nav id="menu">
+    <div class="desktop-menu">
+        <a href="/">
+            <span class="title">Albatross&blog</span>
+        </a>
+        
+        <a href="/">
+            <i class="fa-solid fa-house fa-fw"></i>
+            <span>&ensp;home</span>
+        </a>
+        
+        <a href="/about">
+            <i class="fa-solid fa-id-card fa-fw"></i>
+            <span>&ensp;about</span>
+        </a>
+        
+        <a href="/archives">
+            <i class="fa-solid fa-box-archive fa-fw"></i>
+            <span>&ensp;archives</span>
+        </a>
+        
+        <a href="/categories">
+            <i class="fa-solid fa-bookmark fa-fw"></i>
+            <span>&ensp;categories</span>
+        </a>
+        
+        <a href="/tags">
+            <i class="fa-solid fa-tags fa-fw"></i>
+            <span>&ensp;tags</span>
+        </a>
+        
+    </div>
+    <div :class="'phone-menu ' + menu_show" id="phone-menu">
+        <div class="curtain" @click="menu_show = !menu_show" v-show="menu_show"></div>
+        <div :class="'title'" @click="menu_show = !menu_show">
+            <i class="fa-solid fa-bars fa-fw"></i>
+            <span>&emsp;Albatross&blog</span>
+        </div>
+        <transition name="slide">
+        <div class="items" v-show="menu_show">
+            
+            <a href="">
+                <div class="item">
+                    <div style="min-width: 20px; max-width: 50px; width: 10%">
+                        <i class="fa-solid fa-house fa-fw"></i>
+                    </div>
+                    <div style="min-width: 100px; max-width: 150%; width: 20%">home</div>
+                </div>
+            </a>
+            
+            <a href="about">
+                <div class="item">
+                    <div style="min-width: 20px; max-width: 50px; width: 10%">
+                        <i class="fa-solid fa-id-card fa-fw"></i>
+                    </div>
+                    <div style="min-width: 100px; max-width: 150%; width: 20%">about</div>
+                </div>
+            </a>
+            
+            <a href="archives">
+                <div class="item">
+                    <div style="min-width: 20px; max-width: 50px; width: 10%">
+                        <i class="fa-solid fa-box-archive fa-fw"></i>
+                    </div>
+                    <div style="min-width: 100px; max-width: 150%; width: 20%">archives</div>
+                </div>
+            </a>
+            
+            <a href="categories">
+                <div class="item">
+                    <div style="min-width: 20px; max-width: 50px; width: 10%">
+                        <i class="fa-solid fa-bookmark fa-fw"></i>
+                    </div>
+                    <div style="min-width: 100px; max-width: 150%; width: 20%">categories</div>
+                </div>
+            </a>
+            
+            <a href="tags">
+                <div class="item">
+                    <div style="min-width: 20px; max-width: 50px; width: 10%">
+                        <i class="fa-solid fa-tags fa-fw"></i>
+                    </div>
+                    <div style="min-width: 100px; max-width: 150%; width: 20%">tags</div>
+                </div>
+            </a>
+            
+        </div>
+        </transition>
+    </div>
+    <canvas
+    id="background"
+    style="position:fixed;top:0;left:0;width:100vw;height:100vh;pointer-events:none;z-index:-1"
+></canvas>
+<script src="/js/background.js"></script>
+</nav>
+
+
+                    </div>
+                    <div id="main">
+                        
+<div class="article">
+    <div>
+        <h1>Go语言基础 </h1>
+    </div>
+    <div class="info">
+        <span class="date">
+            <span class="icon">
+                <svg class="fa-icon"><use xlink:href="#calendar-solid"></use></svg>
+            </span>
+            2023/1/20
+        </span>
+        
+        <span class="category">
+            <a href="/categories/语言学习/">
+                <span class="icon">
+                    <svg class="fa-icon"><use xlink:href="#bookmark-solid"></use></svg>
+                </span>
+                语言学习
+            </a>
+        </span>
+        
+        
+        <span class="tags">
+            <span class="icon">
+                <svg class="fa-icon"><use xlink:href="#tags-solid"></use></svg>
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/others/" style="color: #00bcd4">
+                    others
+                </a>
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/GO/" style="color: #ff7d73">
+                    GO
+                </a>
+            </span>
+            
+        </span>
+        
+    </div>
+    <div class="content" v-pre>
+        <p>掘金系列课程学习笔记</p>
+<span id="more"></span>
+<p>Go是一门编译型语言，Go语言的工具链将源代码及其依赖转换成计算机的机器指令（静态编译）。</p>
+<p>我们以经典的hello,world作为入门</p>
+<pre><code class="language-go">package main
+
+import &quot;fmt&quot;
+
+func main() &#123;
+	fmt.Println(&quot;hello world&quot;)
+&#125;
+</code></pre>
+<p>Go语言的代码通过<strong>包</strong>（package）组织，包类似于其它语言里的库（libraries）或者模块（modules）。一个包由位于单个目录下的一个或多个.go源代码文件组成，目录定义包的作用。每个源文件都以一条<code>package</code>声明语句开始，这个例子里就是<code>package main</code>，表示该文件属于哪个包，紧跟着一系列导入（import）的包，之后是存储在这个文件里的程序语句。</p>
+<p><code>main</code>包比较特殊。它定义了一个独立可执行的程序，而不是一个库。在<code>main</code>里的<code>main</code> <em>函数</em> 也很特殊，它是整个程序执行时的入口。<code>main</code>函数所做的事情就是程序做的。当然了，<code>main</code>函数一般调用其它包里的函数完成很多工作</p>
+<p>必须告诉编译器源文件需要哪些包，这就是跟随在<code>package</code>声明后面的<code>import</code>声明扮演的角色。hello world例子只用到了一个包，大多数程序需要导入多个包。</p>
+<p>一个函数的声明由<code>func</code>关键字、函数名、参数列表、返回值列表（这个例子里的<code>main</code>函数参数列表和返回值都是空的）以及包含在大括号里的函数体组成。</p>
+<p>Go语言不需要在语句或者声明的末尾添加分号，除非一行上有多条语句。实际上，编译器会主动把特定符号后的换行符转换为分号，因此换行符添加的位置会影响Go代码的正确解析</p>
+<p>Go语言在代码格式上采取了很强硬的态度。<code>gofmt</code>工具把代码格式化为标准格式（并且这个格式化的工具没有任何可以调整代码格式的参数)，并且<code>go</code>工具中的<code>fmt</code>子命令会对指定包，否则默认为当前目录中所有.go源文件应用<code>gofmt</code>命令。</p>
+<h2 id="程序结构"><a class="header-anchor" href="#程序结构">¶</a>程序结构</h2>
+<h3 id="命名"><a class="header-anchor" href="#命名">¶</a>命名</h3>
+<p>Go语言中的函数名、变量名、常量名、类型名、语句标号和包名等所有的命名，都遵循一个简单的命名规则：一个名字必须以一个字母（Unicode字母）或下划线开头，后面可以跟任意数量的字母、数字或下划线。并且大小写敏感。</p>
+<p>Go语言中类似if和switch的关键字有25个；关键字不能用于自定义名字，只能在特定语法结构中使用。</p>
+<pre><code>break      default       func     interface   select
+case       defer         go       map         struct
+chan       else          goto     package     switch
+const      fallthrough   if       range       type
+continue   for           import   return      var
+</code></pre>
+<p>此外，还有大约30多个预定义的名字，比如int和true等，主要对应内建的常量、类型和函数。</p>
+<pre><code>内建常量: true false iota nil
+
+内建类型: int int8 int16 int32 int64
+          uint uint8 uint16 uint32 uint64 uintptr
+          float32 float64 complex128 complex64
+          bool byte rune string error
+
+内建函数: make len cap new append copy close delete
+          complex real imag
+          panic recover
+</code></pre>
+<p>此外，Go语言程序员推荐使用驼峰式命名。</p>
+<h3 id="声明与变量"><a class="header-anchor" href="#声明与变量">¶</a>声明与变量</h3>
+<p>Go语言的声明有以下4种</p>
+<ul>
+<li><code>var</code>：变量</li>
+<li><code>const</code>：常量</li>
+<li><code>type</code>：类型</li>
+<li><code>func</code>：函数实体对象的声明</li>
+</ul>
+<h4 id="使用var进行声明"><a class="header-anchor" href="#使用var进行声明">¶</a>使用var进行声明</h4>
+<p>变量可以这样进行声明</p>
+<p><code>var 变量名 类型 = 表达式</code></p>
+<p>其中<strong>类型</strong>或者<strong>表达式</strong>可以省略其一，因为不管是省略前者还是后者，Go语言都有他自己的方法。</p>
+<p><strong>省略类型信息</strong></p>
+<p>类型信息会根据其表达式对类型进行推导</p>
+<p><strong>省略表达式</strong></p>
+<p>如果是数值类型变量，那么将被声明为0（int =&gt; 0）</p>
+<p>如果是布尔类型变量，那么将被声明为0（bool =&gt; false）</p>
+<p>如果是字符串类型变量，那么将被声明为0（string =&gt; “”）</p>
+<p>如果是接口或引用类型变量，那么将被声明为0（slice，map，chan，指针，函数 =&gt; nil）</p>
+<h4 id="简短变量声明语句"><a class="header-anchor" href="#简短变量声明语句">¶</a>简短变量声明语句</h4>
+<p>在函数内部，还有一种声明</p>
+<p><code>名字 := 表达式</code></p>
+<p>因为简洁和灵活的特点，简短变量声明被广泛用于大部分的局部变量的声明和初始化。var形式的声明语句往往是用于需要显式指定变量类型的地方，或者因为变量稍后会被重新赋值而初始值无关紧要的地方。</p>
+<pre><code class="language-go">package main
+
+import (
+	&quot;fmt&quot;
+	&quot;math&quot;
+)
+
+func main() &#123;
+
+	var a = &quot;initial&quot;
+
+	var b, c int = 1, 2
+
+	var d = true
+
+	var e float64	//0
+
+	f := float32(e)	//0
+
+	g := a + &quot;foo&quot;
+	fmt.Println(a, b, c, d, e, f) // initial 1 2 true 0 0
+	fmt.Println(g)                // initialapple
+
+	const s string = &quot;constant&quot;
+	const h = 500000000
+	const i = 3e20 / h
+	fmt.Println(s, h, i, math.Sin(h), math.Sin(i))
+    //constant 500000000 6e+11 -0.28470407323754404 0.7591864109375384
+&#125;
+</code></pre>
+<p>在我看来，go更像是Python和C语言的结合，语法相似，基础语法理解起来并不难，性能强大，并且很多功能都类似，比如C/C++特色的指针，这里也有类似的体现</p>
+<p>如果用“var x int”声明语句声明一个x变量，那么&amp;x表达式（取x变量的内存地址）将产生一个指向该整数变量的指针，指针对应的数据类型是<code>*int</code>，指针被称之为“指向int类型的指针”。</p>
+<p>如果指针名字为p，那么可以说“p指针指向变量x”，或者说“p指针保存了x变量的内存地址”。同时<code>*p</code>表达式对应p指针指向的变量的值。一般<code>*p</code>表达式读取指针指向的变量的值，这里为int类型的值，同时因为<code>*p</code>对应一个变量，所以该表达式也可以出现在赋值语句的左边，表示更新指针所指向的变量的值。</p>
+<pre><code class="language-Go">x := 1
+p := &amp;x         // p, of type *int, points to x
+fmt.Println(*p) // &quot;1&quot;
+*p = 2          // equivalent to x = 2
+fmt.Println(x)  // &quot;2&quot;
+</code></pre>
+<h4 id="new函数"><a class="header-anchor" href="#new函数">¶</a>new函数</h4>
+<p>表达式new(T)将创建一个T类型的匿名变量，初始化为T类型的零值，然后返回变量地址，返回的指针类型为<code>*T</code>。</p>
+<p>new函数类似一个语法糖，并且每次调用都会返回一个新的地址</p>
+<pre><code class="language-Go">p := new(int)   // p, *int 类型, 指向匿名的 int 变量
+fmt.Println(*p) // &quot;0&quot;
+*p = 2          // 设置 int 匿名变量的值为 2
+fmt.Println(*p) // &quot;2&quot;
+</code></pre>
+<h3 id="基础数据类型"><a class="header-anchor" href="#基础数据类型">¶</a>基础数据类型</h3>
+<p>类C，其中常见到的8,16,32,64指的是8,16,32,64bit大小的有符号整数</p>
+<h3 id="复合数据类型"><a class="header-anchor" href="#复合数据类型">¶</a>复合数据类型</h3>
+<h4 id="数组"><a class="header-anchor" href="#数组">¶</a>数组</h4>
+<p>在数组字面值中，如果在数组的长度位置出现的是“…”省略号，则表示数组的长度是根据初始化值的个数来计算。</p>
+<pre><code class="language-Go">//初始化1
+var q [3]int = [3]int&#123;1, 2, 3&#125;
+
+//初始化2
+q := [...]int&#123;1, 2, 3&#125;
+fmt.Printf(&quot;%T\n&quot;, q) // &quot;[3]int&quot;
+</code></pre>
+<h4 id="Slice"><a class="header-anchor" href="#Slice">¶</a>Slice</h4>
+<p>Slice（切片）代表变长的序列，序列中每个元素都有相同的类型。一个slice类型一般写作[]T，其中T代表slice中元素的类型；slice的语法和数组很像，只是没有固定长度而已，会进行自动扩容操作，每一次容量的变化都会导致重新分配内存和copy操作。</p>
+<pre><code class="language-Go">//初始化
+var runes []rune
+
+//使用range来遍历，对于数组会返回两个值 第一个是下标 第二个是数值 如果不需要索引可以用_
+for _, r := range &quot;Hello, 世界&quot; &#123;
+    //append(原数组,...) 可以追加多个数
+    runes = append(runes, r)
+&#125;
+
+fmt.Printf(&quot;%q\n&quot;, runes) // &quot;['H' 'e' 'l' 'l' 'o' ',' ' ' '世' '界']&quot;
+
+
+//内置的make函数创建一个指定元素类型、长度和容量的slice。容量部分可以省略，在这种情况下，容量将等于长度。
+s := make([]string, 3)
+</code></pre>
+<h4 id="map"><a class="header-anchor" href="#map">¶</a>map</h4>
+<p>无序的key/value对的集合，其中所有的key都是不同的</p>
+<pre><code>//创建方式
+m1 := make(map[string]int)
+
+//赋值方式
+m1[&quot;one&quot;] = 1
+m1[&quot;two&quot;] = 2
+
+m2 := map[string]int&#123;&quot;one&quot;: 1, &quot;two&quot;: 2&#125;
+
+var m3 = map[string]int&#123;&quot;one&quot;: 1, &quot;two&quot;: 2&#125;
+
+
+//删除数据
+delete(m1, &quot;one&quot;)
+fmt.Println(m) //map[two:2]
+
+
+</code></pre>
+<p>而且<code>x += y</code>和<code>x++</code>等简短赋值语法也可以用在map上</p>
+<pre><code class="language-Go">ages[&quot;bob&quot;] += 1 
+ages[&quot;bob&quot;]++
+</code></pre>
+<p>但是map中的元素并不是一个变量，因此我们不能对map的元素进行取址操作</p>
+<h4 id="结构体"><a class="header-anchor" href="#结构体">¶</a>结构体</h4>
+<pre><code class="language-Go">//声明
+type Employee struct &#123;
+    ID        int
+    Name      string
+    DoB       time.Time
+    Salary    int
+    Position  string
+&#125;
+
+//声明了一个Employee类型的变量dilbert
+var dilbert Employee
+
+//dilbert结构体变量的成员可以通过点操作符访问和赋值
+dilbert.Salary -= 5000 
+//或者是对成员取地址，然后通过指针访问
+position := &amp;dilbert.Position
+*position = &quot;Senior &quot; + *position 
+</code></pre>
+<h3 id="JSON"><a class="header-anchor" href="#JSON">¶</a>JSON</h3>
+<pre><code class="language-go">package main
+
+import (
+   &quot;encoding/json&quot;
+   &quot;fmt&quot;
+)
+
+type userInfo struct &#123;
+   Name  string
+   Age   int `json:&quot;age&quot;`//该步骤可以更改json中的名称
+   Hobby []string
+&#125;
+
+func main() &#123;
+   a := userInfo&#123;Name: &quot;wang&quot;, Age: 18, Hobby: []string&#123;&quot;Golang&quot;, &quot;TypeScript&quot;&#125;&#125;
+   buf, err := json.Marshal(a)
+   if err != nil &#123;
+      panic(err)
+   &#125;
+   fmt.Println(buf)         //16进制编码 [123 34 78 97...]
+   fmt.Println(string(buf)) // &#123;&quot;Name&quot;:&quot;wang&quot;,&quot;age&quot;:18,&quot;Hobby&quot;:[&quot;Golang&quot;,&quot;TypeScript&quot;]&#125;
+
+   buf, err = json.MarshalIndent(a, &quot;&quot;, &quot;\t&quot;)
+   if err != nil &#123;
+      panic(err)
+   &#125;
+   fmt.Println(string(buf))
+
+   var b userInfo
+    //反序列化
+   err = json.Unmarshal(buf, &amp;b)
+   if err != nil &#123;
+      panic(err)
+   &#125;
+   fmt.Printf(&quot;%#v\n&quot;, b) // main.userInfo&#123;Name:&quot;wang&quot;, Age:18, Hobby:[]string&#123;&quot;Golang&quot;, &quot;TypeScript&quot;&#125;&#125;
+&#125;
+</code></pre>
+<h3 id="函数"><a class="header-anchor" href="#函数">¶</a>函数</h3>
+<pre><code class="language-go">//后置数据类型
+func add2(a, b int) int &#123;
+   return a + b
+&#125;
+
+//习惯于第一个是真正的返回值，第二个返回值是错误
+func exists(m map[string]string, k string) (v string, ok bool) &#123;
+   v, ok = m[k]
+   return v, ok
+&#125;
+</code></pre>
+<h3 id="错误处理"><a class="header-anchor" href="#错误处理">¶</a>错误处理</h3>
+<p>使用一个单目的返回值来传递错误信息，go语言的错误处理（使用if处理）能够及时处理，并且能够很清晰的知道哪个函数出错了</p>
+<pre><code class="language-go">package main
+
+import (
+   &quot;errors&quot;
+   &quot;fmt&quot;
+)
+
+type user struct &#123;
+   name     string
+   password string
+&#125;
+
+func findUser(users []user, name string) (v *user, err error) &#123;
+   for _, u := range users &#123;
+      if u.name == name &#123;
+         return &amp;u, nil
+      &#125;
+   &#125;
+   return nil, errors.New(&quot;not found&quot;)
+&#125;
+
+func main() &#123;
+   u, err := findUser([]user&#123;&#123;"wang", "1024"&#125;&#125;, &quot;wang&quot;)
+   if err != nil &#123;
+      fmt.Println(err)
+      return
+   &#125;
+   fmt.Println(u.name) // wang
+
+   if u, err := findUser([]user&#123;&#123;"wang", "1024"&#125;&#125;, &quot;li&quot;); err != nil &#123;
+      fmt.Println(err) // not found
+      return
+   &#125; else &#123;
+      fmt.Println(u.name)
+   &#125;
+&#125;
+</code></pre>
+<h3 id="字符串操作"><a class="header-anchor" href="#字符串操作">¶</a>字符串操作</h3>
+<pre><code class="language-go">package main
+
+import (
+   &quot;fmt&quot;
+   &quot;strings&quot;
+)
+
+func main() &#123;
+   a := &quot;hello&quot;
+   fmt.Println(strings.Contains(a, &quot;ll&quot;))                // true
+   fmt.Println(strings.Count(a, &quot;l&quot;))                    // 2
+   fmt.Println(strings.HasPrefix(a, &quot;he&quot;))               // true
+   fmt.Println(strings.HasSuffix(a, &quot;llo&quot;))              // true
+   fmt.Println(strings.Index(a, &quot;ll&quot;))                   // 2
+   fmt.Println(strings.Join([]string&#123;&quot;he&quot;, &quot;llo&quot;&#125;, &quot;-&quot;)) // he-llo
+   fmt.Println(strings.Repeat(a, 2))                     // hellohello
+   fmt.Println(strings.Replace(a, &quot;e&quot;, &quot;E&quot;, -1))         // hEllo
+   fmt.Println(strings.Split(&quot;a-b-c&quot;, &quot;-&quot;))              // [a b c]
+   fmt.Println(strings.ToLower(a))                       // hello
+   fmt.Println(strings.ToUpper(a))                       // HELLO
+   fmt.Println(len(a))                                   // 5
+   b := &quot;你好&quot;
+   fmt.Println(len(b)) // 6
+&#125;
+</code></pre>
+<p>字符串格式化</p>
+<pre><code class="language-go">package main
+
+import &quot;fmt&quot;
+
+type point struct &#123;
+   x, y int
+&#125;
+
+func main() &#123;
+   s := &quot;hello&quot;
+   n := 123
+   p := point&#123;1, 2&#125;
+   fmt.Println(s, n) // hello 123
+   fmt.Println(p)    // &#123;1 2&#125;
+
+   fmt.Printf(&quot;s=%v\n&quot;, s)  // s=hello
+   fmt.Printf(&quot;n=%v\n&quot;, n)  // n=123
+   fmt.Printf(&quot;p=%v\n&quot;, p)  // p=&#123;1 2&#125;
+    //+v 查看较为详细的结构
+   fmt.Printf(&quot;p=%+v\n&quot;, p) // p=&#123;x:1 y:2&#125;
+    //#v 更加详细
+   fmt.Printf(&quot;p=%#v\n&quot;, p) // p=main.point&#123;x:1, y:2&#125;
+
+   f := 3.141592653
+   fmt.Println(f)          // 3.141592653
+   fmt.Printf(&quot;%.2f\n&quot;, f) // 3.14
+&#125;
+</code></pre>
+<h3 id="时间处理"><a class="header-anchor" href="#时间处理">¶</a>时间处理</h3>
+<pre><code class="language-go">package main
+
+import (
+   &quot;fmt&quot;
+   &quot;time&quot;
+)
+
+func main() &#123;
+   now := time.Now()
+   fmt.Println(now) // 2022-03-27 18:04:59.433297 +0800 CST m=+0.000087933
+   t := time.Date(2022, 3, 27, 1, 25, 36, 0, time.UTC)
+   t2 := time.Date(2022, 3, 27, 2, 30, 36, 0, time.UTC)
+   fmt.Println(t)                               // 2022-03-27 01:25:36 +0000 UTC
+   fmt.Println(t.Year(), t.Month(), t.Day(), t.Hour(), t.Minute()) // 2022 March 27 1 25
+   fmt.Println(t.Format(&quot;2006-01-02 15:04:05&quot;))                    // 2022-03-27 01:25:36
+   
+   //截取时间
+   diff := t2.Sub(t)
+   fmt.Println(diff)                           // 1h5m0s
+   fmt.Println(diff.Minutes(), diff.Seconds()) // 65 3900
+   t3, err := time.Parse(&quot;2006-01-02 15:04:05&quot;, &quot;2022-03-27 01:25:36&quot;)
+   if err != nil &#123;
+      panic(err)
+   &#125;
+   //比较的结果是值而不是地址
+   fmt.Println(t3 == t)    // true
+    
+    
+   //获取时间戳
+   fmt.Println(now.Unix()) // 1648738080
+&#125;
+</code></pre>
+<h3 id="数字解析"><a class="header-anchor" href="#数字解析">¶</a>数字解析</h3>
+<pre><code class="language-go">package main
+
+import (
+   &quot;fmt&quot;
+   &quot;strconv&quot;
+)
+
+func main() &#123;
+   //字符串 =&gt; 数字
+   f, _ := strconv.ParseFloat(&quot;1.234&quot;, 64)
+   fmt.Println(f) // 1.234
+	
+    //10进制，64位
+   n, _ := strconv.ParseInt(&quot;111&quot;, 10, 64)
+   fmt.Println(n) // 111
+
+    //0代表自动推测进制 
+   n, _ = strconv.ParseInt(&quot;0x1000&quot;, 0, 64)
+   fmt.Println(n) // 4096
+	
+   n2, _ := strconv.Atoi(&quot;123&quot;)
+   fmt.Println(n2) // 123
+
+   n2, err := strconv.Atoi(&quot;AAA&quot;)
+   fmt.Println(n2, err) // 0 strconv.Atoi: parsing &quot;AAA&quot;: invalid syntax
+&#125;
+</code></pre>
+<h3 id="进程信息"><a class="header-anchor" href="#进程信息">¶</a>进程信息</h3>
+<pre><code class="language-go">package main
+
+import (
+   &quot;fmt&quot;
+   &quot;os&quot;
+   &quot;os/exec&quot;
+)
+
+func main() &#123;
+   //该过程需要像Args中传入参数
+   // go run example/20-env/main.go a b c d
+   fmt.Println(os.Args)           // [/var/folders/8p/n34xxfnx38dg8bv_x8l62t_m0000gn/T/go-build3406981276/b001/exe/main a b c d]
+    
+  //分别来获取和写入环境变量	  
+   fmt.Println(os.Getenv(&quot;PATH&quot;)) // /usr/local/go/bin...
+   fmt.Println(os.Setenv(&quot;AA&quot;, &quot;BB&quot;))
+
+   //启动子进程和获取输入输出
+   buf, err := exec.Command(&quot;grep&quot;, &quot;127.0.0.1&quot;, &quot;/etc/hosts&quot;).CombinedOutput()
+   if err != nil &#123;
+      panic(err)
+   &#125;
+   fmt.Println(string(buf)) // 127.0.0.1       localhost
+&#125;
+</code></pre>
+
+    </div>
+    
+</div>
+                         
+
+
+<footer id="footer">
+    
+
+    <div class="footer-wrap">
+        <div>
+            © 2022 - 2023 Albatross&amp;blog
+            <span class="footer-icon">
+                <i class="fa-solid fa-font-awesome fa-fw"></i>
+            </span>
+            @Albatross
+        </div>
+
+        <div></div>
+        <div>Based on the <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo Engine</a> & <a
+                target="_blank" rel="noopener" href="https://github.com/argvchs/hexo-theme-particlex">ParticleX Theme</a></div>
+        
+    </div>
+    <!--这一段是不蒜子的访问量统计代码-->
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+    </script>
+ 
+    <span id="busuanzi_value_page_pv"><i class="fa fa-spinner"></i></span> Hits   
+</footer>
+
+
+                        
+                    </div>
+                </div>
+            </transition>
+            <div id="img_show">
+                <img id="img_content" alt="img_show">
+            </div>
+        </div>
+        <script src="https://cdn.staticfile.org/highlight.js/11.5.1/highlight.min.js"></script>
+        <script src="/js/particlex.js"></script>
+        <script src="/js/showimg.js"></script>
+        
+        
+
+    <script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/wanko.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"log":false});</script></body>
+    <canvas
+        id="background"
+        style="position:fixed;top:0;left:0;width:100vw;height:100vh;pointer-events:none;z-index:-1"
+    ></canvas>
+    <script src="/js/background.js"></script>
+    <div id="cursor"></div>
+<script src="/css/cursor.css"></script>
+<script src="/js/cursor.js"></script>
+</html>

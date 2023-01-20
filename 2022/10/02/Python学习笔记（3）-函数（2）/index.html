@@ -161,7 +161,7 @@
             
             <span class="tag">
                 
-                <a href="/tags/PYTHON/" style="color: #00bcd4">
+                <a href="/tags/PYTHON/" style="color: #ff7d73">
                     PYTHON
                 </a>
             </span>
@@ -175,6 +175,11 @@
 <h3 id="闭包"><a class="header-anchor" href="#闭包">¶</a>闭包</h3>
 <p>函数名是一个变量, 但它是一个特殊的变量, 与括号配合可以执行函数的变量.</p>
 <h4 id=""><a class="header-anchor" href="#">¶</a></h4>
+<p>内层函数使用外层函数的局部变量</p>
+<ul>
+<li>让一个变量被封锁起来，外界只能看到但是无法修改</li>
+<li>可以让一个变量常驻内存</li>
+</ul>
 <h4 id="函数名的内存地址"><a class="header-anchor" href="#函数名的内存地址">¶</a>函数名的内存地址</h4>
 <pre><code class="language-python">def func():
     print(&quot;呵呵&quot;)
@@ -202,10 +207,6 @@ def func2():
 
 def func3():
     print(&quot;呵呵&quot;)
-
-def func4():
-    print(&quot;呵呵&quot;)
-
 
 lst = [func1, func2, func3]
 for i in lst:
@@ -560,7 +561,7 @@ print(list(s)) # ['我', '要', '吃', '饭', ',', ' ', '你', '吃', '不', '�
 <p>生成器的本质就是迭代器.  在python中有两种方式来获取生成器:</p>
 <ol>
 <li>
-<p>通过生成器函数</p>
+<p>通过生成器函数 (生成器函数在被执行的的时候。创建生成器  )</p>
 </li>
 <li>
 <p>通过生成器表达式来实现生成器</p>
@@ -590,7 +591,7 @@ print(ret)
 &lt;generator object func at 0x10567ff68&gt;
 </code></pre>
 <p>运行的结果和上面不一样. 为什么呢. 由于函数中存在了yield. 那么这个函数就是一个生成器函数. 这个时候. 我们再执行这个函数的时候. 就不再是函数的执行了. 而是获取这个生成器. 如何使用呢? 想想迭代器. 生成器的本质是迭代器. 所以. 我们可以直接执行<code>__next__()</code>来执行以下生成器.</p>
-<pre><code>def func():
+<pre><code class="language-python">def func():
     print(&quot;111&quot;)
     yield 222
 
@@ -846,7 +847,7 @@ Mac牌锅铲
 微星就可以
 还可以烙饼
 </code></pre>
-<h4 id="匿名函数"><a class="header-anchor" href="#匿名函数">¶</a>匿名函数</h4>
+<h4 id="匿名函数-lambda"><a class="header-anchor" href="#匿名函数-lambda">¶</a>匿名函数(lambda )</h4>
 <p>为了解决一些简单的需求而设计的一句话函数</p>
 <pre><code class="language-python"># 计算n的n次方
 def func(n):
@@ -884,7 +885,7 @@ print(f(10))
 
     <div class="footer-wrap">
         <div>
-            © 2022 - 2022 Albatross&amp;blog
+            © 2022 - 2023 Albatross&amp;blog
             <span class="footer-icon">
                 <i class="fa-solid fa-font-awesome fa-fw"></i>
             </span>
